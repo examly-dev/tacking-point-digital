@@ -1,0 +1,16 @@
+export const site = {
+  name: "Tacking Point Digital",
+  email: "hello@tackingpointdigital.com.au",
+  phone: "0473 950 514",
+  location: "Port Macquarie, NSW",
+} as const;
+
+/** Sidebar introduction; also shown in the mobile menu and above the work grid on phones. */
+export const intro = [
+  `${site.name} is me, Andy, a web developer in Port Macquarie.`,
+  "I build websites and web apps for small to medium sized businesses and professionals, on the Mid North Coast and further afield.",
+  "Have a look at some recent work, or get in touch. I'm always happy to chat.",
+] as const;
+
+export const mailto = `mailto:${site.email}`;
+export const tel = `tel:+61${site.phone.replace(/\s/g, "").slice(1)}`;

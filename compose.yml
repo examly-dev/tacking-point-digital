@@ -1,0 +1,46 @@
+# Local preview in OrbStack (same pattern as Examly).
+#
+#   docker compose up
+#
+#   https://web.tackingpoint.orb.local
+#   https://tackingpoint.local
+#
+# No host port — Accordion already binds :3000.
+
+name: tackingpoint
+
+services:
+  web:
+    image: node:22-bookworm-slim
+    working_dir: /app
+    init: true
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      HOSTNAME: "0.0.0.0"
+      PORT: "3000"
+    volumes:
+      - .:/app
+      - tackingpoint_nm:/app/node_modules
+      - tackingpoint_next:/app/.next
+    command: sh -c "npm ci && npm run dev -- --hostname 0.0.0.0 --port 3000"
+    labels:
+      - dev.orbstack.domains=tackingpoint.local
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000').then((r)=>process.exit(r.status<500?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 90s
+
+volumes:
+  tackingpoint_nm:
+  tackingpoint_next:

@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --breakpoint-tablet: 850px;
+  --breakpoint-desktop: 1250px;
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html,
+body {
+  background: #fff;
+  color: #000;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
+
+p,
+figcaption {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Full-screen menu on phones fades up from just below its resting place. */
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.menu-sheet {
+  animation: sheet-in 320ms var(--ease-out-soft) both;
+}
+
+/* Full-size shot viewer uses the same entrance. */
+.lightbox {
+  animation: sheet-in 240ms var(--ease-out-soft) both;
+}
+
+/* Content rises in with a stagger (delay set inline per element). */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 520ms var(--ease-out-soft) both;
+  will-change: transform, opacity;
+}
+
+/*
+  The card cover morphs into the project hero. Transform and opacity only:
+  filters on a screen-sized snapshot are what make these stutter.
+*/
+::view-transition-group(.morph) {
+  animation-duration: 440ms;
+  animation-timing-function: var(--ease-out-soft);
+}
+
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(.morph) {
+  display: none;
+}
+
+/* Everything else crossfades quickly underneath the morph. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Hover the wordmark: lantern comes on, the page warms a little. */
+.lighthouse-lantern,
+.lighthouse-well {
+  fill: transparent;
+  transition: fill 0.45s var(--ease-out-soft);
+}
+
+.lighthouse-beam {
+  transition: stroke 0.45s var(--ease-out-soft);
+}
+
+.lighthouse-logo:hover .lighthouse-lantern,
+.lighthouse-logo:active .lighthouse-lantern,
+.lighthouse-logo:focus-visible .lighthouse-lantern {
+  fill: #ffd54a;
+}
+
+.lighthouse-logo:hover .lighthouse-well,
+.lighthouse-logo:active .lighthouse-well,
+.lighthouse-logo:focus-visible .lighthouse-well {
+  fill: #ffe27a;
+}
+
+.lighthouse-logo:hover .lighthouse-beam,
+.lighthouse-logo:active .lighthouse-beam,
+.lighthouse-logo:focus-visible .lighthouse-beam {
+  stroke: #ffd54a;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    55% 50% at 0% 0%,
+    rgba(255, 220, 120, 0.2),
+    transparent 70%
+  );
+  transition: opacity 0.7s var(--ease-out-soft);
+}
+
+html:has(.lighthouse-logo:hover) body::after,
+html:has(.lighthouse-logo:active) body::after,
+html:has(.lighthouse-logo:focus-visible) body::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lighthouse-lantern,
+  .lighthouse-well,
+  .lighthouse-beam,
+  body::after {
+    transition: none;
+  }
+}
