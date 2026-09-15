@@ -17,7 +17,6 @@ const SITES = [
   "ironbark",
   "ballast",
   "hartwell",
-  "walsh",
   "ellery",
   "sancrox",
 ];

@@ -9,7 +9,6 @@ export const previewSlugs = [
   "halfway",
   "ellery",
   "hartwell",
-  "walsh",
   "sancrox",
 ] as const;
 

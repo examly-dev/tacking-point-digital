@@ -28,14 +28,14 @@ function delay(step: number) {
   return { animationDelay: `${step * 60}ms` };
 }
 
-/** Portrait hero when there is no dedicated poster (same 180×236 DSS frame). */
+/** Portrait hero when there is no dedicated phone clip — same 390×844 well as CoverSwitch. */
 function PhoneShot({ media, priority = false }: { media: WorkMedia; priority?: boolean }) {
   return (
     <figure className="bg-black/[0.05] p-4 tablet:p-8">
       <Lightbox media={media}>
-        <div className="mx-auto flex aspect-[250/300] w-full max-w-[250px] items-center justify-center">
-          <div className="relative aspect-[180/236] w-[180px] overflow-hidden border border-black/[0.03] bg-white">
-            <Media media={media} priority={priority} sizes="180px" className="object-cover object-top" />
+        <div className="mx-auto w-full max-w-[300px]">
+          <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
+            <Media media={media} priority={priority} sizes="300px" className="object-contain" />
           </div>
         </div>
       </Lightbox>
@@ -143,10 +143,10 @@ export default async function WorkPage({ params }: Props) {
 
         <div className="mb-10">
           <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-            {item.mobile ? (
+            {item.mobile || item.mobileClip ? (
               <CoverSwitch
                 cover={item.cover}
-                mobile={item.mobile}
+                mobile={item.mobileClip ?? item.mobile!}
                 previewSlug={preview ? item.slug : undefined}
               />
             ) : item.cover ? (

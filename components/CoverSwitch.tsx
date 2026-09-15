@@ -68,8 +68,9 @@ function ViewSlider({
 }
 
 /**
- * Portrait poster by default — same 180×236 Dead Simple Sites frame as the work grid.
- * Desktop remains a switch, shown contain-fitted so the full landscape clip stays in view.
+ * Work-page preview well. Independent of the Dead Simple Sites index cards.
+ * Mobile is a watchable 390×844 scrolling phone clip; desktop is the landscape
+ * scroll clip, contain-fitted in a 16/10 frame.
  */
 export function CoverSwitch({
   cover,
@@ -95,9 +96,9 @@ export function CoverSwitch({
         </div>
         <Lightbox media={media}>
           {view === "mobile" ? (
-            <div className="mx-auto flex aspect-[250/300] w-full max-w-[250px] items-center justify-center">
-              <div className="relative aspect-[180/236] w-[180px] overflow-hidden border border-black/[0.03] bg-white">
-                <Media media={mobile} sizes="180px" className="object-cover object-top" priority />
+            <div className="mx-auto w-full max-w-[300px]">
+              <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
+                <Media media={mobile} sizes="300px" className="object-contain" priority />
               </div>
             </div>
           ) : cover ? (

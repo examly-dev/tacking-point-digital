@@ -9,7 +9,6 @@ import Ballast from "@/examples/ballast/Site";
 import Halfway from "@/examples/halfway/Site";
 import Ellery from "@/examples/ellery/Site";
 import Hartwell from "@/examples/hartwell/Site";
-import Walsh from "@/examples/walsh/Site";
 import Sancrox from "@/examples/sancrox/Site";
 
 export const examples: Record<PreviewSlug, ComponentType> = {
@@ -22,7 +21,6 @@ export const examples: Record<PreviewSlug, ComponentType> = {
   halfway: Halfway,
   ellery: Ellery,
   hartwell: Hartwell,
-  walsh: Walsh,
   sancrox: Sancrox,
 };
 
@@ -36,6 +34,5 @@ export const previewNames: Record<PreviewSlug, string> = {
   halfway: "Halfway House",
   ellery: "Ellery Lawyers",
   hartwell: "Hartwell Constructions",
-  walsh: "Walsh Mathematics",
   sancrox: "Sancrox Civil",
 };

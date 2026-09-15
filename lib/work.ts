@@ -33,6 +33,11 @@ export type WorkItem = {
    * (`aspect-[180/236]`), shot at that ratio so the card fills edge-to-edge.
    */
   mobile?: WorkMedia;
+  /**
+   * Scrolling phone clip for the work-page CoverSwitch (390×844).
+   * Kept separate from the index-card still so the grid stays DSS-ratio posters.
+   */
+  mobileClip?: WorkMedia;
   /** Extra clips and screenshots shown below the write-up. */
   gallery?: WorkMedia[];
   /** Small high-res stills after the hero clip. Quiet, not a grid of thumbs. */
@@ -51,6 +56,21 @@ function stills(slug: string, captions: string[]): WorkMedia[] {
     src: `/work/${slug}-still-${i + 1}.jpg`,
     alt,
   }));
+}
+
+function phoneClip(
+  slug: string,
+  alt: string,
+  extra?: { src?: string; poster?: string; hd?: string | null },
+): Extract<WorkMedia, { type: "video" }> {
+  const hd = extra?.hd === null ? undefined : (extra?.hd ?? `/work/${slug}-mobile-2x.mp4`);
+  return {
+    type: "video",
+    src: extra?.src ?? `/work/${slug}-mobile.mp4`,
+    ...(hd ? { hd } : {}),
+    poster: extra?.poster ?? `/work/${slug}-mobile.jpg`,
+    alt,
+  };
 }
 
 export const work: WorkItem[] = [
@@ -116,6 +136,11 @@ export const work: WorkItem[] = [
       src: "/work/examly-preview-mobile.jpg",
       alt: "Examly, mobile",
     },
+    mobileClip: phoneClip("examly", "Examly, mobile", {
+      src: "/work/examly-preview-mobile.mp4",
+      poster: "/work/examly-preview-mobile.jpg",
+      hd: null,
+    }),
     gallery: [
       {
         type: "video",
@@ -157,6 +182,7 @@ export const work: WorkItem[] = [
       src: "/work/proof-room-mobile.jpg",
       alt: "Bakehouse, mobile",
     },
+    mobileClip: phoneClip("proof-room", "Bakehouse, mobile"),
     stills: stills("proof-room", ["The wordmark", "What’s on"]),
     overview: [
       "A bakery site with a hard wordmark, a longer counter list, and a weekly loaf you can pick up or have dropped. The sort of thing that looks like it belongs on the street, not in a template gallery.",
@@ -181,6 +207,7 @@ export const work: WorkItem[] = [
       src: "/work/halfway-mobile.jpg",
       alt: "Halfway House, mobile",
     },
+    mobileClip: phoneClip("halfway", "Halfway House, mobile"),
     stills: stills("halfway", ["Holding a table", "Square gift cards"]),
     overview: [
       "Halfway House is a café and roastery. The site holds a table (date, party, window or footpath), sells bags and brew gear through Shopify, and sells Square gift cards — e-gift or pickup — without sending anyone to a different looking checkout.",
@@ -205,6 +232,7 @@ export const work: WorkItem[] = [
       src: "/work/ellery-mobile.jpg",
       alt: "Ellery Lawyers, mobile",
     },
+    mobileClip: phoneClip("ellery", "Ellery Lawyers, mobile"),
     stills: stills("ellery", ["Practice areas", "The people"]),
     overview: [
       "A small firm site that keeps the useful bits on one page: what they do, who you will speak to, and how to write. The partner who takes the call keeps the file.",
@@ -229,6 +257,7 @@ export const work: WorkItem[] = [
       src: "/work/ridgeway-physio-mobile.jpg",
       alt: "Ridgeway Physiotherapy, mobile",
     },
+    mobileClip: phoneClip("ridgeway-physio", "Ridgeway Physiotherapy, mobile"),
     stills: stills("ridgeway-physio", ["HotDoc booking", "Who you will see"]),
     overview: [
       "Bespoke one-pagers like this come together quickly, especially if you already have staff photos and a few shots of the rooms.",
@@ -254,6 +283,7 @@ export const work: WorkItem[] = [
       src: "/work/marlow-finch-mobile.jpg",
       alt: "Rowe Accounting, mobile",
     },
+    mobileClip: phoneClip("marlow-finch", "Rowe Accounting, mobile"),
     stills: stills("marlow-finch", ["Who we work with", "Fees on the page"]),
     overview: [
       "Another example of a slick one-pager that puts the useful information down cleanly. I spent years in professional services, so I tend to ask the same questions your clients would — that is how the site ends up sounding like your practice, not a generic firm.",
@@ -279,6 +309,7 @@ export const work: WorkItem[] = [
       src: "/work/harbourline-mobile.jpg",
       alt: "Harbourline, mobile",
     },
+    mobileClip: phoneClip("harbourline", "Harbourline, mobile"),
     stills: stills("harbourline", ["From survey to issued drawings", "Recent work"]),
     overview: [
       "A coastal and civil practice: harbours, foreshore, stormwater and the reports that get harbour jobs built. Forest green, Outfit, a split hero — kept as it was, without dressing it up as a plant brochure.",
@@ -303,6 +334,7 @@ export const work: WorkItem[] = [
       src: "/work/ironbark-mobile.jpg",
       alt: "Ironbark, mobile",
     },
+    mobileClip: phoneClip("ironbark", "Ironbark, mobile"),
     stills: stills("ironbark", ["The hut", "Availability and booking"]),
     overview: [
       "I am comfortable building bespoke booking pages and showcases for properties, including tying them into systems such as Little Hotelier. In 2026 that does not have to be an expensive piece of work.",
@@ -327,6 +359,7 @@ export const work: WorkItem[] = [
       src: "/work/ballast-mobile.jpg",
       alt: "Parkside Gym, mobile",
     },
+    mobileClip: phoneClip("ballast", "Parkside Gym, mobile"),
     stills: stills("ballast", ["The weekly timetable", "Membership"]),
     overview: [
       "When the classes are, what it costs a week, and who is coaching. The rest of the page supports those three things.",
@@ -351,35 +384,12 @@ export const work: WorkItem[] = [
       src: "/work/hartwell-mobile.jpg",
       alt: "Hartwell, mobile",
     },
+    mobileClip: phoneClip("hartwell", "Hartwell, mobile"),
     stills: stills("hartwell", ["Three things, done properly", "Three from the last year"]),
     overview: [
       "I am more than comfortable developing in CMSs such as WordPress and Webflow. If you already use those tools and would rather stay there, I will work that way. I can also write custom plugins and adjustments for a site you already have.",
     ],
     stack: ["Webflow", "Webflow CMS", "Finsweet Attributes"],
-  },
-  {
-    slug: "walsh",
-    name: "Walsh Mathematics",
-    kind: "Website · example",
-    summary:
-      "Claire Walsh’s tutoring site: mathematics and Engineering Studies, Years 7–12, in the Port Macquarie area. A teaching CV, notes from students, and a calendar to book a first lesson.",
-    cover: {
-      type: "video",
-      src: "/work/walsh.mp4",
-      hd: "/work/walsh-2x.mp4",
-      poster: "/work/walsh.jpg",
-      alt: "Walsh Mathematics home page, scrolling from the Port Macquarie headline through the lessons and the booking calendar",
-    },
-    mobile: {
-      type: "image",
-      src: "/work/walsh-mobile.jpg",
-      alt: "Walsh Mathematics, mobile",
-    },
-    stills: stills("walsh", ["Syllabus", "The booking calendar"]),
-    overview: [
-      "A tutor’s own site — a profile photograph, fourteen years teaching, HSC marking, mathematics and Engineering Studies, notes from students, and a real calendar.",
-    ],
-    stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
     slug: "sancrox",
@@ -399,6 +409,7 @@ export const work: WorkItem[] = [
       src: "/work/sancrox-mobile.jpg",
       alt: "Sancrox Civil, mobile",
     },
+    mobileClip: phoneClip("sancrox", "Sancrox Civil, mobile"),
     stills: stills("sancrox", ["What we do", "Recent jobs"]),
     overview: [
       "A Port Macquarie civil practice: roads, stormwater, subdivisions and culverts, with construction-phase support. Conventional infrastructure, not a marina brochure.",
