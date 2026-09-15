@@ -28,14 +28,15 @@ export type WorkItem = {
   url?: string;
   /** Card thumbnail and project hero. Omit for an empty grey frame. */
   cover?: WorkMedia;
-  /** Phone-sized clip or still (390×844 or 2× that). Default preview on cards and work pages. */
+  /**
+   * Portrait poster still. Dead Simple Sites inner frame is 180×236
+   * (`aspect-[180/236]`), shot at that ratio so the card fills edge-to-edge.
+   */
   mobile?: WorkMedia;
   /** Extra clips and screenshots shown below the write-up. */
   gallery?: WorkMedia[];
   /** Small high-res stills after the hero clip. Quiet, not a grid of thumbs. */
   stills?: WorkMedia[];
-  /** Sanity Studio still, shown under the live preview on example sites. */
-  sanityShot?: Extract<WorkMedia, { type: "image" }>;
   /** A short paragraph or two. Let the media do the talking. */
   overview: string[];
   /** Optional design notes. */
@@ -52,14 +53,6 @@ function stills(slug: string, captions: string[]): WorkMedia[] {
   }));
 }
 
-function sanityShot(slug: string, alt: string): Extract<WorkMedia, { type: "image" }> {
-  return {
-    type: "image",
-    src: `/work/${slug}-sanity.jpg`,
-    alt,
-  };
-}
-
 export const work: WorkItem[] = [
   {
     slug: "accordion",
@@ -71,6 +64,11 @@ export const work: WorkItem[] = [
       type: "video",
       src: "/work/accordion-landing.mp4",
       poster: "/work/accordion-landing.png",
+      alt: "Accordion home page",
+    },
+    mobile: {
+      type: "image",
+      src: "/work/accordion-mobile.jpg",
       alt: "Accordion home page",
     },
     gallery: [
@@ -114,9 +112,8 @@ export const work: WorkItem[] = [
       alt: "Examly marketing site, switching through Create, Assign, Assess, Mark and Analyse",
     },
     mobile: {
-      type: "video",
-      src: "/work/examly-preview-mobile.mp4",
-      poster: "/work/examly-preview-mobile.jpg",
+      type: "image",
+      src: "/work/examly-preview-mobile.jpg",
       alt: "Examly, mobile",
     },
     gallery: [
@@ -156,14 +153,11 @@ export const work: WorkItem[] = [
       alt: "Bakehouse home page, scrolling from the wordmark through the menu and weekly loaf",
     },
     mobile: {
-      type: "video",
-      src: "/work/proof-room-mobile.mp4",
-      hd: "/work/proof-room-mobile-2x.mp4",
-      poster: "/work/proof-room-mobile.jpg",
+      type: "image",
+      src: "/work/proof-room-mobile.jpg",
       alt: "Bakehouse, mobile",
     },
     stills: stills("proof-room", ["The wordmark", "What’s on"]),
-    sanityShot: sanityShot("proof-room", "The weekly loaf, in Sanity"),
     overview: [
       "A bakery site with a hard wordmark, a longer counter list, and a weekly loaf you can pick up or have dropped. The sort of thing that looks like it belongs on the street, not in a template gallery.",
     ],
@@ -183,14 +177,11 @@ export const work: WorkItem[] = [
       alt: "Halfway House home page, scrolling through booking, the shop and gift cards",
     },
     mobile: {
-      type: "video",
-      src: "/work/halfway-mobile.mp4",
-      hd: "/work/halfway-mobile-2x.mp4",
-      poster: "/work/halfway-mobile.jpg",
+      type: "image",
+      src: "/work/halfway-mobile.jpg",
       alt: "Halfway House, mobile",
     },
     stills: stills("halfway", ["Holding a table", "Square gift cards"]),
-    sanityShot: sanityShot("halfway", "Table booking, in Sanity"),
     overview: [
       "Halfway House is a café and roastery. The site holds a table (date, party, window or footpath), sells bags and brew gear through Shopify, and sells Square gift cards — e-gift or pickup — without sending anyone to a different looking checkout.",
     ],
@@ -210,14 +201,11 @@ export const work: WorkItem[] = [
       alt: "Ellery Lawyers home page, scrolling from the headline through practice areas and the people",
     },
     mobile: {
-      type: "video",
-      src: "/work/ellery-mobile.mp4",
-      hd: "/work/ellery-mobile-2x.mp4",
-      poster: "/work/ellery-mobile.jpg",
+      type: "image",
+      src: "/work/ellery-mobile.jpg",
       alt: "Ellery Lawyers, mobile",
     },
     stills: stills("ellery", ["Practice areas", "The people"]),
-    sanityShot: sanityShot("ellery", "The headline, in Sanity"),
     overview: [
       "A small firm site that keeps the useful bits on one page: what they do, who you will speak to, and how to write. The partner who takes the call keeps the file.",
     ],
@@ -237,14 +225,11 @@ export const work: WorkItem[] = [
       alt: "Ridgeway Physiotherapy home page, scrolling through booking, fees and the team",
     },
     mobile: {
-      type: "video",
-      src: "/work/ridgeway-physio-mobile.mp4",
-      hd: "/work/ridgeway-physio-mobile-2x.mp4",
-      poster: "/work/ridgeway-physio-mobile.jpg",
+      type: "image",
+      src: "/work/ridgeway-physio-mobile.jpg",
       alt: "Ridgeway Physiotherapy, mobile",
     },
     stills: stills("ridgeway-physio", ["HotDoc booking", "Who you will see"]),
-    sanityShot: sanityShot("ridgeway-physio", "A team bio, in Sanity"),
     overview: [
       "Bespoke one-pagers like this come together quickly, especially if you already have staff photos and a few shots of the rooms.",
       "Most clinics now expect an integrated booking system. HotDoc is the usual one around here. Wiring it in is not a big extra job, and you keep managing the diary yourself.",
@@ -265,14 +250,11 @@ export const work: WorkItem[] = [
       alt: "Rowe Accounting home page, scrolling through services, fees and the team",
     },
     mobile: {
-      type: "video",
-      src: "/work/marlow-finch-mobile.mp4",
-      hd: "/work/marlow-finch-mobile-2x.mp4",
-      poster: "/work/marlow-finch-mobile.jpg",
+      type: "image",
+      src: "/work/marlow-finch-mobile.jpg",
       alt: "Rowe Accounting, mobile",
     },
     stills: stills("marlow-finch", ["Who we work with", "Fees on the page"]),
-    sanityShot: sanityShot("marlow-finch", "The company fee, in Sanity"),
     overview: [
       "Another example of a slick one-pager that puts the useful information down cleanly. I spent years in professional services, so I tend to ask the same questions your clients would — that is how the site ends up sounding like your practice, not a generic firm.",
       "Bespoke sites can include a simple CMS so you can change text and photos yourself. If you would rather I did the tweaks, that is a reasonable hourly rate.",
@@ -293,14 +275,11 @@ export const work: WorkItem[] = [
       alt: "Harbourline home page, scrolling from the work into recent projects",
     },
     mobile: {
-      type: "video",
-      src: "/work/harbourline-mobile.mp4",
-      hd: "/work/harbourline-mobile-2x.mp4",
-      poster: "/work/harbourline-mobile.jpg",
+      type: "image",
+      src: "/work/harbourline-mobile.jpg",
       alt: "Harbourline, mobile",
     },
     stills: stills("harbourline", ["From survey to issued drawings", "Recent work"]),
-    sanityShot: sanityShot("harbourline", "The headline, in Sanity"),
     overview: [
       "A coastal and civil practice: harbours, foreshore, stormwater and the reports that get harbour jobs built. Forest green, Outfit, a split hero — kept as it was, without dressing it up as a plant brochure.",
     ],
@@ -320,14 +299,11 @@ export const work: WorkItem[] = [
       alt: "Ironbark listing page, scrolling through photos, the booking card and the calendar",
     },
     mobile: {
-      type: "video",
-      src: "/work/ironbark-mobile.mp4",
-      hd: "/work/ironbark-mobile-2x.mp4",
-      poster: "/work/ironbark-mobile.jpg",
+      type: "image",
+      src: "/work/ironbark-mobile.jpg",
       alt: "Ironbark, mobile",
     },
     stills: stills("ironbark", ["The hut", "Availability and booking"]),
-    sanityShot: sanityShot("ironbark", "The booking note, in Sanity"),
     overview: [
       "I am comfortable building bespoke booking pages and showcases for properties, including tying them into systems such as Little Hotelier. In 2026 that does not have to be an expensive piece of work.",
     ],
@@ -347,14 +323,11 @@ export const work: WorkItem[] = [
       alt: "Parkside Gym home page, scrolling through programmes, timetable and membership",
     },
     mobile: {
-      type: "video",
-      src: "/work/ballast-mobile.mp4",
-      hd: "/work/ballast-mobile-2x.mp4",
-      poster: "/work/ballast-mobile.jpg",
+      type: "image",
+      src: "/work/ballast-mobile.jpg",
       alt: "Parkside Gym, mobile",
     },
     stills: stills("ballast", ["The weekly timetable", "Membership"]),
-    sanityShot: sanityShot("ballast", "Opening hours, in Sanity"),
     overview: [
       "When the classes are, what it costs a week, and who is coaching. The rest of the page supports those three things.",
     ],
@@ -374,14 +347,11 @@ export const work: WorkItem[] = [
       alt: "Hartwell Constructions home page, scrolling through about, services and projects",
     },
     mobile: {
-      type: "video",
-      src: "/work/hartwell-mobile.mp4",
-      hd: "/work/hartwell-mobile-2x.mp4",
-      poster: "/work/hartwell-mobile.jpg",
+      type: "image",
+      src: "/work/hartwell-mobile.jpg",
       alt: "Hartwell, mobile",
     },
     stills: stills("hartwell", ["Three things, done properly", "Three from the last year"]),
-    sanityShot: sanityShot("hartwell", "A project, in Sanity"),
     overview: [
       "I am more than comfortable developing in CMSs such as WordPress and Webflow. If you already use those tools and would rather stay there, I will work that way. I can also write custom plugins and adjustments for a site you already have.",
     ],
@@ -401,14 +371,11 @@ export const work: WorkItem[] = [
       alt: "Walsh Mathematics home page, scrolling from the Port Macquarie headline through the lessons and the booking calendar",
     },
     mobile: {
-      type: "video",
-      src: "/work/walsh-mobile.mp4",
-      hd: "/work/walsh-mobile-2x.mp4",
-      poster: "/work/walsh-mobile.jpg",
+      type: "image",
+      src: "/work/walsh-mobile.jpg",
       alt: "Walsh Mathematics, mobile",
     },
     stills: stills("walsh", ["Syllabus", "The booking calendar"]),
-    sanityShot: sanityShot("walsh", "The headline, in Sanity"),
     overview: [
       "A tutor’s own site — a profile photograph, fourteen years teaching, HSC marking, mathematics and Engineering Studies, notes from students, and a real calendar.",
     ],
@@ -428,14 +395,11 @@ export const work: WorkItem[] = [
       alt: "Sancrox Civil home page, scrolling from the Pacific Highway tunnel into services and recent jobs",
     },
     mobile: {
-      type: "video",
-      src: "/work/sancrox-mobile.mp4",
-      hd: "/work/sancrox-mobile-2x.mp4",
-      poster: "/work/sancrox-mobile.jpg",
+      type: "image",
+      src: "/work/sancrox-mobile.jpg",
       alt: "Sancrox Civil, mobile",
     },
     stills: stills("sancrox", ["What we do", "Recent jobs"]),
-    sanityShot: sanityShot("sancrox", "The headline, in Sanity"),
     overview: [
       "A Port Macquarie civil practice: roads, stormwater, subdivisions and culverts, with construction-phase support. Conventional infrastructure, not a marina brochure.",
     ],

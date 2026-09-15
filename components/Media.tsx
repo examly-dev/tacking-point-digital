@@ -15,7 +15,8 @@ export type PlayMode =
 
 /**
  * Fills its (positioned) parent with either a still or a silent looping clip.
- * `object-contain` so the capture sits in frame — no cropped header or sides.
+ * Cards pass `object-cover object-top` (poster matches the frame). Landscape
+ * gallery clips still use `object-contain`.
  *
  * Plain `img` (not next/image): GitHub Pages `basePath` is applied via `asset()`.
  *

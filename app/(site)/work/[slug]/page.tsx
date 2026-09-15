@@ -6,7 +6,6 @@ import { Arrow } from "@/components/Arrow";
 import { CoverSwitch } from "@/components/CoverSwitch";
 import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
-import { asset } from "@/lib/asset";
 import { hasPreview } from "@/lib/preview";
 import { getWork, work, type WorkMedia } from "@/lib/work";
 
@@ -29,14 +28,14 @@ function delay(step: number) {
   return { animationDelay: `${step * 60}ms` };
 }
 
-/** Portrait hero when there is no dedicated mobile clip (Accordion). */
+/** Portrait hero when there is no dedicated poster (same 180×236 DSS frame). */
 function PhoneShot({ media, priority = false }: { media: WorkMedia; priority?: boolean }) {
   return (
     <figure className="bg-black/[0.05] p-4 tablet:p-8">
       <Lightbox media={media}>
-        <div className="mx-auto w-full max-w-[260px]">
-          <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
-            <Media media={media} priority={priority} sizes="260px" className="object-contain" />
+        <div className="mx-auto flex aspect-[250/300] w-full max-w-[250px] items-center justify-center">
+          <div className="relative aspect-[180/236] w-[180px] overflow-hidden border border-black/[0.03] bg-white">
+            <Media media={media} priority={priority} sizes="180px" className="object-cover object-top" />
           </div>
         </div>
       </Lightbox>
@@ -56,21 +55,6 @@ function Shot({ media, priority = false }: { media: WorkMedia; priority?: boolea
             sizes="(min-width: 1250px) 720px, (min-width: 850px) calc(100vw - 340px), 100vw"
             className="object-contain"
           />
-        </div>
-      </Lightbox>
-      <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
-    </figure>
-  );
-}
-
-/** Studio still under the live preview. Plain img so GitHub Pages basePath is honest. */
-function SanityShot({ media }: { media: Extract<WorkMedia, { type: "image" }> }) {
-  return (
-    <figure className="mt-3 bg-black/[0.05] p-3 tablet:p-6">
-      <Lightbox media={media}>
-        <div className="overflow-hidden border border-black/[0.03] bg-white">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset(media.src)} alt={media.alt} className="block h-auto w-full" />
         </div>
       </Lightbox>
       <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
@@ -171,7 +155,6 @@ export default async function WorkPage({ params }: Props) {
               <div className="h-[300px] bg-black/[0.05]" />
             )}
           </ViewTransition>
-          {item.sanityShot ? <SanityShot media={item.sanityShot} /> : null}
         </div>
 
         <section style={delay(3)} className={`rise ${body} mb-10 space-y-5`}>

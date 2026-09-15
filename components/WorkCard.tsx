@@ -5,9 +5,9 @@ import { Arrow } from "./Arrow";
 import { Media } from "./Media";
 
 /**
- * Dead Simple Sites–style portrait card: grey mat, even inset, phone-shaped
- * screenshot (390×844) with object-contain so nothing is cropped. Prefers the
- * mobile capture; falls back to the desktop cover (letterboxed, still whole).
+ * Dead Simple Sites gallery card: 250×300 grey mat, 180×236 inner screenshot
+ * (`aspect-[180/236]`). Poster is shot at that ratio and fills with cover/top —
+ * never contained into a mismatched hole.
  */
 export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
   const preview = item.mobile ?? item.cover;
@@ -15,24 +15,25 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
   return (
     <Link
       href={`/work/${item.slug}`}
-      className="group block w-full cursor-pointer rise tablet:w-[220px]"
+      className="group block w-full cursor-pointer rise tablet:w-[250px]"
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-        <div className="mb-2.5 bg-black/[0.05] p-3.5 transition-colors duration-300 ease-out group-hover:bg-black/[0.08] group-active:bg-black/[0.08] tablet:p-4 tablet:w-[220px]">
-          <div className="relative aspect-[390/844] w-full overflow-hidden border border-black/[0.03] bg-white transition-transform duration-500 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.015] group-active:scale-[0.99]">
+        <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] transition-colors duration-300 ease-out group-hover:bg-black/[0.08] group-active:bg-black/[0.08] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
+          <div className="relative aspect-[180/236] w-[72%] overflow-hidden border border-black/[0.03] bg-white transition-transform duration-500 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.015] group-active:scale-[0.99] tablet:h-[236px] tablet:w-[180px]">
             {preview ? (
               <Media
                 media={preview}
-                sizes="(min-width: 850px) 188px, (min-width: 520px) 44vw, 44vw"
+                sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
                 play="hover"
                 priority={index === 0}
+                className="object-cover object-top"
               />
             ) : null}
           </div>
         </div>
       </ViewTransition>
-      <div className="flex w-full items-center justify-between tablet:w-[220px]">
+      <div className="flex w-full items-center justify-between tablet:w-[250px]">
         <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
         <span className="flex items-center gap-1 text-[15px] text-black/30 transition-colors duration-200 group-hover:text-black tablet:text-[14px]">
           Visit

@@ -68,8 +68,8 @@ function ViewSlider({
 }
 
 /**
- * Vertical (phone) preview by default — same 390×844 frame as the work grid.
- * Desktop remains a switch, shown contain-fitted so the full page stays in view.
+ * Portrait poster by default — same 180×236 Dead Simple Sites frame as the work grid.
+ * Desktop remains a switch, shown contain-fitted so the full landscape clip stays in view.
  */
 export function CoverSwitch({
   cover,
@@ -95,9 +95,9 @@ export function CoverSwitch({
         </div>
         <Lightbox media={media}>
           {view === "mobile" ? (
-            <div className="mx-auto w-full max-w-[260px]">
-              <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
-                <Media media={mobile} sizes="260px" className="object-contain" priority />
+            <div className="mx-auto flex aspect-[250/300] w-full max-w-[250px] items-center justify-center">
+              <div className="relative aspect-[180/236] w-[180px] overflow-hidden border border-black/[0.03] bg-white">
+                <Media media={mobile} sizes="180px" className="object-cover object-top" priority />
               </div>
             </div>
           ) : cover ? (
