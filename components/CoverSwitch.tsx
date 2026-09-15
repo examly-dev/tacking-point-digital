@@ -68,8 +68,8 @@ function ViewSlider({
 }
 
 /**
- * Desktop or mobile clip in one 16/10 grey figure, so switching does not
- * change the height of the page. Optional View site sits with the slider.
+ * Vertical (phone) preview by default — same 390×844 frame as the work grid.
+ * Desktop remains a switch, shown contain-fitted so the full page stays in view.
  */
 export function CoverSwitch({
   cover,
@@ -80,7 +80,7 @@ export function CoverSwitch({
   mobile: WorkMedia;
   previewSlug?: string;
 }) {
-  const [view, setView] = useState<"desktop" | "mobile">(cover ? "desktop" : "mobile");
+  const [view, setView] = useState<"desktop" | "mobile">("mobile");
   const [preview, setPreview] = useState(false);
   const openPreview = useCallback(() => setPreview(true), []);
   const closePreview = useCallback(() => setPreview(false), []);
@@ -88,25 +88,28 @@ export function CoverSwitch({
 
   return (
     <>
-      <figure className="bg-black/[0.05] p-3 tablet:p-6">
-        <div className="mb-2.5 flex items-center justify-between gap-4">
+      <figure className="bg-black/[0.05] p-4 tablet:p-8">
+        <div className="mb-3 flex items-center justify-between gap-4 tablet:mb-4">
           {previewSlug ? <ViewSiteButton onClick={openPreview} /> : <span />}
           {cover ? <ViewSlider value={view} onChange={setView} /> : null}
         </div>
         <Lightbox media={media}>
-          <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-black/[0.03] bg-white">
-            {view === "mobile" ? (
-              <div className="relative aspect-[390/844] h-full max-h-full">
-                <Media media={mobile} sizes="250px" className="object-cover object-top" />
+          {view === "mobile" ? (
+            <div className="mx-auto w-full max-w-[260px]">
+              <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
+                <Media media={mobile} sizes="260px" className="object-contain" priority />
               </div>
-            ) : cover ? (
+            </div>
+          ) : cover ? (
+            <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-black/[0.03] bg-white">
               <Media
                 media={cover}
                 priority
                 sizes="(min-width: 1250px) 720px, (min-width: 850px) calc(100vw - 340px), 100vw"
+                className="object-contain"
               />
-            ) : null}
-          </div>
+            </div>
+          ) : null}
         </Lightbox>
         <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
       </figure>

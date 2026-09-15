@@ -183,7 +183,20 @@ export function BookingForm() {
             <option value="" disabled>
               Select
             </option>
-            {['7', '8', '9', '10', '11 Standard', '11 Advanced', '11 Extension 1', '12 Standard', '12 Advanced', '12 Extension 1'].map(
+            {[
+              '7',
+              '8',
+              '9',
+              '10',
+              '11 Standard',
+              '11 Advanced',
+              '11 Extension 1',
+              '11 Engineering Studies',
+              '12 Standard',
+              '12 Advanced',
+              '12 Extension 1',
+              '12 Engineering Studies',
+            ].map(
               (y) => (
                 <option key={y} value={y}>
                   {y.startsWith('1') && y.length > 2 ? y : `Year ${y}`}

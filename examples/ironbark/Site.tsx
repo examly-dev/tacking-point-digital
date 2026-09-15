@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { Bricolage_Grotesque, DM_Mono, DM_Sans } from 'next/font/google';
-import { Reveal } from '@/examples/_shared/primitives';
+import { InPageScroll, Reveal } from '@/examples/_shared/primitives';
 
 /*
   IRONBARK — a tiny house in the bush, booked direct.
@@ -321,6 +321,7 @@ function BookingCard() {
 export default function IronbarkPage() {
   return (
     <>
+      <InPageScroll />
 
       <div
         data-example=""

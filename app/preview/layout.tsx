@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { InPageScroll } from "@/examples/_shared/primitives";
 
 export const metadata: Metadata = {
   title: "Preview",
@@ -11,5 +12,10 @@ export default function PreviewLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="min-h-full bg-white">{children}</div>;
+  return (
+    <div className="min-h-full bg-white">
+      <InPageScroll />
+      {children}
+    </div>
+  );
 }

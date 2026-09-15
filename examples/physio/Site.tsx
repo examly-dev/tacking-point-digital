@@ -1,13 +1,22 @@
 import Image from 'next/image';
-import { Source_Sans_3 } from 'next/font/google';
-import { Reveal, ScrollSpy } from '@/examples/_shared/primitives';
+import { Sora, Source_Sans_3 } from 'next/font/google';
+import { asset } from '@/lib/asset';
+import { InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
 
 /*
   RIDGEWAY PHYSIOTHERAPY
   Clinical, direct, no stock smiles. Fees and the next appointment on the front page.
   Bone white, ink, one dark medical green.
+  Wordmark and nav: Sora — geometric, full-width, not Anybody condensed,
+  not Archivo Black, not Hanken Grotesk, not Outfit.
 */
 
+const display = Sora({
+  subsets: ['latin'],
+  weight: 'variable',
+  variable: '--rw-display',
+  display: 'swap',
+});
 const sans = Source_Sans_3({
   subsets: ['latin'],
   weight: ['400', '600', '700'],
@@ -15,8 +24,9 @@ const sans = Source_Sans_3({
   display: 'swap',
 });
 
-const img = (id: string, w = 1800) =>
-  `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
+const photo = (file: string) => asset(`/examples/physio/${file}`);
+const mark = 'font-[family-name:var(--rw-display)] font-bold tracking-[-0.03em]';
+const menu = 'font-[family-name:var(--rw-display)] font-medium tracking-[-0.01em]';
 
 const GREEN = '#1A4D3E';
 const label = 'text-[12px] font-semibold uppercase tracking-[0.12em] text-[#0B0B0B]/55';
@@ -45,24 +55,43 @@ const fees = [
 ];
 
 const people = [
-  { name: 'Sam Ridgeway', role: 'Principal physiotherapist', note: 'Musculoskeletal and spinal. Workers compensation and CTP claims.', id: '1545167622-3a6ac756afa4' },
-  { name: 'Priya Nair', role: 'Sports physiotherapist', note: 'Sports injuries, knees and shoulders, return to running.', id: '1567532939604-b6b5b0db2604' },
-  { name: 'Tom Alder', role: 'Physiotherapist', note: 'Post-surgical rehab and clinical exercise classes.', id: '1504257432389-52343af06ae3' },
+  {
+    name: 'Sam Ridgeway',
+    role: 'Principal physiotherapist',
+    note: 'Musculoskeletal and spinal. Workers compensation and CTP claims.',
+    photo: 'sam.jpg',
+    pos: 'object-[72%_18%]',
+  },
+  {
+    name: 'Priya Nair',
+    role: 'Sports physiotherapist',
+    note: 'Sports injuries, knees and shoulders, return to running.',
+    photo: 'priya.jpg',
+    pos: 'object-[38%_18%]',
+  },
+  {
+    name: 'Tom Alder',
+    role: 'Physiotherapist',
+    note: 'Post-surgical rehab and clinical exercise classes.',
+    photo: 'tom.jpg',
+    pos: 'object-[50%_45%]',
+  },
 ];
 
 export default function RidgewayPage() {
   return (
     <>
+      <InPageScroll />
       <div
         data-example=""
-        className={`${sans.variable} font-[family-name:var(--rw-sans)] min-h-screen bg-[#FAFAF8] text-[#0B0B0B] antialiased selection:bg-[#1A4D3E] selection:text-white`}
+        className={`${display.variable} ${sans.variable} font-[family-name:var(--rw-sans)] min-h-screen bg-[#FAFAF8] text-[#0B0B0B] antialiased selection:bg-[#1A4D3E] selection:text-white`}
       >
-        {/* Header: mark and two-line lockup, underline tabs, one filled call to action. */}
+        {/* Header: Sora wordmark and nav. Hash links kept for in-page scroll. */}
         <header className={`custom-header fixed inset-x-0 top-0 z-50 border-b ${rule} bg-[#FAFAF8]/90 backdrop-blur-md`}>
-          <div className="flex h-[4.5rem] items-center justify-between gap-6 px-5 md:px-8">
-            <a href="#top" className="flex items-center gap-2.5">
-              <span className="text-[19px] font-semibold tracking-[-0.03em] md:text-[21px]">
-                Ridgeway <span className="font-normal text-[#0B0B0B]/60">Physio</span>
+          <div className="flex min-h-[4.5rem] flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-2 md:flex-nowrap md:px-8">
+            <a href="#top" className="min-w-0 shrink-0">
+              <span className={`${mark} block text-[18px] leading-none sm:text-[20px] md:text-[22px]`}>
+                Ridgeway <span className="font-normal text-[#0B0B0B]/55">Physio</span>
               </span>
             </a>
 
@@ -74,15 +103,15 @@ export default function RidgewayPage() {
                 { href: '#people', label: 'People' },
                 { href: '#visit', label: 'Visit' },
               ]}
-              className="hidden h-full items-stretch gap-1 md:flex"
-              linkClass="relative flex items-center px-3 text-[15px] font-medium tracking-[-0.01em] transition-colors duration-200 after:absolute after:inset-x-3 after:bottom-0 after:h-[2px] after:origin-left after:bg-[#1A4D3E] after:transition-transform after:duration-300 after:content-['']"
+              className="hidden h-11 min-w-0 flex-1 items-stretch justify-center md:flex"
+              linkClass={`${menu} relative flex items-center whitespace-nowrap px-2.5 text-[13px] transition-colors duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-[2px] after:origin-left after:bg-[#1A4D3E] after:transition-transform after:duration-300 after:content-[''] lg:px-3.5 lg:text-[14px]`}
               activeClass="text-[#0B0B0B] after:scale-x-100"
               inactiveClass="text-[#0B0B0B]/55 hover:text-[#0B0B0B] after:scale-x-0"
             />
 
             <a
               href="#book"
-              className="group inline-flex h-11 items-center gap-2 rounded-md px-5 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#0B0B0B]"
+              className={`${menu} group inline-flex h-10 shrink-0 items-center gap-2 rounded-md px-4 text-[13px] text-white transition-colors duration-200 hover:bg-[#0B0B0B] lg:h-11 lg:px-5 lg:text-[14px]`}
               style={{ background: GREEN }}
             >
               Book
@@ -119,7 +148,7 @@ export default function RidgewayPage() {
                 <ul className={`mt-6 divide-y ${rule} border-y ${rule}`}>
                   {slots.map((s) => (
                     <li key={s.day + s.time}>
-                      <a href="#" className="group flex items-baseline justify-between py-3 text-[15px]">
+                      <a href="#book" className="group flex items-baseline justify-between py-3 text-[15px]">
                         <span>
                           {s.day} <span className="tabular-nums">{s.time}</span>
                           <span className="ml-2 text-[#0B0B0B]/45">with {s.who}</span>
@@ -150,8 +179,8 @@ export default function RidgewayPage() {
         {/* Photograph */}
         <Reveal as="figure" className="relative aspect-[3/2] w-full overflow-hidden md:aspect-[21/9]">
           <Image
-            src={img('1571019614242-c5c5dee9f50b', 2200)}
-            alt="Floor work in the rehab space"
+            src={photo('rehab.jpg')}
+            alt="Supervised rehab on the reformers"
             fill
             priority
             sizes="100vw"
@@ -360,11 +389,11 @@ export default function RidgewayPage() {
               <Reveal key={p.name} as="figure" delay={i * 80} className={`col-span-12 md:col-span-4 ${i === 1 ? 'md:mt-24' : ''} ${i === 2 ? 'md:mt-12' : ''}`}>
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#0B0B0B]/5">
                   <Image
-                    src={img(p.id, 1000)}
+                    src={photo(p.photo)}
                     alt={`${p.name}, ${p.role}`}
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover grayscale contrast-[1.1] transition-[filter] duration-700 hover:grayscale-0"
+                    className={`object-cover grayscale contrast-[1.1] transition-[filter] duration-700 hover:grayscale-0 ${p.pos}`}
                   />
                 </div>
                 <figcaption className="mt-4">

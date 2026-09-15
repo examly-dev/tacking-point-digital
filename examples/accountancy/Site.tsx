@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Schibsted_Grotesk } from 'next/font/google';
-import { Count, Reveal } from '@/examples/_shared/primitives';
+import { Count, InPageScroll, Reveal } from '@/examples/_shared/primitives';
 
 /*
   ROWE ACCOUNTING — chartered accountants.
@@ -75,6 +75,7 @@ const faq = [
 export default function MarlowFinchPage() {
   return (
     <>
+      <InPageScroll />
 
       <div
         data-example=""

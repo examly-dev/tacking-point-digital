@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sanity Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --fg: #101112;
+        --muted: #6e7683;
+        --quiet: #8b939e;
+        --border: #e3e4e8;
+        --hover: #f4f5f7;
+        --selected: #eef0f4;
+        --focus: #2276fc;
+        --brand: #f03e2f;
+        --positive: #0d7a4f;
+        --positive-bg: #e7f6ee;
+        --caution: #9a6700;
+        --caution-bg: #fff4d4;
+        --btn: #1b1d25;
+        --pane: 51px;
+        --nav: 49px;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: var(--fg);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+      }
+      button { font: inherit; color: inherit; background: none; border: 0; cursor: default; }
+      svg { display: block; }
+
+      .studio { display: flex; flex-direction: column; height: 100%; }
+
+      /* Navbar — Studio v3.23+ / v4 */
+      .nav {
+        height: var(--nav);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 0 10px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .nav-left, .nav-right { display: flex; align-items: center; gap: 6px; }
+      .nav-right { justify-content: flex-end; }
+      .nav-center { display: flex; justify-content: center; gap: 2px; }
+
+      .icon-btn {
+        width: 33px; height: 33px;
+        display: grid; place-items: center;
+        border-radius: 6px;
+        color: var(--fg);
+      }
+      .home {
+        width: 33px; height: 33px;
+        border-radius: 7px;
+        background: var(--brand);
+        display: grid; place-items: center;
+      }
+      .workspace {
+        display: flex; align-items: center; gap: 6px;
+        height: 33px; padding: 0 8px 0 10px;
+        border-radius: 6px;
+        font-size: 13px; font-weight: 600;
+      }
+      .search {
+        display: flex; align-items: center; gap: 8px;
+        height: 33px; min-width: 168px; padding: 0 10px;
+        border: 1px solid var(--border); border-radius: 6px;
+        color: var(--quiet); font-size: 13px;
+      }
+      .search kbd {
+        margin-left: auto;
+        font: 11px Inter, sans-serif;
+        color: var(--quiet);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1px 5px;
+      }
+      .tool {
+        display: flex; align-items: center; gap: 7px;
+        height: 33px; padding: 0 11px;
+        border-radius: 6px;
+        font-size: 13px; font-weight: 500;
+        color: var(--muted);
+      }
+      .tool.active { background: var(--selected); color: var(--fg); font-weight: 600; }
+      .avatar {
+        width: 25px; height: 25px; border-radius: 50%;
+        display: grid; place-items: center;
+        font-size: 10px; font-weight: 700; color: #fff;
+        background: #3d4f6f;
+      }
+      .avatar.b { background: #c45c26; margin-left: -6px; box-shadow: 0 0 0 2px #fff; }
+
+      /* Desk */
+      .desk { display: flex; flex: 1; min-height: 0; }
+
+      .pane {
+        display: flex; flex-direction: column;
+        border-right: 1px solid var(--border);
+        min-width: 0;
+      }
+      .pane.types { width: 232px; flex-shrink: 0; }
+      .pane.list { width: 292px; flex-shrink: 0; }
+      .pane.editor { flex: 1; border-right: 0; }
+
+      .pane-h {
+        height: var(--pane);
+        display: flex; align-items: center; gap: 8px;
+        padding: 0 10px 0 14px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+        font-size: 13px; font-weight: 600;
+      }
+      .pane-h .grow { flex: 1; }
+      .pane-h .sub { font-weight: 500; color: var(--muted); }
+
+      .rows { overflow: hidden; padding: 6px 0; }
+      .row {
+        display: flex; align-items: center; gap: 10px;
+        margin: 0 6px; padding: 8px 10px;
+        border-radius: 6px;
+      }
+      .row.active { background: var(--selected); }
+      .type-ico {
+        width: 29px; height: 29px; border-radius: 7px;
+        background: var(--hover);
+        display: grid; place-items: center;
+        color: var(--fg);
+        flex-shrink: 0;
+      }
+      .row .name { font-size: 13px; font-weight: 500; line-height: 1.2; }
+      .row .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+      .count { margin-left: auto; font-size: 12px; color: var(--quiet); }
+
+      .doc-row { align-items: flex-start; padding: 10px 10px; }
+      .dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: #3ab77d; margin-top: 6px; flex-shrink: 0;
+      }
+      .dot.draft { background: #e3a008; }
+
+      /* Document editor */
+      .doc-bar {
+        height: var(--pane);
+        display: flex; align-items: center; gap: 10px;
+        padding: 0 14px 0 16px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .doc-bar .title { font-size: 13px; font-weight: 600; flex: 1; min-width: 0;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .tabs { display: flex; gap: 2px; margin-right: 8px; }
+      .tab {
+        height: 29px; padding: 0 10px; border-radius: 6px;
+        font-size: 13px; font-weight: 500; color: var(--muted);
+      }
+      .tab.on { background: var(--selected); color: var(--fg); font-weight: 600; }
+      .badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        height: 25px; padding: 0 9px;
+        border-radius: 999px;
+        font-size: 12px; font-weight: 600;
+      }
+      .badge.pub { background: var(--positive-bg); color: var(--positive); }
+      .badge.draft { background: var(--caution-bg); color: var(--caution); }
+      .ghost {
+        height: 33px; padding: 0 11px; border-radius: 6px;
+        font-size: 13px; font-weight: 500; color: var(--fg);
+      }
+      .publish {
+        height: 33px; padding: 0 13px; border-radius: 6px;
+        background: var(--btn); color: #fff;
+        font-size: 13px; font-weight: 600;
+      }
+
+      .form-wrap {
+        flex: 1; overflow: hidden;
+        display: flex; justify-content: center;
+        background: #fff;
+      }
+      .form {
+        width: 100%; max-width: 42rem;
+        padding: 28px 36px 40px;
+      }
+
+      .field { margin-bottom: 22px; position: relative; }
+      .field.focus { padding: 12px; margin: -12px -12px 10px; border-radius: 8px;
+        box-shadow: 0 0 0 1px var(--focus), 0 0 0 4px rgba(34, 118, 252, 0.18); }
+      .field.changed::before {
+        content: "";
+        position: absolute; left: -18px; top: 2px; bottom: 2px;
+        width: 3px; border-radius: 2px; background: var(--focus);
+      }
+      .flabel { font-size: 13px; font-weight: 600; }
+      .fdesc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+      .input {
+        margin-top: 8px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 16px; line-height: 1.4;
+        background: #fff;
+        min-height: 41px;
+      }
+      .field.focus .input { border-color: transparent; }
+      .input.area { min-height: 92px; }
+      .caret {
+        display: inline-block; width: 1.5px; height: 18px;
+        background: var(--fg); margin-left: 1px; vertical-align: text-bottom;
+        position: relative; top: 2px;
+      }
+
+      .pt { margin-top: 8px; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+      .pt-bar {
+        display: flex; align-items: center; gap: 2px;
+        padding: 5px 6px;
+        border-bottom: 1px solid var(--border);
+        background: #fafafa;
+      }
+      .pt-btn {
+        width: 28px; height: 28px; border-radius: 4px;
+        display: grid; place-items: center;
+        font-size: 13px; font-weight: 700; color: var(--muted);
+      }
+      .pt-btn.on { background: var(--selected); color: var(--fg); }
+      .pt-sep { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+      .pt-body { padding: 12px 14px; font-size: 16px; line-height: 1.5; min-height: 88px; }
+
+      .array { margin-top: 8px; border: 1px solid var(--border); border-radius: 4px; }
+      .aitem {
+        display: flex; align-items: center; gap: 10px;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+      }
+      .aitem:last-of-type { border-bottom: 0; }
+      .handle { color: var(--quiet); letter-spacing: -1px; }
+      .add {
+        display: flex; align-items: center; gap: 6px;
+        padding: 9px 12px; font-size: 13px; font-weight: 500; color: var(--muted);
+        border-top: 1px solid var(--border);
+      }
+
+      .locations {
+        margin-top: 8px;
+        display: flex; align-items: center; gap: 8px;
+        font-size: 13px; color: var(--muted);
+      }
+      .locations a { color: var(--focus); font-weight: 500; text-decoration: none; }
+
+      .hidden { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <div class="studio">
+      <header class="nav">
+        <div class="nav-left">
+          <div class="home" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M4.2 16.8V7.4c0-1.1.6-1.7 1.6-1.7h4.4c2.6 0 4.1 1.3 4.1 3.4 0 1.5-.8 2.6-2.1 3.1 1.6.4 2.6 1.6 2.6 3.3 0 2.3-1.7 3.7-4.5 3.7H5.8c-1 0-1.6-.6-1.6-1.6zm3.2-5.8h2.1c1.1 0 1.7-.5 1.7-1.4s-.6-1.4-1.7-1.4H7.4v2.8zm0 5.4h2.4c1.3 0 2-.6 2-1.6s-.7-1.5-2-1.5H7.4v3.1z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="workspace">
+            <span id="workspace">Bakehouse</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="icon-btn" title="New document">
+            <svg width="17" height="17" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12.5 5v15M5 12.5h15"/></svg>
+          </div>
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>
+            Search
+            <kbd>⌘K</kbd>
+          </div>
+        </div>
+        <div class="nav-center">
+          <div class="tool active">
+            <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="7" height="17" rx="1"/><rect x="14" y="4" width="7" height="10" rx="1"/></svg>
+            Structure
+          </div>
+          <div class="tool">
+            <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3.5" y="5" width="18" height="14" rx="1.5"/><path d="M8 14l3-3 2.5 2.5L17 10"/></svg>
+            Presentation
+          </div>
+          <div class="tool">
+            <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12.5" cy="12.5" r="8"/><path d="M12.5 8.5v4l3 2"/></svg>
+            Vision
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="icon-btn">
+            <svg width="17" height="17" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12.5" cy="12.5" r="8"/><path d="M12.5 11v6M12.5 8.2v.2"/></svg>
+          </div>
+          <div class="avatar">CL</div>
+          <div class="avatar b" id="user-av">BH</div>
+        </div>
+      </header>
+
+      <div class="desk">
+        <aside class="pane types">
+          <div class="pane-h">Content</div>
+          <div class="rows" id="types"></div>
+        </aside>
+        <aside class="pane list">
+          <div class="pane-h">
+            <span id="list-title">Weekly loaf</span>
+            <span class="grow"></span>
+            <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12.5 5v15M5 12.5h15"/></svg>
+          </div>
+          <div class="rows" id="docs"></div>
+        </aside>
+        <section class="pane editor">
+          <div class="doc-bar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--quiet)"><path d="M15 6l-6 6 6 6"/></svg>
+            <div class="title" id="doc-title">This week’s bag</div>
+            <div class="tabs">
+              <div class="tab on">Editor</div>
+              <div class="tab">Inspect</div>
+            </div>
+            <span class="badge draft">Draft</span>
+            <button class="ghost" type="button">Review changes</button>
+            <button class="publish" type="button">Publish</button>
+            <div class="icon-btn">
+              <svg width="16" height="16" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="12.5" r="1.2" fill="currentColor"/><circle cx="12.5" cy="12.5" r="1.2" fill="currentColor"/><circle cx="19" cy="12.5" r="1.2" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="form-wrap">
+            <div class="form" id="form"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      const I = {
+        doc: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 4.5h8l4 4V20.5H7z"/><path d="M14.5 4.5V9h4.5"/></svg>`,
+        users: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10" cy="9" r="3"/><path d="M4.5 19c.4-3 2.6-5 5.5-5s5.1 2 5.5 5"/><circle cx="17" cy="9.5" r="2.2"/><path d="M16.2 14.2c2.2.4 3.8 2.2 4.3 4.8"/></svg>`,
+        clock: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12.5" cy="12.5" r="8"/><path d="M12.5 8v5l3.5 2"/></svg>`,
+        home: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12.5L12.5 5l8.5 7.5"/><path d="M7 11.5V20h11v-8.5"/></svg>`,
+        tag: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4.5 13.5l8-8H20.5v8l-8 8z"/><circle cx="16.5" cy="8.5" r="1.2" fill="currentColor"/></svg>`,
+        cal: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4.5" y="6" width="16" height="14.5" rx="1.5"/><path d="M4.5 10.5h16M9 4.5v3M16 4.5v3"/></svg>`,
+        img: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="6" width="17" height="13" rx="1.5"/><path d="M4 16l5-5 4 4 3-3 5 5"/></svg>`,
+        brief: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="8" width="17" height="12" rx="1.5"/><path d="M9 8V6.5A2.5 2.5 0 0 1 11.5 4h2A2.5 2.5 0 0 1 16 6.5V8"/></svg>`,
+        card: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3.5" y="6.5" width="18" height="12" rx="1.5"/><path d="M3.5 10.5h18"/></svg>`,
+        pin: `<svg width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12.5 21s7-6.2 7-11.2a7 7 0 1 0-14 0C5.5 14.8 12.5 21 12.5 21z"/><circle cx="12.5" cy="9.8" r="2"/></svg>`,
+      };
+
+      const SITES = {
+        "proof-room": {
+          workspace: "Bakehouse",
+          user: "BH",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "doc", label: "Menu", count: 3 },
+            { icon: "tag", label: "Weekly loaf", count: 1, active: true },
+            { icon: "clock", label: "Hours", count: 1 },
+          ],
+          docs: [{ title: "This week’s bag", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "This week’s bag",
+          listTitle: "Weekly loaf",
+          fields: [
+            { kind: "string", label: "Title", desc: "Heading on the weekly loaf block.", value: "The weekly loaf.", focus: true },
+            { kind: "text", label: "Standfirst", value: "A recurring bag of bread. Two loaves, weekly or fortnightly. Pick them up, or we drop them." },
+            { kind: "string", label: "Weekly price", value: "$22" },
+            { kind: "locations", href: "Home → Weekly" },
+          ],
+        },
+        halfway: {
+          workspace: "Halfway House",
+          user: "HH",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "doc", label: "Menu", count: 3 },
+            { icon: "cal", label: "Table bookings", count: 1, active: true },
+            { icon: "card", label: "Gift cards", count: 1 },
+            { icon: "clock", label: "Hours", count: 1 },
+          ],
+          docs: [{ title: "Hold a table", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Hold a table",
+          listTitle: "Table bookings",
+          fields: [
+            { kind: "string", label: "Heading", value: "Book" },
+            { kind: "pt", label: "Booking note", desc: "Shown under the heading on the booking block.", value: "A table inside, at the window, or on the footpath. Two to eight people. We hold it fifteen minutes, then it goes back on the board.", focus: true },
+            { kind: "string", label: "Last sitting", value: "Mon – Sat · last sitting 13:00" },
+            { kind: "locations", href: "Home → Book" },
+          ],
+        },
+        "ridgeway-physio": {
+          workspace: "Ridgeway Physio",
+          user: "RP",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "users", label: "Team", count: 3, active: true },
+            { icon: "tag", label: "Fees", count: 4 },
+            { icon: "clock", label: "Hours", count: 1 },
+          ],
+          docs: [
+            { title: "Sam Ridgeway", meta: "Principal physiotherapist" },
+            { title: "Priya Nair", meta: "Sports physiotherapist", active: true, draft: true },
+            { title: "Tom Alder", meta: "Physiotherapist" },
+          ],
+          docTitle: "Priya Nair",
+          listTitle: "Team",
+          fields: [
+            { kind: "string", label: "Name", value: "Priya Nair" },
+            { kind: "string", label: "Role", value: "Sports physiotherapist" },
+            { kind: "pt", label: "Bio", desc: "Shown on the People block.", value: "Sports injuries, knees and shoulders, return to running.", focus: true },
+            { kind: "locations", href: "Home → People" },
+          ],
+        },
+        "marlow-finch": {
+          workspace: "Rowe Accounting",
+          user: "RA",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "brief", label: "Services", count: 6 },
+            { icon: "tag", label: "Fee plans", count: 3, active: true },
+            { icon: "users", label: "Team", count: 4 },
+          ],
+          docs: [
+            { title: "Sole trader", meta: "$220 / month" },
+            { title: "Company", meta: "$480 / month", active: true, draft: true },
+            { title: "Group", meta: "$950 / month" },
+          ],
+          docTitle: "Company",
+          listTitle: "Fee plans",
+          fields: [
+            { kind: "string", label: "Plan name", value: "Company" },
+            { kind: "string", label: "Monthly fee", desc: "Published on the fees block.", value: "480", focus: true, prefix: "$" },
+            { kind: "array", label: "Includes", items: ["Everything in Sole trader", "Monthly bookkeeping", "Payroll to 10 staff", "Company and director returns", "Quarterly review meeting"] },
+            { kind: "locations", href: "Home → Fees" },
+          ],
+        },
+        harbourline: {
+          workspace: "Harbourline",
+          user: "HL",
+          types: [
+            { icon: "home", label: "Home", count: 1, active: true },
+            { icon: "brief", label: "Services", count: 4 },
+            { icon: "img", label: "Projects", count: 6 },
+          ],
+          docs: [{ title: "Home", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Home",
+          listTitle: "Home",
+          fields: [
+            { kind: "string", label: "Eyebrow", value: "Est. 2011" },
+            { kind: "string", label: "Headline", desc: "Hero on the home page.", value: "Harbour, foreshore and civil work for ports and marinas.", focus: true },
+            { kind: "text", label: "Standfirst", value: "Civil and coastal engineers to ports, marinas and landowners." },
+            { kind: "locations", href: "Home" },
+          ],
+        },
+        ironbark: {
+          workspace: "Ironbark",
+          user: "IB",
+          types: [
+            { icon: "home", label: "Listing", count: 1 },
+            { icon: "cal", label: "Booking", count: 1, active: true },
+            { icon: "doc", label: "House rules", count: 3 },
+          ],
+          docs: [{ title: "How booking works", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "How booking works",
+          listTitle: "Booking",
+          fields: [
+            { kind: "string", label: "Nightly rate", value: "$320" },
+            { kind: "pt", label: "Booking note", desc: "Under “Get the details by text”.", value: "Gate code, directions and the track map arrive the day before. Check-in is self-serve from 2pm.", focus: true },
+            { kind: "string", label: "Check-in", value: "After 2pm" },
+            { kind: "locations", href: "Listing → Booking" },
+          ],
+        },
+        ballast: {
+          workspace: "Parkside Gym",
+          user: "PG",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "cal", label: "Timetable", count: 1 },
+            { icon: "clock", label: "Hours", count: 1, active: true },
+            { icon: "users", label: "Coaches", count: 3 },
+          ],
+          docs: [{ title: "Opening hours", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Opening hours",
+          listTitle: "Hours",
+          fields: [
+            { kind: "string", label: "Weekdays", desc: "Hero stat and footer hours.", value: "Mon – Fri 5am – 9pm", focus: true },
+            { kind: "string", label: "Saturday", value: "6am – 12pm" },
+            { kind: "string", label: "Sunday", value: "Closed" },
+            { kind: "locations", href: "Home" },
+          ],
+        },
+        hartwell: {
+          workspace: "Hartwell",
+          user: "HC",
+          types: [
+            { icon: "home", label: "Home", count: 1 },
+            { icon: "brief", label: "Services", count: 3 },
+            { icon: "img", label: "Projects", count: 3, active: true },
+          ],
+          docs: [
+            { title: "Ridgeline House", meta: "New home · May 2026", active: true, draft: true },
+            { title: "Deck and pavilion", meta: "Extension · Feb 2026" },
+            { title: "Kitchen and living", meta: "Renovation · Nov 2025" },
+          ],
+          docTitle: "Ridgeline House",
+          listTitle: "Projects",
+          fields: [
+            { kind: "string", label: "Title", desc: "Name on the project card.", value: "Ridgeline House", focus: true },
+            { kind: "string", label: "Kind", value: "New home · 4 bed · 320 m²" },
+            { kind: "text", label: "Summary", value: "Split-level on a sloping block. Off-form concrete, spotted gum cladding, a north-facing living wing." },
+            { kind: "locations", href: "Home → Projects" },
+          ],
+        },
+        ellery: {
+          workspace: "Ellery Lawyers",
+          user: "EL",
+          types: [
+            { icon: "home", label: "Home", count: 1, active: true },
+            { icon: "brief", label: "Practice", count: 3 },
+            { icon: "users", label: "People", count: 4 },
+            { icon: "doc", label: "Notes", count: 2 },
+          ],
+          docs: [{ title: "Home", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Home",
+          listTitle: "Home",
+          fields: [
+            { kind: "string", label: "Headline", desc: "Hero on the home page.", value: "The partner you meet runs the file.", focus: true },
+            { kind: "text", label: "Standfirst", value: "Commercial work, disputes and family law. We have been doing this since 1998. The person you speak to first is the person who writes the letters." },
+            { kind: "string", label: "Callout", value: "The person who takes your call keeps the file." },
+            { kind: "locations", href: "Home" },
+          ],
+        },
+        walsh: {
+          workspace: "Walsh Mathematics",
+          user: "CW",
+          types: [
+            { icon: "home", label: "Home", count: 1, active: true },
+            { icon: "doc", label: "Syllabus", count: 4 },
+            { icon: "cal", label: "Booking", count: 1 },
+          ],
+          docs: [{ title: "Home", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Home",
+          listTitle: "Home",
+          fields: [
+            { kind: "string", label: "Headline", desc: "Hero on the home page.", value: "Mathematics tutor in the Port Macquarie area.", focus: true },
+            { kind: "text", label: "Subjects", value: "Standard, Advanced, Extension 1, and Engineering Studies. After school and Saturday mornings." },
+            { kind: "string", label: "Eyebrow", value: "Years 7–12 · In person or online" },
+            { kind: "locations", href: "Home" },
+          ],
+        },
+        sancrox: {
+          workspace: "Sancrox Civil",
+          user: "SC",
+          types: [
+            { icon: "home", label: "Home", count: 1, active: true },
+            { icon: "brief", label: "Services", count: 6 },
+            { icon: "img", label: "Jobs", count: 3 },
+          ],
+          docs: [{ title: "Home", meta: "Edited just now", active: true, draft: true }],
+          docTitle: "Home",
+          listTitle: "Home",
+          fields: [
+            { kind: "string", label: "Eyebrow", value: "Port Macquarie · Mid North Coast · NSW" },
+            { kind: "string", label: "Headline", desc: "Hero on the home page.", value: "Roads, drainage and structures for the Mid North Coast.", focus: true },
+            { kind: "text", label: "Standfirst", value: "We design the civil work that gets a DA through and a job built, and we stay on through construction." },
+            { kind: "locations", href: "Home" },
+          ],
+        },
+      };
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      }
+
+      function fieldHtml(f) {
+        const wrap = `field${f.focus ? " focus changed" : ""}`;
+        if (f.kind === "locations") {
+          return `<div class="locations">Appears on <a href="#">${esc(f.href)}</a></div>`;
+        }
+        let control = "";
+        if (f.kind === "string") {
+          const val = f.focus
+            ? `${esc(f.value)}<span class="caret"></span>`
+            : esc(f.value);
+          control = `<div class="input">${f.prefix ? `<span style="color:var(--muted)">${esc(f.prefix)}</span>` : ""}${val}</div>`;
+        } else if (f.kind === "text") {
+          const val = f.focus ? `${esc(f.value)}<span class="caret"></span>` : esc(f.value);
+          control = `<div class="input area">${val}</div>`;
+        } else if (f.kind === "pt") {
+          const val = f.focus ? `${esc(f.value)}<span class="caret"></span>` : esc(f.value);
+          control = `<div class="pt">
+            <div class="pt-bar">
+              <div class="pt-btn on">B</div>
+              <div class="pt-btn" style="font-style:italic;font-weight:600">I</div>
+              <div class="pt-sep"></div>
+              <div class="pt-btn">H</div>
+              <div class="pt-btn">“</div>
+              <div class="pt-sep"></div>
+              <div class="pt-btn">
+                <svg width="13" height="13" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 8h10M8 12.5h10M8 17h7"/></svg>
+              </div>
+              <div class="pt-btn">
+                <svg width="13" height="13" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 8h10M8 12.5h10M8 17h7"/><path d="M5 8v.01M5 12.5v.01M5 17v.01"/></svg>
+              </div>
+              <div class="pt-sep"></div>
+              <div class="pt-btn">
+                <svg width="13" height="13" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 8h7a4 4 0 0 1 0 8h-2"/><path d="M16 17H9a4 4 0 0 1 0-8h2"/></svg>
+              </div>
+            </div>
+            <div class="pt-body">${val}</div>
+          </div>`;
+        } else if (f.kind === "array") {
+          control = `<div class="array">
+            ${(f.items || []).map((it) => `<div class="aitem"><span class="handle">⋮⋮</span>${esc(it)}</div>`).join("")}
+            <div class="add"><svg width="13" height="13" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12.5 5v15M5 12.5h15"/></svg> Add item</div>
+          </div>`;
+        }
+        return `<div class="${wrap}">
+          <div class="flabel">${esc(f.label)}</div>
+          ${f.desc ? `<div class="fdesc">${esc(f.desc)}</div>` : ""}
+          ${control}
+        </div>`;
+      }
+
+      function render(key) {
+        const site = SITES[key];
+        if (!site) return;
+        document.getElementById("workspace").textContent = site.workspace;
+        document.getElementById("user-av").textContent = site.user;
+        document.getElementById("list-title").textContent = site.listTitle;
+        document.getElementById("doc-title").textContent = site.docTitle;
+
+        document.getElementById("types").innerHTML = site.types.map((t) => `
+          <div class="row${t.active ? " active" : ""}">
+            <div class="type-ico">${I[t.icon] || I.doc}</div>
+            <div class="name">${esc(t.label)}</div>
+            <div class="count">${t.count}</div>
+          </div>
+        `).join("");
+
+        document.getElementById("docs").innerHTML = site.docs.map((d) => `
+          <div class="row doc-row${d.active ? " active" : ""}">
+            <div class="dot${d.draft ? " draft" : ""}"></div>
+            <div>
+              <div class="name">${esc(d.title)}</div>
+              <div class="meta">${esc(d.meta)}</div>
+            </div>
+          </div>
+        `).join("");
+
+        document.getElementById("form").innerHTML = site.fields.map(fieldHtml).join("");
+      }
+
+      const params = new URLSearchParams(location.search);
+      render(params.get("site") || "proof-room");
+    </script>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Big_Shoulders, Instrument_Sans } from 'next/font/google';
-import { Reveal, ScrollSpy } from '@/examples/_shared/primitives';
+import { InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
 
 /*
   PARKSIDE GYM — a coached strength and conditioning gym.
@@ -100,6 +100,7 @@ function Wordmark({ className = '' }: { className?: string }) {
 export default function BallastPage() {
   return (
     <>
+      <InPageScroll />
 
       <div
         data-example=""

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import { Reveal, ScrollSpy, type SpyItem } from '@/examples/_shared/primitives';
+import { InPageScroll, Reveal, ScrollSpy, type SpyItem } from '@/examples/_shared/primitives';
 
 /**
  * Hartwell Constructions. A Webflow-style build for a residential builder:
@@ -53,6 +53,7 @@ const navItems: SpyItem[] = [
 export default function HartwellPage() {
   return (
     <>
+      <InPageScroll />
 
       <div data-example="" className={`${inter.className} min-h-screen antialiased`} style={{ background: PAPER, color: INK }}>
         {/* Floating pill nav */}

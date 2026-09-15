@@ -223,3 +223,176 @@ export function ScrollSpy({
     </div>
   );
 }
+
+const IN_PAGE_STYLE_ID = 'in-page-scroll-style';
+let inPageScrollOwners = 0;
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function samePath(a: string, b: string) {
+  const norm = (p: string) => (p.replace(/\/$/, '') || '/');
+  return norm(a) === norm(b);
+}
+
+function hashFromAnchor(anchor: HTMLAnchorElement): string | null {
+  const raw = anchor.getAttribute('href');
+  if (!raw || raw === '#') return null;
+  let url: URL;
+  try {
+    url = new URL(anchor.href);
+  } catch {
+    return null;
+  }
+  if (url.origin !== window.location.origin) return null;
+  if (!samePath(url.pathname, window.location.pathname)) return null;
+  if (!url.hash || url.hash === '#') return null;
+  return url.hash;
+}
+
+function stickyHeaderBottom(): number {
+  let bottom = 0;
+  const nodes = document.querySelectorAll('header, .custom-header');
+  for (const el of nodes) {
+    const style = getComputedStyle(el);
+    if (style.position !== 'fixed' && style.position !== 'sticky') continue;
+    if (style.visibility === 'hidden' || style.display === 'none') continue;
+    if (Number.parseFloat(style.opacity) === 0) continue;
+    const rect = el.getBoundingClientRect();
+    if (rect.height < 8) continue;
+    if (rect.top < -8 || rect.top > 96) continue;
+    bottom = Math.max(bottom, rect.bottom);
+  }
+  return bottom > 0 ? bottom + 12 : 0;
+}
+
+function shouldAnimateScroll(): boolean {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  const html = document.documentElement;
+  if (html.dataset.capture != null) return false;
+  if (html.style.scrollBehavior === 'auto') return false;
+  return getComputedStyle(html).scrollBehavior !== 'auto';
+}
+
+function scrollToId(hash: string, animate: boolean) {
+  const id = decodeURIComponent(hash.replace(/^#/, ''));
+  if (!id) return;
+
+  const target = id === 'top' ? document.getElementById('top') : document.getElementById(id);
+  const offset = stickyHeaderBottom();
+  document.documentElement.style.setProperty('--in-page-scroll-margin', `${Math.max(offset, 16)}px`);
+
+  const destination = target
+    ? Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset)
+    : id === 'top'
+      ? 0
+      : null;
+  if (destination == null) return;
+
+  const html = document.documentElement;
+  const previousBehavior = html.style.scrollBehavior;
+  // Inline `auto` beats stylesheet `smooth` so per-frame jumps aren't re-eased by CSS.
+  html.style.scrollBehavior = 'auto';
+  const restore = () => {
+    html.style.scrollBehavior = previousBehavior;
+  };
+
+  if (!animate) {
+    window.scrollTo({ top: destination, behavior: 'auto' });
+    restore();
+    return;
+  }
+
+  const start = window.scrollY;
+  const distance = destination - start;
+  if (Math.abs(distance) < 2) {
+    window.scrollTo({ top: destination, behavior: 'auto' });
+    restore();
+    return;
+  }
+
+  const duration = Math.min(900, Math.max(420, Math.abs(distance) * 0.55));
+  const t0 = performance.now();
+  const step = (now: number) => {
+    const p = Math.min(1, (now - t0) / duration);
+    window.scrollTo({ top: start + distance * easeInOutCubic(p), behavior: 'auto' });
+    if (p < 1) requestAnimationFrame(step);
+    else restore();
+  };
+  requestAnimationFrame(step);
+}
+
+/**
+ * Smooth in-page hash navigation with sticky-header offset.
+ * CSS `scroll-behavior` is the fallback; clicks get an ease-in-out scroll
+ * so Next.js client routing and hash links don't jump. Capture scripts that
+ * force `scroll-behavior: auto` (or `data-capture`) keep instant jumps.
+ */
+export function InPageScroll() {
+  useEffect(() => {
+    inPageScrollOwners += 1;
+    if (inPageScrollOwners > 1) {
+      return () => {
+        inPageScrollOwners -= 1;
+      };
+    }
+    if (!document.getElementById(IN_PAGE_STYLE_ID)) {
+      const style = document.createElement('style');
+      style.id = IN_PAGE_STYLE_ID;
+      style.textContent = `
+        @media (prefers-reduced-motion: no-preference) {
+          html { scroll-behavior: smooth; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          html { scroll-behavior: auto !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const syncOffset = () => {
+      document.documentElement.style.setProperty('--in-page-scroll-margin', `${Math.max(stickyHeaderBottom(), 16)}px`);
+    };
+    syncOffset();
+
+    const onClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const anchor = (event.target as Element | null)?.closest?.('a[href]');
+      if (!(anchor instanceof HTMLAnchorElement)) return;
+      const hash = hashFromAnchor(anchor);
+      if (!hash) return;
+      const id = decodeURIComponent(hash.slice(1));
+      if (!document.getElementById(id) && id !== 'top') return;
+
+      event.preventDefault();
+      const animate = shouldAnimateScroll();
+      scrollToId(hash, animate);
+      if (window.location.hash !== hash) {
+        history.pushState(null, '', hash);
+      }
+    };
+
+    const onHash = () => {
+      if (!window.location.hash) return;
+      scrollToId(window.location.hash, shouldAnimateScroll());
+    };
+
+    document.addEventListener('click', onClick, true);
+    window.addEventListener('hashchange', onHash);
+    window.addEventListener('resize', syncOffset);
+    if (window.location.hash) {
+      scrollToId(window.location.hash, false);
+    }
+
+    return () => {
+      inPageScrollOwners -= 1;
+      document.removeEventListener('click', onClick, true);
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('resize', syncOffset);
+    };
+  }, []);
+
+  return null;
+}

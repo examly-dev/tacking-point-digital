@@ -7,8 +7,10 @@ export const previewSlugs = [
   "ironbark",
   "ballast",
   "halfway",
+  "ellery",
   "hartwell",
   "walsh",
+  "sancrox",
 ] as const;
 
 export type PreviewSlug = (typeof previewSlugs)[number];

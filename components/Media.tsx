@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { asset } from "@/lib/asset";
 import type { WorkMedia } from "@/lib/work";
@@ -16,19 +15,22 @@ export type PlayMode =
 
 /**
  * Fills its (positioned) parent with either a still or a silent looping clip.
+ * `object-contain` so the capture sits in frame — no cropped header or sides.
+ *
+ * Plain `img` (not next/image): GitHub Pages `basePath` is applied via `asset()`.
  *
  * Clips never all run at once: grid cards play on hover, project pages play
  * only the clip in view, and `prefers-reduced-motion` shows posters only.
  */
 export function Media({
   media,
-  sizes,
   priority = false,
   play = "inview",
-  className = "object-cover object-left-top",
+  className = "object-contain",
 }: {
   media: WorkMedia;
-  sizes: string;
+  /** Unused; kept so call sites can still pass a sizes hint. */
+  sizes?: string;
   priority?: boolean;
   play?: PlayMode;
   className?: string;
@@ -91,6 +93,8 @@ export function Media({
     };
   }, [play]);
 
+  const fit = `absolute inset-0 h-full w-full ${className}`;
+
   if (media.type === "video") {
     return (
       <video
@@ -102,19 +106,13 @@ export function Media({
         playsInline
         preload={play === "hover" ? "none" : priority ? "auto" : "metadata"}
         aria-label={media.alt}
-        className={`absolute inset-0 h-full w-full ${className}`}
+        className={fit}
       />
     );
   }
 
   return (
-    <Image
-      src={media.src}
-      alt={media.alt}
-      fill
-      priority={priority}
-      sizes={sizes}
-      className={className}
-    />
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={asset(media.src)} alt={media.alt} className={fit} />
   );
 }

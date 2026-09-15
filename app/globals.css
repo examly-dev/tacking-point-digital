@@ -17,6 +17,26 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html:has([data-example]) {
+    scroll-behavior: smooth;
+  }
+}
+
+html:has([data-example]) {
+  scroll-padding-top: var(--in-page-scroll-margin, 5.5rem);
+}
+
+[data-example] :is(section, footer, header, [id])[id] {
+  scroll-margin-top: var(--in-page-scroll-margin, 5.5rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has([data-example]) {
+    scroll-behavior: auto;
+  }
+}
+
 a,
 button {
   touch-action: manipulation;

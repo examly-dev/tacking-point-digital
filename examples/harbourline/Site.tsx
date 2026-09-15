@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
+import { InPageScroll } from '@/examples/_shared/primitives';
 
 /*
-  Original Impact Environmental design, kept as Harbourline.
-  Forest green, Outfit, split hero — not the industrial restyle.
+  Forest green, Outfit, HL mark, split hero — original layout, not the industrial restyle.
+  Copy is a fictional coastal/civil practice named Harbourline.
 */
 
 const sans = Outfit({
@@ -24,53 +25,53 @@ const img = (id: string, w = 1600) =>
 
 const services = [
   {
-    title: 'Strategy & Planning',
-    desc: 'Long-range waste and resource recovery strategy for councils and regional groups, grounded in real service data.',
-    items: ['Regional Waste Strategies', 'Options & Business Cases', 'Collection Contract Tenders', 'Funding Submissions'],
+    title: 'Coastal & marine',
+    desc: 'Wharves, ramps, pontoons and seawalls: condition, design, and the detailing that lasts in salt air.',
+    items: ['Wharf and jetty design', 'Boat ramps and pontoons', 'Seawalls and revetments', 'Marine condition surveys'],
   },
   {
-    title: 'Approvals & Compliance',
-    desc: 'Getting facilities licensed, keeping them licensed, and making the paperwork match what happens on site.',
-    items: ['Environmental Licensing', 'Impact Assessment', 'Environmental Management Plans', 'Monitoring & Reporting'],
+    title: 'Catchment & stormwater',
+    desc: 'Upgrades to the pipes, pits and overland paths that fail first in a big wet.',
+    items: ['Stormwater upgrades', 'Overland flow and flooding', 'Waterway crossings', 'Biofiltration and swales'],
   },
   {
-    title: 'Resource Recovery',
-    desc: 'Kerbside, organics and commercial streams: what is being thrown away, what it is worth, and how to capture more of it.',
-    items: ['Kerbside Audits', 'Organics Processing Options', 'Commercial Waste Reviews', 'Diversion Target Modelling'],
+    title: 'Civil infrastructure',
+    desc: 'The work behind the foreshore: yards, pavements, retaining and access.',
+    items: ['Car parks and hardstand', 'Depot and compound yards', 'Access roads and pavements', 'Retaining and earthworks'],
   },
   {
-    title: 'Infrastructure',
-    desc: 'Concept design and operational review for the assets that do the work.',
-    items: ['Transfer Station Design', 'Landfill Closure Planning', 'Site Operations Review', 'Asset Condition Assessment'],
+    title: 'Approvals & investigations',
+    desc: 'The reports and field work that let a harbour job start on time.',
+    items: ['Planning and environmental reports', 'Coastal hazard assessments', 'Geotech and hydrographic coordination', 'Construction environmental plans'],
   },
 ];
 
 const projects = [
   {
-    title: 'Landfill Closure & Aftercare Plan',
-    loc: 'A shire of 13,000',
-    tag: 'Infrastructure',
-    id: '1581094794329-c8112a89af12',
+    title: 'Seawall reconstruction',
+    loc: 'Private marina, Barlows Inlet',
+    tag: 'Coastal',
+    id: '1475924156734-496f6cac6ec1',
   },
   {
-    title: 'Regional Waste Strategy 2035',
-    loc: 'Five-council group',
-    tag: 'Strategy',
-    id: '1454165804606-c3d57bc86b40',
+    title: 'Boat harbour pontoons',
+    loc: 'Regional port operator',
+    tag: 'Marine',
+    id: '1439066615861-d1af74d74000',
   },
   {
-    title: 'FOGO Rollout Business Case',
-    loc: 'A shire of 31,000',
-    tag: 'Resource Recovery',
+    title: 'Catchment drainage upgrade',
+    loc: 'Inlet Water catchment',
+    tag: 'Stormwater',
     id: '1504307651254-35680f356dfd',
   },
 ];
 
 const how = [
-  { t: 'Regulator-ready', p: 'Licensing, assessment and management plans written to the standard the regulator expects, not the minimum.' },
-  { t: 'Operational first', p: 'Most of our team has run a site or a collection contract. The advice reflects it.' },
-  { t: 'Built on data', p: 'Bin audits, weighbridge records and tonnage modelling before anyone writes a recommendation.' },
-  { t: 'Safe by design', p: 'Facility layouts and procedures that keep the public, the crews and the environment out of harm.' },
+  { t: 'Salt-air detailing', p: 'Connections, coatings and covers specified for a marine climate, not a brochure climate.' },
+  { t: 'Issued for construction', p: 'Drawings a contractor can price and build from, with the hold-points written in.' },
+  { t: 'Costed against a budget', p: 'Options ranked by what an owner can actually fund this financial year.' },
+  { t: 'Signed off in time', p: 'Planning reports and construction environmental plans that match the drawings.' },
 ];
 
 export default function HarbourlinePage() {
@@ -88,6 +89,7 @@ export default function HarbourlinePage() {
       className={`${sans.variable} min-h-screen antialiased`}
       style={{ fontFamily: 'var(--hl-sans), ui-sans-serif, system-ui', color: '#1E293B', background: '#fff' }}
     >
+      <InPageScroll />
       <header
         className="custom-header fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300"
         style={{
@@ -118,7 +120,7 @@ export default function HarbourlinePage() {
             className="hidden h-12 items-center px-8 text-[15px] font-semibold text-white lg:inline-flex"
             style={{ background: PRIMARY }}
           >
-            Get In Touch
+            Write to us
           </a>
         </div>
       </header>
@@ -128,36 +130,36 @@ export default function HarbourlinePage() {
           <div>
             <div className="flex items-center gap-3">
               <span className="h-[2px] w-12" style={{ background: PRIMARY }} />
-              <span className="text-[13px] font-bold uppercase tracking-widest text-black/40">Est. 2004</span>
+              <span className="text-[13px] font-bold uppercase tracking-widest text-black/40">Est. 2011</span>
             </div>
             <h1 className="mt-6 max-w-[16ch] text-[clamp(36px,4.6vw,64px)] font-bold leading-[1.1] tracking-tight" style={{ color: PRIMARY }}>
-              Waste strategy for the places that have to live with it.
+              Harbour, foreshore and civil work for ports and marinas.
             </h1>
             <p className="mt-6 max-w-[32rem] text-[20px] font-medium leading-relaxed" style={{ color: PRIMARY, opacity: 0.85 }}>
-              Resource recovery, infrastructure and approvals consultants to regional councils, utilities and industry.
+              Civil and coastal engineers to ports, marinas and landowners.
             </p>
             <p className="mt-5 max-w-[32rem] leading-relaxed text-black/55">
-              Harbourline works on the unglamorous end of the environment sector: kerbside bins, transfer stations, landfill closures, and the contracts and licences that sit behind them.
+              Harbourline designs boat ramps, seawalls, drainage and the civil jobs that sit next to them. Most of the work sits on a harbour, a marina or a private foreshore.
             </p>
             <a href="#services" className="mt-8 inline-flex h-14 items-center px-8 text-[16px] font-semibold text-white" style={{ background: PRIMARY }}>
-              Our Services
+              What we do
             </a>
-            <div className="mt-10 grid max-w-[28rem] grid-cols-2 gap-8 border-t border-black/10 pt-8">
+            <div className="mt-6 grid max-w-[28rem] grid-cols-2 gap-8 border-t border-black/10 pt-6">
               <div>
-                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>40+</p>
-                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Council Clients</p>
+                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>70+</p>
+                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Coastal projects</p>
               </div>
               <div>
-                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>$310M</p>
-                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Contracts Procured</p>
+                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>15</p>
+                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Years in practice</p>
               </div>
             </div>
           </div>
 
           <div className="relative hidden h-[560px] lg:block">
             <Image
-              src={img('1532996122724-e3c354a0b15b', 2070)}
-              alt="Engineer on a site inspection"
+              src={img('1503387762-592deb58ef4e', 2070)}
+              alt="Engineer marking up a set of drawings"
               fill
               className="object-cover grayscale"
               priority
@@ -165,9 +167,9 @@ export default function HarbourlinePage() {
             />
             <div className="absolute inset-0 mix-blend-multiply" style={{ background: `${PRIMARY}1A` }} />
             <div className="absolute bottom-0 left-0 max-w-sm border-t-4 bg-white p-8" style={{ borderColor: ACCENT }}>
-              <p className="text-[11px] font-bold uppercase tracking-widest text-black/40">Current Project</p>
-              <p className="mt-1 text-[18px] font-bold leading-tight" style={{ color: PRIMARY }}>Regional transfer station</p>
-              <p className="mt-2 text-[14px] text-black/50">Concept design and licensing · a shire of 20,000</p>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-black/40">Current project</p>
+              <p className="mt-1 text-[18px] font-bold leading-tight" style={{ color: PRIMARY }}>Boat ramp and groyne</p>
+              <p className="mt-2 text-[14px] text-black/50">Detailed design and approvals · a private marina</p>
             </div>
           </div>
         </div>
@@ -175,13 +177,13 @@ export default function HarbourlinePage() {
 
       <section className="border-y border-black/5 bg-white py-10">
         <p className="mb-6 text-center text-[11px] font-bold uppercase tracking-widest text-black/40">
-          Working with councils, utilities and operators
+          Working with ports, marinas and utilities
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 px-6 text-[18px] font-bold tracking-tight text-slate-800">
-          <span>RIDGE COAST <span className="font-normal text-slate-400">SHIRE</span></span>
-          <span>EASTERN RIVERS <span className="font-normal text-slate-400">WATER</span></span>
-          <span>COASTAL <span className="font-normal text-slate-400">COUNCILS GROUP</span></span>
-          <span>TERRAFORM <span className="font-normal text-slate-400">RECOVERY</span></span>
+          <span>BARLOWS INLET <span className="font-normal text-slate-400">MARINA</span></span>
+          <span>WESTFERRY <span className="font-normal text-slate-400">PORTS</span></span>
+          <span>CAPE MERRICK <span className="font-normal text-slate-400">WHARF</span></span>
+          <span>INLET <span className="font-normal text-slate-400">WATER</span></span>
         </div>
       </section>
 
@@ -189,7 +191,7 @@ export default function HarbourlinePage() {
         <div className="mx-auto max-w-[1200px] px-6 md:px-12">
           <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>Services</p>
           <h2 className="mt-3 max-w-[20ch] text-[clamp(28px,4vw,48px)] font-bold tracking-tight" style={{ color: PRIMARY }}>
-            From the strategy document to the weighbridge.
+            From the first survey to the issued drawings.
           </h2>
           <div className="mt-16 grid gap-8 md:grid-cols-2">
             {services.map((s) => (
@@ -212,8 +214,8 @@ export default function HarbourlinePage() {
 
       <section id="projects" className="border-t border-black/10 bg-slate-50 py-24">
         <div className="mx-auto max-w-[1200px] px-6 md:px-12">
-          <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>Our Work</p>
-          <h2 className="mt-3 text-[clamp(28px,4vw,40px)] font-bold tracking-tight" style={{ color: PRIMARY }}>Recent Projects</h2>
+          <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>Our work</p>
+          <h2 className="mt-3 text-[clamp(28px,4vw,40px)] font-bold tracking-tight" style={{ color: PRIMARY }}>Recent work</h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             {projects.map((p) => (
               <figure key={p.title}>
@@ -237,9 +239,9 @@ export default function HarbourlinePage() {
         <div className="mx-auto grid max-w-[1200px] gap-16 px-6 md:px-12 lg:grid-cols-2">
           <div>
             <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>How we work</p>
-            <h2 className="mt-3 text-[clamp(28px,4vw,48px)] font-bold tracking-tight">Advice you can take to a council meeting.</h2>
+            <h2 className="mt-3 text-[clamp(28px,4vw,48px)] font-bold tracking-tight">Drawings an owner can act on.</h2>
             <p className="mt-6 text-[17px] leading-relaxed text-white/70">
-              Our reports get read by general managers, elected councillors and the regulator. They are written to survive all three: plain language, clear numbers, and recommendations that account for what the depot can actually do on a Tuesday.
+              The pack is read by the engineer, the owner and whoever has to build it. Short sentences, numbers that add up, and details that still make sense on a wet Thursday.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
@@ -261,17 +263,17 @@ export default function HarbourlinePage() {
               <span className="text-[18px] font-bold">HARBOURLINE Environmental</span>
             </div>
             <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-white/75">
-              Waste and resource recovery consultants to regional councils, utilities and industry since 2004.
+              Civil and coastal engineers to ports, marinas and landowners since 2011.
             </p>
           </div>
           <div>
             <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">Office</p>
             <p className="mt-4 text-[14px] leading-relaxed text-white/90">
-              Suite 4, 18 Gordon Street
+              Unit 3, 22 Pilot Street
               <br />
-              Mid North Coast NSW
+              Barlows Inlet
               <br />
-              02 5550 6620
+              02 5518 4400
               <br />
               office@harbourline.com.au
             </p>

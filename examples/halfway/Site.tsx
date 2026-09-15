@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import { Figtree, Syne } from 'next/font/google';
 import { asset } from '@/lib/asset';
-import { Clock, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
+import { Clock, InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
+import { BookingForm } from '@/examples/halfway/BookingForm';
+import { GiftCards } from '@/examples/halfway/GiftCards';
 
 /*
   HALFWAY — a neighbourhood coffee shop, open early.
   Espresso brown, oat cream, olive and one blush accent. A chunky wide wordmark,
-  a menu you can actually read, this month's beans and the room itself.
+  a menu you can actually read, tables you can hold, Square gift cards, and the shop.
 */
 
 const display = Syne({
@@ -31,6 +33,7 @@ const BLUSH = '#E9A7A0';
 const disp = 'font-[family-name:var(--hw-display)] font-extrabold uppercase leading-[0.9] tracking-[-0.02em]';
 const label = 'text-[11px] font-semibold uppercase tracking-[0.18em]';
 const sentence = 'font-[family-name:var(--hw-display)] font-extrabold leading-[1.0] tracking-[-0.03em]';
+const section = 'scroll-mt-[var(--in-page-scroll-margin,5.5rem)]';
 
 const menu = [
   {
@@ -89,13 +92,11 @@ type Product = {
 };
 
 const products: Product[] = [
-  { name: 'Hario V60 Dripper 02', variant: 'Ceramic, white', price: '49.00', tag: 'Brewers', photo: 'dripper.jpg' },
-  { name: 'Hario V60 Paper Filters 02', variant: '100 pack, tabbed', price: '12.00', tag: 'Filters', photo: 'filters.jpg', added: true },
-  { name: 'AeroPress Original', variant: 'With 350 micro-filters', price: '69.00', tag: 'Brewers', photo: 'espresso.jpg' },
+  { name: 'Hario V60 Dripper 02', variant: 'Ceramic, white', price: '49.00', tag: 'Brewers', photo: 'v60.jpg' },
+  { name: 'Basket filters', variant: '100 pack, for the batch brewer', price: '12.00', tag: 'Filters', photo: 'paper-filters.jpg', added: true },
   { name: 'Chemex Classic', variant: '6 cup, wood collar', price: '95.00', tag: 'Brewers', photo: 'chemex.jpg' },
-  { name: 'Kalita Wave 185 Filters', variant: '100 pack', price: '18.00', tag: 'Filters', photo: 'cups.jpg' },
-  { name: 'Fellow Stagg EKG', variant: 'Electric pour-over kettle, matte black', price: '259.00', tag: 'Kettles & grinders', photo: 'kettle.jpg' },
-  { name: 'Timemore Chestnut C3', variant: 'Hand grinder, black', price: '119.00', tag: 'Kettles & grinders', photo: 'portafilter.jpg' },
+  { name: 'Hario Buono', variant: 'Stovetop gooseneck, 1.2 L', price: '89.00', tag: 'Kettles & grinders', photo: 'kettle.jpg' },
+  { name: 'Zassenhaus mill', variant: 'Beech, adjustable', price: '129.00', tag: 'Kettles & grinders', photo: 'grinder.jpg' },
   { name: 'Ethiopia Yirgacheffe', variant: '250g whole bean, this month', price: '18.00', tag: 'Beans', photo: 'bag-eth.jpg', added: true },
   { name: 'House blend', variant: '1kg whole bean', price: '52.00', tag: 'Beans', photo: 'bag-house.jpg' },
   { name: 'Colombia Huila', variant: '250g whole bean', price: '17.00', tag: 'Beans', photo: 'bag-col.jpg' },
@@ -115,51 +116,49 @@ function BagIcon({ className = '' }: { className?: string }) {
 export default function HalfwayPage() {
   return (
     <>
+      <InPageScroll />
       <div
         data-example=""
-        className={`${display.variable} ${sans.variable} font-[family-name:var(--hw-sans)] min-h-screen antialiased selection:bg-[#5E6B3B] selection:text-[#EFE4D2]`}
+        className={`${display.variable} ${sans.variable} font-[family-name:var(--hw-sans)] min-h-screen overflow-x-clip antialiased selection:bg-[#5E6B3B] selection:text-[#EFE4D2]`}
         style={{ background: OAT, color: BROWN }}
       >
-        {/* Header */}
         <header className="custom-header sticky top-0 z-50 border-b border-[#2B1A12]/15 backdrop-blur-md" style={{ background: 'rgba(239,228,210,0.9)' }}>
-          <div className="flex h-16 items-center justify-between px-5 md:px-8">
-            <a href="#top" className={`${disp} text-[26px] tracking-[-0.04em] md:text-[28px]`}>
-              Halfway House
+          <div className="flex h-16 min-w-0 items-center justify-between gap-3 px-5 md:px-8">
+            <a href="#top" className={`${disp} shrink-0 text-[22px] tracking-[-0.04em] sm:text-[26px] md:text-[28px]`}>
+              Halfway<span className="hidden sm:inline"> House</span>
             </a>
             <ScrollSpy
               items={[
                 { href: '#menu', label: 'Menu' },
-                { href: '#beans', label: 'Beans' },
+                { href: '#book', label: 'Book' },
                 { href: '#shop', label: 'Shop' },
-                { href: '#room', label: 'The room' },
-                { href: '#hours', label: 'Hours' },
+                { href: '#gifts', label: 'Gifts' },
               ]}
-              className={`${label} hidden gap-8 md:flex`}
+              className={`${label} hidden min-w-0 gap-6 lg:flex lg:gap-8`}
               linkClass="transition-colors duration-200"
               activeClass="text-[#5E6B3B] underline decoration-2 underline-offset-[6px]"
               inactiveClass="text-[#2B1A12]/60 hover:text-[#2B1A12]"
             />
-            <div className="flex items-center gap-2">
-              <a href="#shop" className="inline-flex h-10 items-center gap-2 rounded-full border border-[#2B1A12]/20 px-3.5 text-[13px] font-semibold transition-colors hover:border-[#2B1A12]">
+            <div className="flex shrink-0 items-center gap-2">
+              <a href="#shop" className="inline-flex h-10 items-center gap-2 rounded-full border border-[#2B1A12]/20 px-3 text-[13px] font-semibold transition-colors hover:border-[#2B1A12] sm:px-3.5">
                 <BagIcon className="h-4 w-4" />
-                Cart
+                <span className="hidden sm:inline">Cart</span>
                 <span className="grid h-5 min-w-5 place-items-center rounded-full px-1 text-[11px] text-[#EFE4D2]" style={{ background: BROWN }}>
                   2
                 </span>
               </a>
               <a
-                href="#"
+                href="#book"
                 className="hidden h-10 items-center rounded-full px-4 text-[13px] font-semibold text-[#EFE4D2] transition-colors hover:bg-[#2B1A12] sm:inline-flex"
                 style={{ background: OLIVE }}
               >
-                Order ahead
+                Book a table
               </a>
             </div>
           </div>
         </header>
 
-        {/* Hero */}
-        <section id="top" className="grid min-h-[calc(100svh-4rem)] grid-cols-12 gap-x-4">
+        <section id="top" className={`${section} grid min-h-[calc(100svh-4rem)] grid-cols-12 gap-x-4`}>
           <div className="col-span-12 flex flex-col justify-between px-5 pb-8 pt-10 md:col-span-6 md:px-8 md:pb-10 md:pt-16">
             <Reveal>
               <p className={`${label} flex flex-wrap items-center gap-x-3 gap-y-1 text-[#2B1A12]/60`}>
@@ -190,11 +189,11 @@ export default function HalfwayPage() {
                 </p>
               </Reveal>
               <Reveal delay={220} className="mt-8 flex flex-wrap gap-3">
-                <a href="#menu" className="inline-flex h-12 items-center rounded-full px-6 text-[15px] font-semibold text-[#EFE4D2] transition-colors hover:bg-[#5E6B3B]" style={{ background: BROWN }}>
-                  See the menu
+                <a href="#book" className="inline-flex h-12 items-center rounded-full px-6 text-[15px] font-semibold text-[#EFE4D2] transition-colors hover:bg-[#5E6B3B]" style={{ background: BROWN }}>
+                  Book a table
                 </a>
-                <a href="#beans" className="inline-flex h-12 items-center rounded-full border border-[#2B1A12]/25 px-6 text-[15px] font-semibold transition-colors hover:border-[#2B1A12]">
-                  This month’s beans
+                <a href="#menu" className="inline-flex h-12 items-center rounded-full border border-[#2B1A12]/25 px-6 text-[15px] font-semibold transition-colors hover:border-[#2B1A12]">
+                  See the menu
                 </a>
               </Reveal>
             </div>
@@ -206,7 +205,7 @@ export default function HalfwayPage() {
           <Reveal delay={120} className="relative col-span-12 min-h-[60vw] md:col-span-6 md:min-h-0">
             <Image
               src={photo('flatwhite.jpg')}
-              alt="A flat white on the counter in morning light"
+              alt="A glass of coffee on a sunlit ledge"
               fill
               priority
               sizes="(min-width: 768px) 50vw, 100vw"
@@ -218,8 +217,7 @@ export default function HalfwayPage() {
           </Reveal>
         </section>
 
-        {/* Menu */}
-        <section id="menu" className="px-5 py-20 md:px-8 md:py-28">
+        <section id="menu" className={`${section} px-5 py-20 md:px-8 md:py-28`}>
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>Menu</h2>
             <p className="max-w-[24rem] text-[15px] leading-[1.5] text-[#2B1A12]/65">
@@ -244,8 +242,23 @@ export default function HalfwayPage() {
           </div>
         </section>
 
-        {/* Beans */}
-        <section id="beans" className="text-[#EFE4D2]" style={{ background: OLIVE }}>
+        <section id="book" className={`${section} px-5 py-20 md:px-8 md:py-28`} style={{ background: '#E7D9C4' }}>
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>Book</h2>
+              <p className="mt-4 max-w-[28rem] text-[15px] leading-[1.5] text-[#2B1A12]/65">
+                A table inside, at the window, or on the footpath. Two to eight people. We hold it fifteen minutes, then it
+                goes back on the board.
+              </p>
+            </div>
+            <p className={`${label} text-[#2B1A12]/50`}>Mon – Sat · last sitting 13:00</p>
+          </Reveal>
+          <Reveal delay={80} className="mt-10">
+            <BookingForm />
+          </Reveal>
+        </section>
+
+        <section id="beans" className={`${section} text-[#EFE4D2]`} style={{ background: OLIVE }}>
           <div className="grid grid-cols-12 gap-x-4 gap-y-12 px-5 py-20 md:px-8 md:py-28">
             <Reveal className="col-span-12 md:col-span-5">
               <p className={`${label} text-[#EFE4D2]/60`}>On the grinders this month</p>
@@ -255,7 +268,7 @@ export default function HalfwayPage() {
                 house blend the same, because people notice.
               </p>
               <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-3xl">
-                <Image src={photo('portafilter.jpg')} alt="Dosing a portafilter" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
+                <Image src={photo('dripper.jpg')} alt="Beans coming off the roaster" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
               </div>
             </Reveal>
             <div className="col-span-12 md:col-span-6 md:col-start-7">
@@ -279,7 +292,7 @@ export default function HalfwayPage() {
                 </Reveal>
               ))}
               <Reveal delay={260}>
-                <a href="#" className="mt-4 inline-flex h-12 items-center rounded-full px-6 text-[15px] font-semibold text-[#2B1A12] transition-colors hover:bg-[#EFE4D2]" style={{ background: BLUSH }}>
+                <a href="#shop" className="mt-4 inline-flex h-12 items-center rounded-full px-6 text-[15px] font-semibold text-[#2B1A12] transition-colors hover:bg-[#EFE4D2]" style={{ background: BLUSH }}>
                   Bags at the counter, or subscribe
                 </a>
               </Reveal>
@@ -287,9 +300,7 @@ export default function HalfwayPage() {
           </div>
         </section>
 
-
-        {/* Shop: Shopify storefront in the same clothes. Brewing gear and bags of beans. */}
-        <section id="shop" className="px-5 py-20 md:px-8 md:py-28">
+        <section id="shop" className={`${section} px-5 py-20 md:px-8 md:py-28`}>
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>Shop</h2>
@@ -319,11 +330,11 @@ export default function HalfwayPage() {
             ))}
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-5">
+          <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 lg:grid-cols-5 md:gap-x-5">
             {products.map((pr, i) => (
               <Reveal key={pr.name} delay={(i % 4) * 50} y={14} className="group">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#2B1A12]/5">
-                  <Image src={photo(pr.photo)} alt={pr.name} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <Image src={photo(pr.photo)} alt={pr.name} fill sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                   <span className={`${label} absolute left-3 top-3 rounded-full bg-[#EFE4D2]/90 px-2.5 py-1 text-[10px] text-[#2B1A12]`}>{pr.tag}</span>
                 </div>
                 <div className="mt-3 flex items-start justify-between gap-3">
@@ -347,20 +358,20 @@ export default function HalfwayPage() {
 
           <Reveal delay={80} className="mt-12 text-[#EFE4D2]">
             <div className="flex w-full flex-col gap-4 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between md:p-6" style={{ background: BROWN }}>
-              <div className="flex items-center gap-4">
-                <span className="grid h-11 w-11 place-items-center rounded-full" style={{ background: OLIVE }}>
+              <div className="flex min-w-0 items-center gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full" style={{ background: OLIVE }}>
                   <BagIcon className="h-5 w-5" />
                 </span>
                 <p className="text-[15px]">
                   <span className="font-semibold">2 items · $30.00</span>
-                  <span className="text-[#EFE4D2]/60"> · V60 filters, Ethiopia 250g · pickup is free</span>
+                  <span className="text-[#EFE4D2]/60"> · Basket filters, Ethiopia 250g · pickup is free</span>
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <a href="#" className="inline-flex h-11 items-center rounded-full border border-[#EFE4D2]/30 px-5 text-[14px] font-semibold transition-colors hover:border-[#EFE4D2]">
+                <a href="#shop" className="inline-flex h-11 items-center rounded-full border border-[#EFE4D2]/30 px-5 text-[14px] font-semibold transition-colors hover:border-[#EFE4D2]">
                   View cart
                 </a>
-                <a href="#" className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110" style={{ background: '#5A31F4' }}>
+                <a href="#shop" className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110" style={{ background: '#5A31F4' }}>
                   Buy with <span className="font-extrabold tracking-[-0.02em]">shop</span><span className="-ml-1 font-extrabold tracking-[-0.02em]">Pay</span>
                 </a>
               </div>
@@ -368,8 +379,23 @@ export default function HalfwayPage() {
           </Reveal>
         </section>
 
-        {/* The room */}
-        <section id="room" className="px-5 py-20 md:px-8 md:py-28">
+        <section id="gifts" className={`${section} px-5 py-20 md:px-8 md:py-28`} style={{ background: '#E7D9C4' }}>
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>Gifts</h2>
+              <p className="mt-4 max-w-[28rem] text-[15px] leading-[1.5] text-[#2B1A12]/65">
+                Coffee for someone who is not here. Square gift cards, same as the till: an e-gift, or a card we print when you
+                come in.
+              </p>
+            </div>
+            <p className={`${label} text-[#2B1A12]/50`}>Powered by Square</p>
+          </Reveal>
+          <Reveal delay={80} className="mt-10">
+            <GiftCards />
+          </Reveal>
+        </section>
+
+        <section id="room" className={`${section} px-5 py-20 md:px-8 md:py-28`}>
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>The room</h2>
             <p className="max-w-[24rem] text-[15px] leading-[1.5] text-[#2B1A12]/65">
@@ -382,70 +408,80 @@ export default function HalfwayPage() {
             </Reveal>
             <Reveal delay={80} className="col-span-3 flex md:col-span-2">
               <div className="flex w-full flex-col justify-between rounded-3xl p-6 text-[#EFE4D2]" style={{ background: BROWN }}>
-                <p className={`${sentence} text-[clamp(22px,2.2vw,30px)]`}>Book the room after two.</p>
+                <p className={`${sentence} text-[clamp(22px,2.2vw,30px)]`}>The room after two.</p>
                 <p className="mt-6 text-[14px] leading-[1.5] text-[#EFE4D2]/70">
-                  Book club, birthday, a launch. Thirty people standing, coffee and cake sorted. From $350.
+                  Book club, birthday, a launch. Thirty people standing, coffee and cake sorted. From $350. Ask at the counter, or
+                  <a href="#book" className="underline decoration-[#EFE4D2]/40 underline-offset-4 hover:decoration-[#EFE4D2]"> hold a table</a> for a smaller sitting.
                 </p>
               </div>
             </Reveal>
             <Reveal delay={120} className="relative col-span-3 aspect-square overflow-hidden rounded-3xl md:col-span-2">
-              <Image src={photo('pour-over.jpg')} alt="The morning’s baking in the cabinet" fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+              <Image src={photo('pastry.jpg')} alt="Banana bread and a coffee at a table" fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
             </Reveal>
             <Reveal delay={160} className="relative col-span-3 aspect-square overflow-hidden rounded-3xl md:col-span-2">
-              <Image src={photo('cups.jpg')} alt="Two flat whites going out" fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+              <Image src={photo('cups.jpg')} alt="Three coffees held over a table" fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
             </Reveal>
             <Reveal delay={200} className="relative col-span-6 aspect-[16/10] overflow-hidden rounded-3xl md:col-span-2 md:aspect-square">
-              <Image src={photo('milk.jpg')} alt="Pouring milk" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              <Image src={photo('milk.jpg')} alt="Eight cups of coffee on a round stool" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </Reveal>
           </div>
         </section>
 
-        {/* Footer / hours */}
-        <footer id="hours" className="custom-footer text-[#EFE4D2]" style={{ background: BROWN }}>
-          <div className="grid grid-cols-12 gap-x-4 gap-y-12 px-5 py-20 md:px-8 md:py-28">
-            <Reveal className="col-span-12 md:col-span-6">
-              <p className={`${disp} text-[clamp(36px,8vw,120px)] leading-[0.9]`}>Halfway House</p>
-              <p className="mt-6 max-w-[24rem] text-[16px] leading-[1.5] text-[#EFE4D2]/70">
-                Halfway House between the station and the beach. Look for the olive awning and the queue that moves quickly.
+        <footer id="hours" className={`custom-footer ${section} text-[#EFE4D2]`} style={{ background: BROWN }}>
+          <div className="grid grid-cols-1 gap-12 px-5 py-16 md:grid-cols-12 md:gap-x-8 md:px-8 md:py-20">
+            <Reveal className="min-w-0 md:col-span-5">
+              <p className={`${disp} max-w-[12ch] text-[clamp(32px,5.4vw,72px)]`}>
+                Halfway
+                <br />
+                House
+              </p>
+              <p className="mt-5 max-w-[24rem] text-[16px] leading-[1.5] text-[#EFE4D2]/70">
+                Between the station and the beach. Look for the olive awning and the queue that moves quickly.
+              </p>
+              <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[14px]">
+                <a href="#menu" className="hover:opacity-70">Menu</a>
+                <a href="#book" className="hover:opacity-70">Book</a>
+                <a href="#shop" className="hover:opacity-70">Shop</a>
+                <a href="#gifts" className="hover:opacity-70">Gifts</a>
               </p>
             </Reveal>
-            <div className="col-span-12 grid grid-cols-2 gap-x-4 gap-y-10 md:col-span-5 md:col-start-8">
-              <Reveal delay={60}>
+            <div className="grid min-w-0 grid-cols-1 gap-10 sm:grid-cols-2 md:col-span-6 md:col-start-7">
+              <Reveal delay={60} className="min-w-0">
                 <p className={`${label} text-[#EFE4D2]/50`}>Hours</p>
-                <dl className="mt-3 space-y-1.5 text-[15px]">
-                  <div className="flex justify-between gap-4">
+                <dl className="mt-3 max-w-[16rem] space-y-1.5 text-[15px]">
+                  <div className="flex justify-between gap-6">
                     <dt>Mon – Fri</dt>
                     <dd className="tabular-nums">6:00 – 14:00</dd>
                   </div>
-                  <div className="flex justify-between gap-4">
+                  <div className="flex justify-between gap-6">
                     <dt>Saturday</dt>
                     <dd className="tabular-nums">6:30 – 14:00</dd>
                   </div>
-                  <div className="flex justify-between gap-4 text-[#EFE4D2]/50">
+                  <div className="flex justify-between gap-6 text-[#EFE4D2]/50">
                     <dt>Sunday</dt>
                     <dd>Closed</dd>
                   </div>
                 </dl>
               </Reveal>
-              <Reveal delay={120}>
+              <Reveal delay={120} className="min-w-0">
                 <p className={`${label} text-[#EFE4D2]/50`}>Say hello</p>
                 <p className="mt-3 space-y-1.5 text-[15px] leading-[1.6]">
                   <a href="tel:+61255508830" className="block hover:opacity-70">02 5550 8830</a>
-                  <a href="mailto:hello@halfway.coffee" className="block hover:opacity-70">hello@halfway.coffee</a>
-                  <a href="#" className="block hover:opacity-70">Instagram</a>
+                  <a href="mailto:hello@halfway.coffee" className="block break-all hover:opacity-70">hello@halfway.coffee</a>
+                  <a href="https://www.instagram.com/halfwayhouse/" className="block hover:opacity-70">Instagram</a>
                 </p>
               </Reveal>
-              <Reveal delay={180} className="col-span-2">
+              <Reveal delay={180} className="min-w-0 sm:col-span-2">
                 <p className={`${label} text-[#EFE4D2]/50`}>Wholesale</p>
-                <p className="mt-3 max-w-[22rem] text-[15px] leading-[1.5] text-[#EFE4D2]/80">
+                <p className="mt-3 max-w-[36rem] text-[15px] leading-[1.5] text-[#EFE4D2]/80">
                   We supply a handful of offices and one very good bookshop. Beans, training, machine service. Ask at the counter.
                 </p>
               </Reveal>
             </div>
           </div>
-          <div className={`${label} flex flex-col gap-2 border-t border-[#EFE4D2]/15 px-5 py-5 text-[#EFE4D2]/40 md:flex-row md:items-center md:justify-between md:px-8`}>
-            <span>© Halfway House 2026</span>
-            <span>ABN 51 824 753 556 · Shop powered by Shopify · Sixth coffee free</span>
+          <div className="flex flex-col gap-2 border-t border-[#EFE4D2]/15 px-5 py-5 text-[11px] leading-relaxed tracking-[0.08em] text-[#EFE4D2]/40 uppercase sm:flex-row sm:flex-wrap sm:items-center sm:justify-between md:px-8">
+            <span className="shrink-0">© Halfway House 2026</span>
+            <span className="max-w-full sm:text-right">ABN 51 824 753 556 · Shopify shop · Square gift cards · Sixth coffee free</span>
           </div>
         </footer>
       </div>
