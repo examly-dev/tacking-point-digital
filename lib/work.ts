@@ -100,7 +100,7 @@ export const work: WorkItem[] = [
       type: "video",
       src: "/work/examly-preview.mp4",
       poster: "/work/examly-preview.jpg",
-      alt: "Examly marketing site, scrolling from the homepage",
+      alt: "Examly marketing site, switching through Create, Assign, Assess, Mark and Analyse",
     },
     gallery: [
       {
@@ -113,7 +113,7 @@ export const work: WorkItem[] = [
         type: "video",
         src: "/work/examly-assess.mp4",
         poster: "/work/examly-assess.png",
-        alt: "Assessing a sitting of the exam",
+        alt: "Marking a 12SEN trial paper, moving between students",
       },
     ],
     stills: stills("examly", [
@@ -122,7 +122,7 @@ export const work: WorkItem[] = [
     ]),
     overview: [
       "In 2025 the NSW HSC changed in a real way: some Year 12 exams are now sat online. Examly is the software I am building so teachers can create, host, mark and analyse mock versions of those exams, in a window that behaves like the real thing.",
-      "It is a SaaS product, launching late 2026, and will include marking and analysis. The clips show the marketing site, putting an exam together, then the assess view.",
+      "It is a SaaS product, launching late 2026, and will include marking and analysis. The clips show the marketing site, putting an exam together, then marking a class.",
     ],
     stack: ["Next.js", "TypeScript", "PostgreSQL", "Redis"],
   },
