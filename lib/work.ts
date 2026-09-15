@@ -129,7 +129,7 @@ export const work: WorkItem[] = [
       src: "/work/proof-room.mp4",
       hd: "/work/proof-room-2x.mp4",
       poster: "/work/proof-room.jpg",
-      alt: "The Bakehouse home page, scrolling from the wordmark through the bread list",
+      alt: "The Bakehouse home page, scrolling from the wordmark through today's bake",
     },
     mobile: {
       type: "video",
