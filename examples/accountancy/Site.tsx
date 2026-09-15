@@ -31,12 +31,12 @@ const clients = [
 ];
 
 const services = [
-  { n: '01', h: 'Bookkeeping', p: 'Xero, reconciled weekly. You see the same numbers we do.' },
-  { n: '02', h: 'BAS and tax', p: 'Lodged on time, every time. We chase you before the ATO does.' },
-  { n: '03', h: 'Payroll and super', p: 'Awards, STP, super guarantee. Staff paid right, on the day.' },
-  { n: '04', h: 'Structure', p: 'Sole trader, company, trust. Set up for where you are going, not where you were.' },
-  { n: '05', h: 'Management reporting', p: 'A one-page monthly report you will actually read, and a call to go through it.' },
-  { n: '06', h: 'Selling or handing on', p: 'Valuation, due diligence, and the tax on the way out. Start two years early.' },
+  { h: 'Bookkeeping', p: 'Xero, reconciled weekly. You see the same numbers we do.' },
+  { h: 'BAS and tax', p: 'Lodged on time, every time. We chase you before the ATO does.' },
+  { h: 'Payroll and super', p: 'Awards, STP, super guarantee. Staff paid right, on the day.' },
+  { h: 'Structure', p: 'Sole trader, company, trust. Set up for where you are going, not where you were.' },
+  { h: 'Management reporting', p: 'A one-page monthly report you will actually read, and a call to go through it.' },
+  { h: 'Selling or handing on', p: 'Valuation, due diligence, and the tax on the way out. Start two years early.' },
 ];
 
 const plans = [

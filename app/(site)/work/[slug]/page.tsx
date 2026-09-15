@@ -124,9 +124,13 @@ export default async function WorkPage({ params }: Props) {
         </p>
 
         <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-          {preview && item.mobile ? (
+          {item.mobile ? (
             <div className="mb-10">
-              <CoverSwitch cover={item.cover} mobile={item.mobile} previewSlug={item.slug} />
+              <CoverSwitch
+                cover={item.cover}
+                mobile={item.mobile}
+                previewSlug={preview ? item.slug : undefined}
+              />
             </div>
           ) : item.cover ? (
             <div className="mb-10">

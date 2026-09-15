@@ -31,10 +31,10 @@ const services = [
 ];
 
 const steps = [
-  { n: '01', t: 'Site visit', d: 'We walk the block or the house with you, talk budget honestly, and tell you what is realistic.' },
-  { n: '02', t: 'Plans and approvals', d: 'Your architect or ours. We handle the DA or CDC, engineering and BASIX so you do not have to.' },
-  { n: '03', t: 'Fixed-price contract', d: 'An HIA contract with a real number and a start date. Variations only when you ask for them, priced in writing first.' },
-  { n: '04', t: 'Build and handover', d: 'One site supervisor, a weekly photo update, and a walk-through with a defects list we actually fix.' },
+  { t: 'Site visit', d: 'We walk the block or the house with you, talk budget honestly, and tell you what is realistic.' },
+  { t: 'Plans and approvals', d: 'Your architect or ours. We handle the DA or CDC, engineering and BASIX so you do not have to.' },
+  { t: 'Fixed-price contract', d: 'An HIA contract with a real number and a start date. Variations only when you ask for them, priced in writing first.' },
+  { t: 'Build and handover', d: 'One site supervisor, a weekly photo update, and a walk-through with a defects list we actually fix.' },
 ];
 
 const projects = [

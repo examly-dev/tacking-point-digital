@@ -118,7 +118,7 @@ export const work: WorkItem[] = [
     ],
     stills: stills("examly", [
       "Create: a coding question in the exam builder",
-      "Assess: watching a sitting as it happens",
+      "Mark: working through a student’s paper",
     ]),
     overview: [
       "In 2025 the NSW HSC changed in a real way: some Year 12 exams are now sat online. Examly is the software I am building so teachers can create, host, mark and analyse mock versions of those exams, in a window that behaves like the real thing.",

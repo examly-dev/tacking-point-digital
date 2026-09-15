@@ -33,21 +33,18 @@ const rule = 'border-[#EDE9E1]/15';
 
 const programmes = [
   {
-    n: '01',
     h: 'Strength',
     p: 'Barbell fundamentals, coached in groups of eight. Squat, press, pull, hinge. Programmed in twelve-week blocks so you can see the numbers move.',
     img: '1541534741688-6078c6bfb5c5',
     alt: 'Back squat under coaching',
   },
   {
-    n: '02',
     h: 'Conditioning',
     p: 'Forty-five minutes of hard, sensible work. Rowers, sleds, kettlebells, running. Scaled to whoever walks in, no leaderboard.',
     img: '1517836357463-d25dfeac3438',
     alt: 'Barbell on the platform',
   },
   {
-    n: '03',
     h: 'Lifting club',
     p: 'Olympic weightlifting on Tuesday and Thursday nights and Saturday mornings. Technique first. Competition optional, encouraged.',
     img: '1526506118085-60ce8714f8c5',
