@@ -5,7 +5,7 @@ import { InPageScroll, Reveal } from '@/examples/_shared/primitives';
 
 /*
   IRONBARK — a tiny house in the bush, booked direct.
-  One flat system: paper, ink and a single ember accent. No radius, no shadows,
+  One flat system: paper, ink and a single moss accent. No radius, no shadows,
   hairline rules, numbered sections, mono labels and tabular figures. Photos are
   monochrome and colour up on hover; the accent is the only colour on the page.
   Full-bleed hero, a strict photo grid, a sticky booking card, live availability.
@@ -35,7 +35,7 @@ const img = (id: string, w = 1600) =>
 
 const PAPER = '#F3F0E8';
 const INK = '#121410';
-const ACCENT = '#E1481A';
+const ACCENT = '#6F8F4E';
 const h = 'font-[family-name:var(--ib-display)] font-semibold tracking-[-0.04em]';
 const label = 'font-[family-name:var(--ib-mono)] text-[11px] uppercase tracking-[0.12em]';
 const rule = 'border-[#121410]/15';
@@ -326,7 +326,7 @@ export default function IronbarkPage() {
       <div
         data-example=""
         id="top"
-        className={`${display.variable} ${sans.variable} ${monoFont.variable} font-[family-name:var(--ib-sans)] min-h-screen pb-24 antialiased selection:bg-[#E1481A] selection:text-[#F3F0E8] lg:pb-0`}
+        className={`${display.variable} ${sans.variable} ${monoFont.variable} font-[family-name:var(--ib-sans)] min-h-screen pb-24 antialiased selection:bg-[#6F8F4E] selection:text-[#F3F0E8] lg:pb-0`}
         style={{ color: INK, background: PAPER }}
       >
         {/* Header: name, five anchors, one Book action. Solid paper, hairline underneath. */}

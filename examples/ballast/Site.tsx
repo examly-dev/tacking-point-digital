@@ -4,8 +4,8 @@ import { InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
 
 /*
   PARKSIDE GYM — a coached strength and conditioning gym.
-  Black, bone, one signal orange. A wordmark set full-bleed across the hero,
-  a straight orange ticker, a real weekly timetable and weekly-billed memberships.
+  Black, bone, one acid lime. A wordmark set full-bleed across the hero,
+  a straight ticker, a real weekly timetable and weekly-billed memberships.
 */
 
 const display = Big_Shoulders({
@@ -26,7 +26,7 @@ const img = (id: string, w = 1600) =>
 
 const BLACK = '#0B0B0C';
 const BONE = '#EDE9E1';
-const ORANGE = '#FF5A1F';
+const LIME = '#C8F542';
 const disp = 'font-[family-name:var(--bl-display)] font-extrabold uppercase leading-[0.85] tracking-[-0.01em]';
 const label = 'text-[11px] font-semibold uppercase tracking-[0.2em]';
 const rule = 'border-[#EDE9E1]/15';
@@ -104,14 +104,14 @@ export default function BallastPage() {
 
       <div
         data-example=""
-        className={`${display.variable} ${sans.variable} font-[family-name:var(--bl-sans)] min-h-screen antialiased selection:bg-[#FF5A1F] selection:text-black`}
+        className={`${display.variable} ${sans.variable} font-[family-name:var(--bl-sans)] min-h-screen antialiased selection:bg-[#C8F542] selection:text-black`}
         style={{ background: BLACK, color: BONE }}
       >
         {/* Header */}
         <header className={`custom-header fixed inset-x-0 top-0 z-50 border-b ${rule} backdrop-blur-md`} style={{ background: 'rgba(11,11,12,0.8)' }}>
           <div className="flex h-16 items-center justify-between px-5 md:px-8">
             <a href="#top" className="flex items-center gap-2.5">
-              <span className="h-3 w-3 rounded-full" style={{ background: ORANGE }} aria-hidden="true" />
+              <span className="h-3 w-3 rounded-full" style={{ background: LIME }} aria-hidden="true" />
               <span className={`${disp} text-[26px] tracking-[0.02em]`}>Parkside</span>
             </a>
             <ScrollSpy
@@ -124,13 +124,13 @@ export default function BallastPage() {
               ]}
               className={`${label} hidden gap-8 md:flex`}
               linkClass="transition-colors duration-200"
-              activeClass="text-[#FF5A1F]"
+              activeClass="text-[#C8F542]"
               inactiveClass="text-[#EDE9E1]/60 hover:text-[#EDE9E1]"
             />
             <a
               href="#membership"
               className="inline-flex h-10 items-center rounded-full px-4 text-[13px] font-semibold uppercase tracking-[0.08em] text-black transition-colors hover:bg-[#EDE9E1]"
-              style={{ background: ORANGE }}
+              style={{ background: LIME }}
             >
               Free first session
             </a>
@@ -147,7 +147,7 @@ export default function BallastPage() {
                 eight. Nobody yells.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#membership" className="inline-flex h-12 items-center rounded-full px-6 text-[14px] font-semibold text-black transition-colors hover:bg-[#EDE9E1]" style={{ background: ORANGE }}>
+                <a href="#membership" className="inline-flex h-12 items-center rounded-full px-6 text-[14px] font-semibold text-black transition-colors hover:bg-[#EDE9E1]" style={{ background: LIME }}>
                   Book a free session
                 </a>
                 <a href="#timetable" className={`inline-flex h-12 items-center rounded-full border ${rule} px-6 text-[14px] font-semibold transition-colors hover:border-[#EDE9E1]`}>
@@ -205,7 +205,7 @@ export default function BallastPage() {
                   <div className="flex flex-1 flex-col p-6 md:p-7">
                     <h3 className={`${disp} text-[clamp(40px,4vw,64px)]`}>{p.h}</h3>
                     <p className="mt-4 text-[15px] leading-[1.55] text-[#EDE9E1]/70">{p.p}</p>
-                    <a href="#timetable" className={`${label} mt-auto inline-flex pt-8 text-[#EDE9E1]/60 transition-colors group-hover:text-[#FF5A1F]`}>
+                    <a href="#timetable" className={`${label} mt-auto inline-flex pt-8 text-[#EDE9E1]/60 transition-colors group-hover:text-[#C8F542]`}>
                       See times →
                     </a>
                   </div>
@@ -238,7 +238,7 @@ export default function BallastPage() {
               <tbody>
                 {timetable.times.map((t, r) => (
                   <tr key={t} className={`border-b ${rule}`}>
-                    <th className={`${disp} py-4 pr-4 text-[22px] font-extrabold tabular-nums`} style={{ color: ORANGE }}>
+                    <th className={`${disp} py-4 pr-4 text-[22px] font-extrabold tabular-nums`} style={{ color: LIME }}>
                       {t}
                     </th>
                     {timetable.grid[r].map((c, ci) => (
@@ -278,7 +278,7 @@ export default function BallastPage() {
                     type="button"
                     aria-pressed={r.on}
                     className={`flex w-full items-start justify-between gap-4 border p-5 text-left transition-colors ${
-                      r.on ? 'border-[#FF5A1F] bg-[#FF5A1F]/8' : `${rule} hover:border-[#EDE9E1]/50`
+                      r.on ? 'border-[#C8F542] bg-[#C8F542]/8' : `${rule} hover:border-[#EDE9E1]/50`
                     }`}
                   >
                     <span>
@@ -287,7 +287,7 @@ export default function BallastPage() {
                     </span>
                     <span className="shrink-0 text-right text-[13px] leading-[1.5]">
                       <span className="block">
-                        <span className={`${disp} text-[22px]`} style={{ color: ORANGE }}>{r.m}</span> <span className="text-[#EDE9E1]/60">members</span>
+                        <span className={`${disp} text-[22px]`} style={{ color: LIME }}>{r.m}</span> <span className="text-[#EDE9E1]/60">members</span>
                       </span>
                       <span className="block text-[#EDE9E1]/60">{r.c} casual</span>
                     </span>
@@ -336,7 +336,7 @@ export default function BallastPage() {
                         aria-pressed={on as boolean}
                         className={`flex items-baseline justify-between border px-3 py-3 text-left transition-colors ${
                           on
-                            ? 'border-[#FF5A1F] bg-[#FF5A1F] text-black'
+                            ? 'border-[#C8F542] bg-[#C8F542] text-black'
                             : full
                               ? 'cursor-not-allowed border-[#EDE9E1]/10 text-[#EDE9E1]/30'
                               : `${rule} hover:border-[#EDE9E1]/60`
@@ -359,7 +359,7 @@ export default function BallastPage() {
                   <a
                     href="#"
                     className="inline-flex h-11 items-center justify-center rounded-full px-5 text-[14px] font-semibold text-black transition-colors hover:bg-[#EDE9E1]"
-                    style={{ background: ORANGE }}
+                    style={{ background: LIME }}
                   >
                     Book this slot
                   </a>
@@ -389,7 +389,7 @@ export default function BallastPage() {
                 >
                   <div className="flex items-baseline justify-between">
                     <h3 className={`${disp} text-[36px]`}>{pl.h}</h3>
-                    {pl.featured ? <span className={`${label}`} style={{ color: ORANGE }}>Most members</span> : null}
+                    {pl.featured ? <span className={`${label}`} style={{ color: LIME }}>Most members</span> : null}
                   </div>
                   <p className="mt-6">
                     <span className={`${disp} text-[72px]`}>{pl.price}</span>
@@ -399,7 +399,7 @@ export default function BallastPage() {
                   <ul className={`mt-6 space-y-2 border-t pt-5 text-[14px] ${pl.featured ? 'border-black/15' : rule}`}>
                     {pl.items.map((it) => (
                       <li key={it} className="flex gap-3">
-                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: ORANGE }} />
+                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: LIME }} />
                         {it}
                       </li>
                     ))}
@@ -407,7 +407,7 @@ export default function BallastPage() {
                   <a
                     href="#"
                     className={`mt-8 inline-flex h-12 items-center justify-center rounded-full text-[14px] font-semibold transition-colors ${
-                      pl.featured ? 'bg-black text-[#EDE9E1] hover:bg-[#FF5A1F] hover:text-black' : `border ${rule} hover:border-[#EDE9E1]`
+                      pl.featured ? 'bg-black text-[#EDE9E1] hover:bg-[#C8F542] hover:text-black' : `border ${rule} hover:border-[#EDE9E1]`
                     }`}
                   >
                     {pl.featured ? 'Start with a free session' : 'Choose'}
@@ -444,7 +444,7 @@ export default function BallastPage() {
         <footer id="contact" className={`custom-footer border-t ${rule}`}>
           <Reveal className="px-5 pt-20 md:px-8 md:pt-28">
             <a href="#" className="group block">
-              <p className={`${disp} text-[clamp(48px,11vw,190px)] transition-colors duration-300 group-hover:text-[#FF5A1F]`}>
+              <p className={`${disp} text-[clamp(48px,11vw,190px)] transition-colors duration-300 group-hover:text-[#C8F542]`}>
                 Come in and
                 <br />
                 have a look.
