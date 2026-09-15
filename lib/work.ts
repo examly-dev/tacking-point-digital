@@ -225,9 +225,9 @@ export const work: WorkItem[] = [
       poster: "/work/harbourline-mobile.jpg",
       alt: "Harbourline, mobile",
     },
-    stills: stills("harbourline", ["Capabilities", "Recent jobs"]),
+    stills: stills("harbourline", ["Services", "Recent projects"]),
     overview: [
-      "A regional environmental engineering firm. Heavy condensed type, plant and site photos, asphalt and safety amber — a site that looks like the work, not a brochure.",
+      "A regional environmental consultancy: waste strategy, infrastructure and approvals. The original design — forest green, Outfit, a split hero — kept, without dressing it up as a plant brochure.",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },

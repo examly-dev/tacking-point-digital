@@ -1,267 +1,293 @@
-import { IBM_Plex_Mono, IBM_Plex_Sans, Oswald } from 'next/font/google';
-import { asset } from '@/lib/asset';
-import { Reveal } from '@/examples/_shared/primitives';
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Outfit } from 'next/font/google';
 
 /*
-  HARBOURLINE ENVIRONMENTAL
-  Industrial environmental engineering. Oswald + IBM Plex. Local photos.
-  Header in document flow so it never covers the hero.
+  Original Impact Environmental design, kept as Harbourline.
+  Forest green, Outfit, split hero — not the industrial restyle.
 */
 
-const display = Oswald({
+const sans = Outfit({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--hl-display',
-  display: 'swap',
-});
-const sans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   variable: '--hl-sans',
   display: 'swap',
 });
-const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--hl-mono',
-  display: 'swap',
-});
 
-const ASPHALT = '#161818';
-const CONCRETE = '#CFC8B8';
-const STEEL = '#2A3030';
-const AMBER = '#D4A017';
-const disp = 'font-[family-name:var(--hl-display)] font-semibold uppercase tracking-[0.04em]';
-const kicker = 'font-[family-name:var(--hl-mono)] text-[11px] uppercase tracking-[0.18em]';
-const photo = (file: string) => asset(`/examples/harbourline/${file}`);
+const PRIMARY = '#15372B';
+const ACCENT = '#2F9B6A';
 
-const capabilities = [
+const img = (id: string, w = 1600) =>
+  `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
+
+const services = [
   {
-    h: 'Waste strategy',
-    p: 'Ten-year strategies, FOGO business cases, options reports and funding submissions. Written for the people who have to take them to a council meeting.',
-    img: 'recycling.jpg',
-    alt: 'Baled recyclables in a materials recovery facility',
+    title: 'Strategy & Planning',
+    desc: 'Long-range waste and resource recovery strategy for councils and regional groups, grounded in real service data.',
+    items: ['Regional Waste Strategies', 'Options & Business Cases', 'Collection Contract Tenders', 'Funding Submissions'],
   },
   {
-    h: 'Infrastructure',
-    p: 'Transfer stations, landfill closure and capping, organics processing, and how a site actually runs once the ribbon is cut.',
-    img: 'plant.jpg',
-    alt: 'Industrial plant under a pale sky',
+    title: 'Approvals & Compliance',
+    desc: 'Getting facilities licensed, keeping them licensed, and making the paperwork match what happens on site.',
+    items: ['Environmental Licensing', 'Impact Assessment', 'Environmental Management Plans', 'Monitoring & Reporting'],
   },
   {
-    h: 'Kerbside and contracts',
-    p: 'Collection specifications, tender evaluation, mobilisation. We price what the market actually bid last time, not a tidy spreadsheet.',
-    img: 'freight.jpg',
-    alt: 'Heavy vehicles at a freight yard',
+    title: 'Resource Recovery',
+    desc: 'Kerbside, organics and commercial streams: what is being thrown away, what it is worth, and how to capture more of it.',
+    items: ['Kerbside Audits', 'Organics Processing Options', 'Commercial Waste Reviews', 'Diversion Target Modelling'],
   },
   {
-    h: 'Approvals',
-    p: 'Licensing, impact assessment, management plans, monitoring and reporting a regulator can read without a covering letter.',
-    img: 'earthworks.jpg',
-    alt: 'Earthworks on a large site',
+    title: 'Infrastructure',
+    desc: 'Concept design and operational review for the assets that do the work.',
+    items: ['Transfer Station Design', 'Landfill Closure Planning', 'Site Operations Review', 'Asset Condition Assessment'],
   },
 ];
 
 const projects = [
   {
-    y: '2026',
-    title: 'Regional transfer station',
-    who: 'A shire of 20,000',
-    status: 'In progress',
-    img: 'pipes.jpg',
-    alt: 'Pipework and steel on an industrial site',
+    title: 'Landfill Closure & Aftercare Plan',
+    loc: 'A shire of 13,000',
+    tag: 'Infrastructure',
+    id: '1581094794329-c8112a89af12',
   },
   {
-    y: '2025',
-    title: 'Landfill closure and capping',
-    who: 'A shire of 13,000',
-    status: 'Approved',
-    img: 'earthworks.jpg',
-    alt: 'Capping and earthworks',
+    title: 'Regional Waste Strategy 2035',
+    loc: 'Five-council group',
+    tag: 'Strategy',
+    id: '1454165804606-c3d57bc86b40',
   },
   {
-    y: '2024',
-    title: 'FOGO processing options',
-    who: 'A shire of 31,000',
-    status: 'Complete',
-    img: 'organics.jpg',
-    alt: 'Organics and farmland at the edge of town',
-  },
-  {
-    y: '2024',
-    title: 'Kerbside collection contract',
-    who: 'A city of 78,000',
-    status: 'Awarded',
-    img: 'freight.jpg',
-    alt: 'Collection fleet yard',
+    title: 'FOGO Rollout Business Case',
+    loc: 'A shire of 31,000',
+    tag: 'Resource Recovery',
+    id: '1504307651254-35680f356dfd',
   },
 ];
 
+const how = [
+  { t: 'Regulator-ready', p: 'Licensing, assessment and management plans written to the standard the regulator expects, not the minimum.' },
+  { t: 'Operational first', p: 'Most of our team has run a site or a collection contract. The advice reflects it.' },
+  { t: 'Built on data', p: 'Bin audits, weighbridge records and tonnage modelling before anyone writes a recommendation.' },
+  { t: 'Safe by design', p: 'Facility layouts and procedures that keep the public, the crews and the environment out of harm.' },
+];
+
 export default function HarbourlinePage() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-      <div
-        data-example=""
-        className={`${display.variable} ${sans.variable} ${mono.variable} font-[family-name:var(--hl-sans)] min-h-screen antialiased`}
-        style={{ background: CONCRETE, color: ASPHALT }}
+    <div
+      data-example=""
+      className={`${sans.variable} min-h-screen antialiased`}
+      style={{ fontFamily: 'var(--hl-sans), ui-sans-serif, system-ui', color: '#1E293B', background: '#fff' }}
+    >
+      <header
+        className="custom-header fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300"
+        style={{
+          backgroundColor: scrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
+          borderColor: scrolled ? 'rgba(0,0,0,0.05)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+        }}
       >
-        <header className="custom-header" style={{ background: ASPHALT }}>
-          <div className="flex items-center justify-between gap-4 border-b-4 px-5 py-3 md:px-8" style={{ borderColor: AMBER }}>
-            <a href="#top" className="min-w-0 text-white">
-              <span className={`${disp} block text-[20px] leading-none md:text-[24px]`}>Harbourline</span>
-              <span className={`${kicker} mt-1 block text-white/50`}>Environmental engineering</span>
+        <div className="mx-auto flex h-24 max-w-[1200px] items-center justify-between px-6 md:px-12">
+          <a href="#top" className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center text-[20px] font-bold text-white" style={{ background: PRIMARY }}>
+              HL
+            </span>
+            <span className="leading-none">
+              <span className="block text-[20px] font-bold tracking-tight" style={{ color: PRIMARY }}>
+                HARBOURLINE
+              </span>
+              <span className="mt-1 block text-[12px] font-normal uppercase tracking-[0.2em] text-black/40">Environmental</span>
+            </span>
+          </a>
+          <nav className="hidden items-center gap-10 text-[14px] font-medium lg:flex">
+            <a href="#services" className="hover:opacity-60">Services</a>
+            <a href="#projects" className="hover:opacity-60">Projects</a>
+            <a href="#contact" className="hover:opacity-60">Contact</a>
+          </nav>
+          <a
+            href="#contact"
+            className="hidden h-12 items-center px-8 text-[15px] font-semibold text-white lg:inline-flex"
+            style={{ background: PRIMARY }}
+          >
+            Get In Touch
+          </a>
+        </div>
+      </header>
+
+      <section id="top" className="bg-slate-50 pb-20 pt-32 lg:pb-32 lg:pt-48">
+        <div className="mx-auto grid max-w-[1200px] items-center gap-16 px-6 md:px-12 lg:grid-cols-2 lg:gap-24">
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="h-[2px] w-12" style={{ background: PRIMARY }} />
+              <span className="text-[13px] font-bold uppercase tracking-widest text-black/40">Est. 2004</span>
+            </div>
+            <h1 className="mt-6 max-w-[16ch] text-[clamp(36px,4.6vw,64px)] font-bold leading-[1.1] tracking-tight" style={{ color: PRIMARY }}>
+              Waste strategy for the places that have to live with it.
+            </h1>
+            <p className="mt-6 max-w-[32rem] text-[20px] font-medium leading-relaxed" style={{ color: PRIMARY, opacity: 0.85 }}>
+              Resource recovery, infrastructure and approvals consultants to regional councils, utilities and industry.
+            </p>
+            <p className="mt-5 max-w-[32rem] leading-relaxed text-black/55">
+              Harbourline works on the unglamorous end of the environment sector: kerbside bins, transfer stations, landfill closures, and the contracts and licences that sit behind them.
+            </p>
+            <a href="#services" className="mt-8 inline-flex h-14 items-center px-8 text-[16px] font-semibold text-white" style={{ background: PRIMARY }}>
+              Our Services
             </a>
-            <nav className={`${kicker} flex items-center gap-5 text-white md:gap-8`}>
-              <a href="#work" className="hidden hover:text-[#D4A017] sm:inline">
-                Capabilities
-              </a>
-              <a href="#projects" className="hidden hover:text-[#D4A017] sm:inline">
-                Projects
-              </a>
-              <a href="#contact" className="inline-flex h-10 items-center px-4 text-[#161818]" style={{ background: AMBER }}>
-                Contact
-              </a>
-            </nav>
-          </div>
-        </header>
-
-        <section id="top" className="relative min-h-[70svh] overflow-hidden md:min-h-[78svh]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photo('hero.jpg')}
-            alt="Civil works on a large environmental infrastructure site"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/20" />
-          <div className="relative flex min-h-[70svh] flex-col justify-end px-5 pb-10 pt-24 md:min-h-[78svh] md:px-8 md:pb-16">
-            <Reveal>
-              <p className={`${kicker} text-[#D4A017]`}>Waste · Infrastructure · Approvals · Est. 1996</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <h1 className={`${disp} mt-4 max-w-[18ch] text-[clamp(40px,8vw,92px)] leading-[0.9] text-white`}>
-                Engineering for the sites that have to keep running.
-              </h1>
-            </Reveal>
-            <Reveal delay={140}>
-              <p className="mt-5 max-w-[36rem] text-[16px] leading-[1.5] text-white/80 md:text-[18px]">
-                Landfill, FOGO, kerbside contracts and the plant around them. Reports written for operators and
-                councils, not for a brochure.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-
-        <section className="grid grid-cols-2 border-y-4 md:grid-cols-4" style={{ borderColor: AMBER, background: STEEL, color: CONCRETE }}>
-          {[
-            ['1996', 'Independent'],
-            ['40+', 'Council clients'],
-            ['12', 'Landfills closed'],
-            ['NSW / QLD', 'Where we work'],
-          ].map(([n, l]) => (
-            <div key={l} className="border-white/10 px-5 py-6 md:border-r md:px-8 md:py-8 last:border-r-0">
-              <p className={`${disp} text-[28px] leading-none md:text-[36px]`}>{n}</p>
-              <p className={`${kicker} mt-2 text-white/50`}>{l}</p>
-            </div>
-          ))}
-        </section>
-
-        <section id="work" className="px-5 py-16 md:px-8 md:py-24">
-          <Reveal>
-            <p className={`${kicker} text-[#161818]/50`}>Capabilities</p>
-            <h2 className={`${disp} mt-3 text-[clamp(32px,5vw,56px)] leading-none`}>What we are hired for</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
-            {capabilities.map((c, i) => (
-              <Reveal key={c.h} delay={i * 60}>
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={photo(c.img)} alt={c.alt} className="h-full w-full object-cover" />
-                </div>
-                <h3 className={`${disp} mt-4 text-[26px] leading-none md:text-[30px]`}>{c.h}</h3>
-                <p className="mt-3 max-w-[36rem] text-[15px] leading-[1.55] text-[#161818]/75">{c.p}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid md:grid-cols-2" style={{ background: ASPHALT, color: CONCRETE }}>
-          <div className="relative min-h-[240px] md:min-h-[420px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={photo('wetland.jpg')} alt="Rehabilitated ground at the edge of a wetland" className="absolute inset-0 h-full w-full object-cover" />
-          </div>
-          <div className="flex flex-col justify-center px-5 py-12 md:px-10 md:py-16">
-            <p className={`${kicker} text-[#D4A017]`}>Aftercare</p>
-            <h2 className={`${disp} mt-3 text-[clamp(28px,4vw,48px)] leading-[0.95]`}>
-              Closure is not the end of the job.
-            </h2>
-            <p className="mt-5 max-w-[34rem] text-[16px] leading-[1.55] text-[#CFC8B8]/80">
-              Capping, leachate, gas and the monitoring that follows. We stay on the licence conditions until the
-              regulator is satisfied, which is usually longer than anyone hoped.
-            </p>
-          </div>
-        </section>
-
-        <section id="projects" className="px-5 py-16 md:px-8 md:py-24">
-          <Reveal>
-            <p className={`${kicker} text-[#161818]/50`}>Selected work</p>
-            <h2 className={`${disp} mt-3 text-[clamp(32px,5vw,56px)] leading-none`}>Recent jobs</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
-            {projects.map((p, i) => (
-              <Reveal key={p.title} delay={i * 50}>
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={photo(p.img)} alt={p.alt} className="h-full w-full object-cover" />
-                </div>
-                <p className={`${kicker} mt-3 text-[#161818]/45`}>
-                  {p.y} · {p.status}
-                </p>
-                <h3 className={`${disp} mt-1 text-[22px] leading-tight md:text-[26px]`}>{p.title}</h3>
-                <p className="mt-1 text-[14px] text-[#161818]/60">{p.who}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <footer id="contact" className="custom-footer" style={{ background: ASPHALT, color: CONCRETE }}>
-          <div className="px-5 py-16 md:px-8 md:py-20">
-            <p className={`${kicker} text-[#D4A017]`}>Contact</p>
-            <p className={`${disp} mt-4 max-w-[16ch] text-[clamp(32px,5vw,56px)] leading-[0.95]`}>
-              Send the licence and the site plan.
-            </p>
-            <div className="mt-12 grid gap-10 sm:grid-cols-3">
+            <div className="mt-10 grid max-w-[28rem] grid-cols-2 gap-8 border-t border-black/10 pt-8">
               <div>
-                <p className={`${kicker} text-[#D4A017]`}>Office</p>
-                <p className="mt-2 text-[16px] leading-snug">
-                  Monday–Friday 8:00–17:00
-                  <br />
-                  Site visits by arrangement
-                </p>
+                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>40+</p>
+                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Council Clients</p>
               </div>
               <div>
-                <p className={`${kicker} text-[#D4A017]`}>Direct</p>
-                <p className="mt-2 text-[16px] leading-snug">
-                  <a href="tel:+61255506620" className="hover:text-[#D4A017]">
-                    02 5550 6620
-                  </a>
-                  <br />
-                  <a href="mailto:office@harbourline.com.au" className="hover:text-[#D4A017]">
-                    office@harbourline.com.au
-                  </a>
-                </p>
-              </div>
-              <div>
-                <p className={`${kicker} text-[#D4A017]`}>Practice</p>
-                <p className="mt-2 text-[16px] leading-snug text-[#CFC8B8]/80">
-                  Independent since 1996. Capability statement on request.
-                </p>
+                <p className="text-[30px] font-bold" style={{ color: PRIMARY }}>$310M</p>
+                <p className="mt-1 text-[12px] font-medium uppercase tracking-wide text-black/45">Contracts Procured</p>
               </div>
             </div>
           </div>
-          <div className={`${kicker} flex flex-col gap-2 border-t border-white/10 px-5 py-4 text-white/35 md:flex-row md:justify-between md:px-8`}>
-            <span>© Harbourline Environmental Pty Ltd 2026</span>
-            <span>We acknowledge the Traditional Custodians of the lands on which we work.</span>
+
+          <div className="relative hidden h-[560px] lg:block">
+            <Image
+              src={img('1532996122724-e3c354a0b15b', 2070)}
+              alt="Engineer on a site inspection"
+              fill
+              className="object-cover grayscale"
+              priority
+              sizes="50vw"
+            />
+            <div className="absolute inset-0 mix-blend-multiply" style={{ background: `${PRIMARY}1A` }} />
+            <div className="absolute bottom-0 left-0 max-w-sm border-t-4 bg-white p-8" style={{ borderColor: ACCENT }}>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-black/40">Current Project</p>
+              <p className="mt-1 text-[18px] font-bold leading-tight" style={{ color: PRIMARY }}>Regional transfer station</p>
+              <p className="mt-2 text-[14px] text-black/50">Concept design and licensing · a shire of 20,000</p>
+            </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </section>
+
+      <section className="border-y border-black/5 bg-white py-10">
+        <p className="mb-6 text-center text-[11px] font-bold uppercase tracking-widest text-black/40">
+          Working with councils, utilities and operators
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 px-6 text-[18px] font-bold tracking-tight text-slate-800">
+          <span>RIDGE COAST <span className="font-normal text-slate-400">SHIRE</span></span>
+          <span>EASTERN RIVERS <span className="font-normal text-slate-400">WATER</span></span>
+          <span>COASTAL <span className="font-normal text-slate-400">COUNCILS GROUP</span></span>
+          <span>TERRAFORM <span className="font-normal text-slate-400">RECOVERY</span></span>
+        </div>
+      </section>
+
+      <section id="services" className="bg-white py-24">
+        <div className="mx-auto max-w-[1200px] px-6 md:px-12">
+          <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>Services</p>
+          <h2 className="mt-3 max-w-[20ch] text-[clamp(28px,4vw,48px)] font-bold tracking-tight" style={{ color: PRIMARY }}>
+            From the strategy document to the weighbridge.
+          </h2>
+          <div className="mt-16 grid gap-8 md:grid-cols-2">
+            {services.map((s) => (
+              <div key={s.title} className="border border-black/10 bg-[#FAFAFA] p-8">
+                <h3 className="text-[22px] font-bold" style={{ color: PRIMARY }}>{s.title}</h3>
+                <p className="mt-3 leading-relaxed text-black/55">{s.desc}</p>
+                <ul className="mt-6 space-y-3">
+                  {s.items.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[14px] font-medium">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0" style={{ background: ACCENT }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" className="border-t border-black/10 bg-slate-50 py-24">
+        <div className="mx-auto max-w-[1200px] px-6 md:px-12">
+          <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>Our Work</p>
+          <h2 className="mt-3 text-[clamp(28px,4vw,40px)] font-bold tracking-tight" style={{ color: PRIMARY }}>Recent Projects</h2>
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {projects.map((p) => (
+              <figure key={p.title}>
+                <div className="relative mb-5 aspect-[4/3] overflow-hidden bg-slate-200">
+                  <Image src={img(p.id, 1600)} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
+                  <span className="absolute left-4 top-4 bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>
+                    {p.tag}
+                  </span>
+                </div>
+                <figcaption>
+                  <p className="text-[18px] font-bold" style={{ color: PRIMARY }}>{p.title}</p>
+                  <p className="mt-1 text-[14px] text-black/50">{p.loc}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 text-white" style={{ background: PRIMARY }}>
+        <div className="mx-auto grid max-w-[1200px] gap-16 px-6 md:px-12 lg:grid-cols-2">
+          <div>
+            <p className="text-[13px] font-bold uppercase tracking-widest" style={{ color: ACCENT }}>How we work</p>
+            <h2 className="mt-3 text-[clamp(28px,4vw,48px)] font-bold tracking-tight">Advice you can take to a council meeting.</h2>
+            <p className="mt-6 text-[17px] leading-relaxed text-white/70">
+              Our reports get read by general managers, elected councillors and the regulator. They are written to survive all three: plain language, clear numbers, and recommendations that account for what the depot can actually do on a Tuesday.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {how.map((h) => (
+              <div key={h.t} className="border border-white/10 bg-white/5 p-7">
+                <h3 className="text-[18px] font-bold">{h.t}</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-white/55">{h.p}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer id="contact" className="custom-footer py-16 text-white" style={{ background: PRIMARY }}>
+        <div className="mx-auto grid max-w-[1200px] gap-12 px-6 md:grid-cols-4 md:px-12">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-3">
+              <span className="grid h-8 w-8 place-items-center text-[15px] font-bold" style={{ background: '#fff', color: PRIMARY }}>HL</span>
+              <span className="text-[18px] font-bold">HARBOURLINE Environmental</span>
+            </div>
+            <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-white/75">
+              Waste and resource recovery consultants to regional councils, utilities and industry since 2004.
+            </p>
+          </div>
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">Office</p>
+            <p className="mt-4 text-[14px] leading-relaxed text-white/90">
+              Suite 4, 18 Gordon Street
+              <br />
+              Mid North Coast NSW
+              <br />
+              02 5550 6620
+              <br />
+              office@harbourline.com.au
+            </p>
+          </div>
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">Links</p>
+            <p className="mt-4 space-y-2 text-[14px] text-white/80">
+              <a href="#services" className="block hover:text-white">Services</a>
+              <a href="#projects" className="block hover:text-white">Projects</a>
+            </p>
+          </div>
+        </div>
+        <p className="mx-auto mt-12 max-w-[1200px] border-t border-white/10 px-6 pt-6 text-[12px] text-white/50 md:px-12">
+          © 2026 Harbourline Environmental Pty Ltd.
+        </p>
+      </footer>
+    </div>
   );
 }
