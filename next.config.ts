@@ -9,12 +9,17 @@ const basePath =
 const nextConfig: NextConfig = {
   // Dev server is viewed through OrbStack domains, not localhost.
   allowedDevOrigins: ["tackingpoint.local", "*.tackingpoint.orb.local", "*.orb.local"],
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
+  },
   ...(isGithubPages
     ? {
         output: "export" as const,
         trailingSlash: true,
         basePath,
-        images: { unoptimized: true },
       }
     : {}),
 };

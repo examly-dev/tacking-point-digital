@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 import { Arrow } from "@/components/Arrow";
+import { CoverSwitch } from "@/components/CoverSwitch";
 import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
+import { hasPreview } from "@/lib/preview";
 import { getWork, work, type WorkMedia } from "@/lib/work";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -22,7 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 
-/** Inline delay for the staggered `rise` animation. */
 function delay(step: number) {
   return { animationDelay: `${step * 60}ms` };
 }
@@ -44,19 +45,25 @@ function Shot({ media, priority = false }: { media: WorkMedia; priority?: boolea
   );
 }
 
-/** A phone-sized clip, centred in the same grey figure as the desktop shots. */
-function PhoneShot({ media }: { media: WorkMedia }) {
+function Stills({ stills }: { stills: WorkMedia[] }) {
   return (
-    <figure className="bg-black/[0.05] p-3 tablet:p-6">
-      <div className="mx-auto w-[220px] tablet:w-[250px]">
-        <Lightbox media={media}>
-          <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
-            <Media media={media} sizes="250px" className="object-cover object-top" />
-          </div>
-        </Lightbox>
-      </div>
-      <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
-    </figure>
+    <section className="mt-8 grid grid-cols-2 gap-2 tablet:gap-3">
+      {stills.map((media) => (
+        <figure key={media.src} className="bg-black/[0.05] p-2 tablet:p-3">
+          <Lightbox media={media}>
+            <div className="relative aspect-[16/10] overflow-hidden border border-black/[0.03] bg-white">
+              <Media
+                media={media}
+                sizes="(min-width: 1250px) 360px, (min-width: 850px) 40vw, 50vw"
+              />
+            </div>
+          </Lightbox>
+          {media.alt ? (
+            <figcaption className="mt-2 text-[12px] tablet:text-[11px] text-black/40">{media.alt}</figcaption>
+          ) : null}
+        </figure>
+      ))}
+    </section>
   );
 }
 
@@ -64,6 +71,8 @@ export default async function WorkPage({ params }: Props) {
   const { slug } = await params;
   const item = getWork(slug);
   if (!item) notFound();
+
+  const preview = hasPreview(slug);
 
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
@@ -115,18 +124,13 @@ export default async function WorkPage({ params }: Props) {
         </p>
 
         <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-          {item.cover || item.mobile ? (
-            <div className="mb-10 grid gap-6 tablet:grid-cols-[minmax(0,1fr)_auto] tablet:items-start">
-              {item.cover ? (
-                <Shot media={item.cover} priority />
-              ) : (
-                <div className="h-[300px] bg-black/[0.05]" />
-              )}
-              {item.mobile ? (
-                <div style={delay(3)} className="rise">
-                  <PhoneShot media={item.mobile} />
-                </div>
-              ) : null}
+          {preview && item.mobile ? (
+            <div className="mb-10">
+              <CoverSwitch cover={item.cover} mobile={item.mobile} previewSlug={item.slug} />
+            </div>
+          ) : item.cover ? (
+            <div className="mb-10">
+              <Shot media={item.cover} priority />
             </div>
           ) : (
             <div className="mb-10 h-[300px] bg-black/[0.05]" />
@@ -156,8 +160,10 @@ export default async function WorkPage({ params }: Props) {
           </p>
         ) : null}
 
+        {item.stills?.length ? <Stills stills={item.stills} /> : null}
+
         {item.gallery?.length ? (
-          <section style={delay(5)} className="rise space-y-6">
+          <section style={delay(5)} className="rise mt-8 space-y-6">
             {item.gallery.map((media) => (
               <Shot key={media.src} media={media} />
             ))}

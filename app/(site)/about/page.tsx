@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { asset } from "@/lib/asset";
-import { mailto, site, tel } from "@/lib/site";
+import { TalkThrough } from "@/components/TalkThrough";
 
 export const metadata: Metadata = {
   title: "About",
@@ -26,7 +26,7 @@ export default function AboutPage() {
               alt="Andy and his daughter sharing a menu at a restaurant"
               width={1024}
               height={767}
-              className="block h-auto w-full"
+              className="block h-auto w-full grayscale contrast-[1.25] brightness-[0.9] transition-[filter] duration-700 ease-out hover:grayscale-0 hover:contrast-100 hover:brightness-100"
             />
           </div>
         </figure>
@@ -58,22 +58,11 @@ export default function AboutPage() {
             <Link href="/services" className={link}>
               Services
             </Link>
-            . Or, if you&apos;d rather talk something through,{" "}
-            <a
-              href={mailto}
-              className="hover:opacity-50 transition-opacity duration-200"
-            >
-              email me
-            </a>{" "}
-            or call{" "}
-            <a
-              href={tel}
-              className="hover:opacity-50 transition-opacity duration-200"
-            >
-              {site.phone}
-            </a>
             .
           </p>
+          <div className="rise" style={{ animationDelay: "360ms" }}>
+            <TalkThrough />
+          </div>
         </div>
       </article>
     </div>
