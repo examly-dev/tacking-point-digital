@@ -396,3 +396,98 @@ export function InPageScroll() {
 
   return null;
 }
+
+export type ClientMark = { name: string; kind: string };
+
+/** Horizontal client wordmark carousel. Autoplays unless reduced-motion; arrows always work. */
+export function ClientCarousel({
+  items,
+  titleClassName = '',
+}: {
+  items: ClientMark[];
+  titleClassName?: string;
+}) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const paused = useRef(false);
+
+  const slideBy = (dir: number) => {
+    const el = scroller.current;
+    if (!el) return;
+    const card = el.querySelector('[data-client-card]');
+    const w = card instanceof HTMLElement ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.7;
+    el.scrollBy({ left: dir * w, behavior: shouldAnimateScroll() ? 'smooth' : 'auto' });
+  };
+
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el) return;
+    const tick = () => {
+      if (paused.current) return;
+      if (!shouldAnimateScroll()) return;
+      const max = el.scrollWidth - el.clientWidth;
+      if (max <= 8) return;
+      if (el.scrollLeft >= max - 8) el.scrollTo({ left: 0, behavior: 'smooth' });
+      else slideBy(1);
+    };
+    const id = window.setInterval(tick, 3800);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => {
+        paused.current = true;
+      }}
+      onMouseLeave={() => {
+        paused.current = false;
+      }}
+    >
+      <div
+        ref={scroller}
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        tabIndex={0}
+        aria-label="Clients"
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            slideBy(1);
+          }
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            slideBy(-1);
+          }
+        }}
+      >
+        {items.map((c) => (
+          <article
+            key={c.name}
+            data-client-card=""
+            className="flex w-[min(78vw,280px)] shrink-0 snap-start flex-col justify-center border border-black/10 bg-white px-6 py-8 md:w-[calc((100%-2rem)/3)]"
+          >
+            <p className={`${titleClassName} text-[22px] leading-[1.15] md:text-[24px]`}>{c.name}</p>
+            <p className="mt-2 text-[13px] text-black/45">{c.kind}</p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-5 flex gap-2">
+        <button
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center border border-current text-[18px] leading-none hover:bg-[#1A1A1A] hover:text-white"
+          aria-label="Previous clients"
+          onClick={() => slideBy(-1)}
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center border border-current text-[18px] leading-none hover:bg-[#1A1A1A] hover:text-white"
+          aria-label="Next clients"
+          onClick={() => slideBy(1)}
+        >
+          ›
+        </button>
+      </div>
+    </div>
+  );
+}

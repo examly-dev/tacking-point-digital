@@ -1,6 +1,6 @@
 import { Source_Sans_3, Source_Serif_4 } from 'next/font/google';
 import { asset } from '@/lib/asset';
-import { Count, InPageScroll, Reveal, ScrollSpy, type SpyItem } from '@/examples/_shared/primitives';
+import { ClientCarousel, Count, InPageScroll, Reveal, ScrollSpy, type SpyItem } from '@/examples/_shared/primitives';
 
 /*
   PELL CIVIL — Mid North Coast civil engineers.
@@ -34,6 +34,7 @@ const section = 'scroll-mt-[var(--in-page-scroll-margin,5.5rem)]';
 
 const navItems: SpyItem[] = [
   { href: '#practice', label: 'Practice' },
+  { href: '#clients', label: 'Clients' },
   { href: '#services', label: 'Services' },
   { href: '#work', label: 'Work' },
   { href: '#people', label: 'People' },
@@ -103,6 +104,17 @@ const towns = [
   { name: 'Kempsey', note: 'Macleay' },
   { name: 'Nambucca Heads', note: 'Nambucca' },
   { name: 'Coffs Harbour', note: 'Coffs' },
+];
+
+const clients = [
+  { name: 'Thrumster Lakes', kind: 'Estate developer' },
+  { name: 'Maria River Contracting', kind: 'Civil contractor' },
+  { name: 'Fernbank Estates', kind: 'Land development' },
+  { name: 'Oxley Overlay', kind: 'Pavement contractor' },
+  { name: 'Limeburners Holdings', kind: 'Private owner' },
+  { name: 'Northshore Build', kind: 'Builder' },
+  { name: 'Pilot Street Works', kind: 'Civil contractor' },
+  { name: 'Lake Innes Developments', kind: 'Subdivision' },
 ];
 
 const people = [
@@ -220,7 +232,7 @@ export default function SancroxPage() {
                 the inspections that follow. We take jobs further into NSW when a client we already know asks.
               </p>
               <p className={`mt-4 max-w-[36rem] text-[16px] leading-[1.55] ${mute}`}>
-                Councils, land developers, builders and private owners. We do not put other people’s marks on the site.
+                Developers, builders, contractors and private owners. A few we issue drawings for sit below.
               </p>
             </Reveal>
             <Reveal delay={80}>
@@ -233,6 +245,18 @@ export default function SancroxPage() {
                 />
               </div>
             </Reveal>
+          </div>
+        </section>
+
+        <section id="clients" className={`${section} border-b border-[#1A1A1A]/10 bg-white`}>
+          <div className="mx-auto max-w-[1180px] px-5 py-16 md:px-8 md:py-20">
+            <p className={label}>Clients</p>
+            <h2 className={`${display} mt-3 max-w-[16ch] text-[clamp(28px,4vw,40px)] leading-[1.1]`}>
+              People we issue drawings for
+            </h2>
+            <div className="mt-10">
+              <ClientCarousel items={clients} titleClassName={display} />
+            </div>
           </div>
         </section>
 

@@ -410,7 +410,7 @@ export const work: WorkItem[] = [
       alt: "Pell Civil, mobile",
     },
     mobileClip: phoneClip("sancrox", "Pell Civil, mobile"),
-    stills: stills("sancrox", ["What we do", "Recent jobs"]),
+    stills: stills("sancrox", ["Clients we issue drawings for", "Recent jobs"]),
     overview: [
       "A Port Macquarie civil practice: roads, stormwater, subdivisions and culverts, with construction-phase support. Conventional infrastructure, not a marina brochure.",
     ],
