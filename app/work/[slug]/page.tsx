@@ -115,20 +115,23 @@ export default async function WorkPage({ params }: Props) {
         </p>
 
         <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-          {item.cover ? (
-            <div className="mb-10">
-              <Shot media={item.cover} priority />
+          {item.cover || item.mobile ? (
+            <div className="mb-10 grid gap-6 tablet:grid-cols-[minmax(0,1fr)_auto] tablet:items-start">
+              {item.cover ? (
+                <Shot media={item.cover} priority />
+              ) : (
+                <div className="h-[300px] bg-black/[0.05]" />
+              )}
+              {item.mobile ? (
+                <div style={delay(3)} className="rise">
+                  <PhoneShot media={item.mobile} />
+                </div>
+              ) : null}
             </div>
           ) : (
             <div className="mb-10 h-[300px] bg-black/[0.05]" />
           )}
         </ViewTransition>
-
-        {item.mobile ? (
-          <div style={delay(3)} className="rise mb-10">
-            <PhoneShot media={item.mobile} />
-          </div>
-        ) : null}
 
         <section style={delay(3)} className={`rise ${body} mb-10 space-y-5`}>
           {item.overview.map((p) => (

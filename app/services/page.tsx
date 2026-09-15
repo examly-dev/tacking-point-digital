@@ -6,7 +6,7 @@ import { mailto, site, tel } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Bespoke websites, CMS and site builders, web and mobile apps, and updates to existing sites. Fixed-price builds, honest pricing.",
+    "Bespoke websites, CMS and site builders, web and mobile apps, updates to existing sites, and automation. Fixed-price builds, honest pricing.",
 };
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
@@ -110,13 +110,28 @@ export default function ServicesPage() {
 
         <Section n="04" title="Existing sites" step={3}>
           <p>
-            Already have a site? I am happy to make updates, fix what is broken
-            or give it a general tidy-up, as long as you can give me the right
-            access.
+            If you already have a working site and just want updates, or some
+            extra functionality, I am happy to do that at a reasonable hourly
+            rate. You need to give me the right access — that is enough. I will
+            not try to sell you a redesign. That is not really me.
           </p>
         </Section>
 
-        <Section n="05" title="Pricing" step={4}>
+        <Section n="05" title="Automation" step={4}>
+          <p>
+            I can also help with the repeating parts of a business: moving
+            information between the tools you already use, drafting from your
+            own data, chasing things that currently live in someone&apos;s
+            inbox. I use tools such as n8n and language models where they
+            actually fit.
+          </p>
+          <p>
+            I will be straight about what is possible and what is theatre. That
+            conversation is better over a good coffee than in a proposal.
+          </p>
+        </Section>
+
+        <Section n="06" title="Pricing" step={5}>
           <p>
             Always reasonable, and I will usually beat the quote you already
             have. You tell me what you need, I give you a fixed price for the
@@ -138,7 +153,13 @@ export default function ServicesPage() {
           </p>
           <p>
             Once the site is live, changes are billed at a competitive hourly
-            rate.
+            rate. The same rate applies if you are only updating a site you
+            already have.
+          </p>
+          <p>
+            Company email, Google Workspace, newsletters and the like: happy to
+            set those up. You pay the platform at their normal price — usually
+            not much — and my time at the hourly rate.
           </p>
           <p>
             I am not one to upsell. I take pride in the work, and I would rather
