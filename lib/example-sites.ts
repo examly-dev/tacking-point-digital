@@ -34,5 +34,5 @@ export const previewNames: Record<PreviewSlug, string> = {
   halfway: "Halfway House",
   ellery: "Ellery Lawyers",
   hartwell: "Hartwell Constructions",
-  sancrox: "Sancrox Civil",
+  sancrox: "Pell Civil",
 };

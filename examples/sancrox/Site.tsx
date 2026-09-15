@@ -1,35 +1,39 @@
-import { Barlow, Barlow_Condensed } from 'next/font/google';
+import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google';
 import { asset } from '@/lib/asset';
 import { Count, InPageScroll, Reveal, ScrollSpy, type SpyItem } from '@/examples/_shared/primitives';
 
 /*
-  SANCROX CIVIL — Port Macquarie civil engineers.
-  Barlow / Barlow Condensed. Steel navy and ochre. Roads, drainage, subdivisions.
-  Conventional infrastructure site — not Harbourline (forest green, marinas).
+  PELL CIVIL — Mid North Coast civil engineers.
+  IBM Plex (drawing-office type). Concrete paper, asphalt, oxide survey mark.
+  Not Harbourline (forest green, marinas). Not hospitality cream/ochre.
 */
 
-const sans = Barlow({
+const sans = IBM_Plex_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  axes: ['wght'],
   variable: '--sx-sans',
   display: 'swap',
 });
-const condensed = Barlow_Condensed({
+
+const mono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--sx-cond',
+  weight: ['400', '500'],
+  variable: '--sx-mono',
   display: 'swap',
 });
 
 const photo = (file: string) => asset(`/examples/sancrox/${file}`);
 
-const INK = '#1B2838';
-const PAPER = '#F3F0E8';
-const OCHRE = '#C9892E';
-const DARK = '#141C26';
-const mute = 'text-[#1B2838]/55';
-const label = 'text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1B2838]/45';
-const cond = 'font-[family-name:var(--sx-cond)] font-semibold tracking-[0.02em]';
+const INK = '#191919';
+const PAPER = '#F5F5F3';
+const MARK = '#D14318';
+const DARK = '#161616';
+const mute = 'text-[#191919]/55';
+const label =
+  'font-[family-name:var(--sx-mono)] text-[11px] font-medium uppercase tracking-[0.12em] text-[#191919]/45';
+const display = 'font-medium tracking-[-0.02em]';
+const btn =
+  'inline-flex items-center bg-[#191919] text-white font-medium transition-colors hover:bg-[#D14318]';
 const section = 'scroll-mt-[var(--in-page-scroll-margin,5.5rem)]';
 
 const navItems: SpyItem[] = [
@@ -136,35 +140,34 @@ export default function SancroxPage() {
 
       <div
         data-example=""
-        className={`${sans.variable} ${condensed.variable} font-[family-name:var(--sx-sans)] min-h-screen antialiased`}
+        className={`${sans.variable} ${mono.variable} font-[family-name:var(--sx-sans)] min-h-screen antialiased`}
         style={{ background: PAPER, color: INK }}
       >
-        <header className="custom-header sticky top-0 z-50 border-b border-[#1B2838]/10 bg-[#F3F0E8]">
+        <header className="custom-header sticky top-0 z-50 border-b border-[#191919]/10 bg-[#F5F5F3]">
           <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-5 py-3.5 md:px-8">
-            <a href="#top" className="min-w-0">
-              <p className={`${cond} text-[22px] leading-none md:text-[24px]`}>Sancrox Civil</p>
-              <p className={`${label} mt-1 hidden sm:block`}>Civil engineers · Port Macquarie</p>
+            <a href="#top" className="flex min-w-0 items-center gap-3">
+              <span className="block h-8 w-[3px] shrink-0" style={{ background: MARK }} aria-hidden />
+              <span>
+                <p className="text-[16px] font-medium leading-none tracking-[0.01em] md:text-[17px]">Pell Civil</p>
+                <p className={`${label} mt-1.5 hidden sm:block`}>Civil engineers · NSW</p>
+              </span>
             </a>
             <div className="flex items-center gap-3 md:gap-8">
               <ScrollSpy
                 items={navItems}
                 className="hidden items-center gap-6 lg:flex"
                 linkClass="text-[14px] font-medium transition-colors"
-                activeClass="text-[#1B2838]"
-                inactiveClass="text-[#1B2838]/50 hover:text-[#1B2838]"
+                activeClass="text-[#191919]"
+                inactiveClass="text-[#191919]/50 hover:text-[#191919]"
               />
-              <a
-                href="#contact"
-                className="inline-flex h-10 items-center px-4 text-[13px] font-semibold text-white md:h-11 md:px-5 md:text-[14px]"
-                style={{ background: OCHRE }}
-              >
+              <a href="#contact" className={`${btn} h-10 px-4 text-[13px] md:h-11 md:px-5 md:text-[14px]`}>
                 Start a job
               </a>
             </div>
           </div>
-          <nav className="mx-auto flex max-w-[1180px] flex-wrap gap-x-5 gap-y-1 px-5 pb-3 text-[13px] font-medium text-[#1B2838]/55 lg:hidden md:px-8">
+          <nav className="mx-auto flex max-w-[1180px] flex-wrap gap-x-5 gap-y-1 px-5 pb-3 text-[13px] font-medium text-[#191919]/55 lg:hidden md:px-8">
             {navItems.map((it) => (
-              <a key={it.href} href={it.href} className="hover:text-[#1B2838]">
+              <a key={it.href} href={it.href} className="hover:text-[#191919]">
                 {it.label}
               </a>
             ))}
@@ -178,30 +181,26 @@ export default function SancroxPage() {
             alt="Pacific Highway tunnel in New South Wales, looking out to daylight"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#141C26]/88 via-[#141C26]/55 to-[#141C26]/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/15" />
           <div className="relative mx-auto flex min-h-[min(88svh,820px)] max-w-[1180px] flex-col justify-end px-5 pb-12 pt-28 md:px-8 md:pb-16 md:pt-32">
             <Reveal>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/65">
+              <p className="font-[family-name:var(--sx-mono)] text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
                 Port Macquarie · Mid North Coast · NSW
               </p>
-              <h1 className={`${cond} mt-4 max-w-[16ch] text-[clamp(36px,6.4vw,76px)] leading-[0.95]`}>
+              <h1 className={`${display} mt-4 max-w-[18ch] text-[clamp(34px,5.6vw,64px)] leading-[1.08]`}>
                 Roads, drainage and structures for the Mid North Coast.
               </h1>
-              <p className="mt-5 max-w-[36rem] text-[17px] leading-[1.5] text-white/80 md:text-[18px]">
+              <p className="mt-5 max-w-[36rem] text-[17px] leading-[1.55] text-white/78 md:text-[18px]">
                 We design the civil work that gets a DA through and a job built, and we stay on through construction.
               </p>
-              <a
-                href="#services"
-                className="mt-8 inline-flex h-12 items-center px-6 text-[15px] font-semibold text-[#141C26]"
-                style={{ background: OCHRE }}
-              >
+              <a href="#services" className={`${btn} mt-8 h-12 px-6 text-[15px]`}>
                 What we do
               </a>
             </Reveal>
           </div>
         </section>
 
-        <section className="border-b border-[#1B2838]/10 bg-white">
+        <section className="border-b border-[#191919]/10 bg-white">
           <div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-8 px-5 py-10 md:grid-cols-4 md:px-8 md:py-12">
             {[
               { n: 2003, s: '', l: 'Established' },
@@ -210,7 +209,7 @@ export default function SancroxPage() {
               { n: 5, s: '', l: 'LGAs we work in most weeks' },
             ].map((st) => (
               <div key={st.l}>
-                <p className={`${cond} text-[36px] leading-none md:text-[42px]`}>
+                <p className={`${display} text-[36px] leading-none md:text-[42px]`}>
                   <Count to={st.n} suffix={st.s} />
                 </p>
                 <p className={`${label} mt-2`}>{st.l}</p>
@@ -219,11 +218,11 @@ export default function SancroxPage() {
           </div>
         </section>
 
-        <section id="practice" className={`${section} border-b border-[#1B2838]/10`}>
+        <section id="practice" className={`${section} border-b border-[#191919]/10`}>
           <div className="mx-auto grid max-w-[1180px] gap-10 px-5 py-16 md:grid-cols-2 md:items-center md:gap-16 md:px-8 md:py-24">
             <Reveal>
               <p className={label}>The practice</p>
-              <h2 className={`${cond} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
+              <h2 className={`${display} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
                 A Port Macquarie office, jobs across NSW.
               </h2>
               <p className="mt-5 max-w-[36rem] text-[16px] leading-[1.55] md:text-[17px]">
@@ -235,7 +234,7 @@ export default function SancroxPage() {
               </p>
             </Reveal>
             <Reveal delay={80}>
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#1B2838]/5">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#191919]/5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={photo('drawings.jpg')}
@@ -247,12 +246,12 @@ export default function SancroxPage() {
           </div>
         </section>
 
-        <section id="services" className={`${section} border-b border-[#1B2838]/10 bg-white`}>
+        <section id="services" className={`${section} border-b border-[#191919]/10 bg-white`}>
           <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-16 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-20 md:px-8 md:py-24">
             <div className="md:sticky md:top-28 md:self-start">
               <Reveal>
                 <p className={label}>Services</p>
-                <h2 className={`${cond} mt-3 max-w-[12ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>What we do</h2>
+                <h2 className={`${display} mt-3 max-w-[12ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>What we do</h2>
                 <p className={`mt-4 max-w-[22rem] text-[16px] leading-[1.5] ${mute}`}>
                   The list a small-to-mid NSW civil consultancy actually keeps: design, approvals, and construction-phase.
                 </p>
@@ -260,7 +259,7 @@ export default function SancroxPage() {
             </div>
             <ul>
               {services.map((s, i) => (
-                <Reveal key={s.t} as="li" delay={i * 40} className="border-t border-[#1B2838]/10 py-7 first:border-t-0 first:pt-0">
+                <Reveal key={s.t} as="li" delay={i * 40} className="border-t border-[#191919]/10 py-7 first:border-t-0 first:pt-0">
                   <h3 className="text-[20px] font-semibold tracking-[-0.02em] md:text-[22px]">{s.t}</h3>
                   <p className={`mt-2 max-w-[40rem] text-[15px] leading-[1.5] md:text-[16px] ${mute}`}>{s.p}</p>
                 </Reveal>
@@ -269,11 +268,11 @@ export default function SancroxPage() {
           </div>
         </section>
 
-        <section id="work" className={`${section} border-b border-[#1B2838]/10`}>
+        <section id="work" className={`${section} border-b border-[#191919]/10`}>
           <div className="mx-auto max-w-[1180px] px-5 py-16 md:px-8 md:py-24">
             <Reveal>
               <p className={label}>Work</p>
-              <h2 className={`${cond} mt-3 max-w-[18ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
+              <h2 className={`${display} mt-3 max-w-[18ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
                 Recent jobs on the coast
               </h2>
               <p className={`mt-4 max-w-[36rem] text-[16px] leading-[1.5] ${mute}`}>
@@ -283,7 +282,7 @@ export default function SancroxPage() {
             <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
               {jobs.map((job, i) => (
                 <Reveal key={job.t} delay={i * 70} as="figure">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#1B2838]/5">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#191919]/5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={photo(job.photo)} alt={job.alt} className="h-full w-full object-cover" />
                   </div>
@@ -300,7 +299,7 @@ export default function SancroxPage() {
           <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-16 md:grid-cols-2 md:items-center md:gap-16 md:px-8 md:py-24">
             <Reveal>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/45">On site</p>
-              <h2 className={`${cond} mt-3 max-w-[14ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
+              <h2 className={`${display} mt-3 max-w-[14ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
                 The same people through construction
               </h2>
               <p className="mt-5 max-w-[32rem] text-[16px] leading-[1.55] text-white/70">
@@ -328,11 +327,11 @@ export default function SancroxPage() {
           </div>
         </section>
 
-        <section className={`${section} border-b border-[#1B2838]/10 bg-white`}>
+        <section className={`${section} border-b border-[#191919]/10 bg-white`}>
           <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-16 md:grid-cols-2 md:items-center md:gap-20 md:px-8 md:py-24">
             <Reveal>
               <p className={label}>Where we work</p>
-              <h2 className={`${cond} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
+              <h2 className={`${display} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
                 Mid North Coast, and further when asked
               </h2>
               <p className={`mt-4 max-w-[32rem] text-[16px] leading-[1.55] ${mute}`}>
@@ -343,7 +342,7 @@ export default function SancroxPage() {
                 {towns.map((t) => (
                   <li
                     key={t.name}
-                    className="flex items-baseline justify-between gap-4 border-t border-[#1B2838]/10 py-3.5"
+                    className="flex items-baseline justify-between gap-4 border-t border-[#191919]/10 py-3.5"
                   >
                     <span className="text-[17px] font-medium">{t.name}</span>
                     <span className={label}>{t.note}</span>
@@ -379,7 +378,7 @@ export default function SancroxPage() {
                   { y: 292, r: 4 },
                   { y: 348, r: 4 },
                 ].map((d) => (
-                  <circle key={d.y} cx="148" cy={d.y} r={d.r} fill={d.r > 5 ? OCHRE : INK} />
+                  <circle key={d.y} cx="148" cy={d.y} r={d.r} fill={d.r > 5 ? MARK : INK} />
                 ))}
                 <text x="168" y="74" fontSize="11" fill={INK} opacity="0.55">
                   Taree
@@ -404,18 +403,18 @@ export default function SancroxPage() {
           </div>
         </section>
 
-        <section id="people" className={`${section} border-b border-[#1B2838]/10`}>
+        <section id="people" className={`${section} border-b border-[#191919]/10`}>
           <div className="mx-auto max-w-[1180px] px-5 py-16 md:px-8 md:py-24">
             <Reveal>
               <p className={label}>People</p>
-              <h2 className={`${cond} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
+              <h2 className={`${display} mt-3 max-w-[16ch] text-[clamp(28px,4vw,44px)] leading-[1.05]`}>
                 Who you deal with
               </h2>
             </Reveal>
             <div className="mt-12 grid gap-10 sm:grid-cols-3">
               {people.map((pe, i) => (
                 <Reveal key={pe.name} delay={i * 60}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-[#1B2838]/5">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[#191919]/5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photo(pe.photo)}
@@ -435,7 +434,10 @@ export default function SancroxPage() {
         <footer id="contact" className={`custom-footer ${section} text-white`} style={{ background: DARK }}>
           <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-16 md:grid-cols-2 md:gap-20 md:px-8 md:py-20">
             <div>
-              <p className={`${cond} text-[28px] md:text-[32px]`}>Sancrox Civil</p>
+              <p className="flex items-center gap-3 text-[22px] font-medium tracking-[0.01em] md:text-[24px]">
+                <span className="block h-6 w-[3px] shrink-0" style={{ background: MARK }} aria-hidden />
+                Pell Civil
+              </p>
               <p className="mt-4 max-w-[28rem] text-[16px] leading-[1.55] text-white/70">
                 Civil engineers. Roads, drainage, subdivisions and structures. Port Macquarie, working across NSW.
               </p>
@@ -457,7 +459,7 @@ export default function SancroxPage() {
                   <dd className="mt-1 text-white/85">
                     02 6584 2190
                     <br />
-                    office@sancroxcivil.com.au
+                    office@pellcivil.com.au
                   </dd>
                 </div>
               </dl>
@@ -480,7 +482,7 @@ export default function SancroxPage() {
                   type="text"
                   name="name"
                   autoComplete="name"
-                  className="mt-2 block h-11 w-full border border-white/15 bg-transparent px-3 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#C9892E]"
+                  className="mt-2 block h-11 w-full border border-white/15 bg-transparent px-3 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#D14318]"
                 />
               </label>
               <label className="mt-4 block text-[12px] font-semibold uppercase tracking-[0.12em] text-white/45">
@@ -489,7 +491,7 @@ export default function SancroxPage() {
                   type="email"
                   name="email"
                   autoComplete="email"
-                  className="mt-2 block h-11 w-full border border-white/15 bg-transparent px-3 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#C9892E]"
+                  className="mt-2 block h-11 w-full border border-white/15 bg-transparent px-3 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#D14318]"
                 />
               </label>
               <label className="mt-4 block text-[12px] font-semibold uppercase tracking-[0.12em] text-white/45">
@@ -497,20 +499,19 @@ export default function SancroxPage() {
                 <textarea
                   name="job"
                   rows={4}
-                  className="mt-2 block w-full border border-white/15 bg-transparent px-3 py-2.5 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#C9892E]"
+                  className="mt-2 block w-full border border-white/15 bg-transparent px-3 py-2.5 text-[15px] font-normal tracking-normal text-white outline-none focus:border-[#D14318]"
                 />
               </label>
               <button
                 type="submit"
-                className="mt-6 inline-flex h-12 items-center px-6 text-[15px] font-semibold text-[#141C26]"
-                style={{ background: OCHRE }}
+                className={`${btn} mt-6 h-12 px-6 text-[15px]`}
               >
                 Send
               </button>
             </form>
           </div>
           <p className="mx-auto max-w-[1180px] border-t border-white/10 px-5 py-6 text-[12px] text-white/40 md:px-8">
-            © 2026 Sancrox Civil Pty Ltd. Example site — not a real practice.
+            © 2026 Pell Civil Pty Ltd. Example site — not a real practice.
           </p>
         </footer>
       </div>

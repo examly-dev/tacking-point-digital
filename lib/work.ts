@@ -393,23 +393,23 @@ export const work: WorkItem[] = [
   },
   {
     slug: "sancrox",
-    name: "Sancrox Civil",
+    name: "Pell Civil",
     kind: "Website · example",
     summary:
-      "A Mid North Coast civil practice: roads, drainage, subdivisions and structures, from Port Macquarie.",
+      "A regional civil practice: roads, drainage, subdivisions and structures.",
     cover: {
       type: "video",
       src: "/work/sancrox.mp4",
       hd: "/work/sancrox-2x.mp4",
       poster: "/work/sancrox.jpg",
-      alt: "Sancrox Civil home page, scrolling from the Pacific Highway tunnel into services and recent jobs",
+      alt: "Pell Civil home page, scrolling from the Pacific Highway tunnel into services and recent jobs",
     },
     mobile: {
       type: "image",
       src: "/work/sancrox-mobile.jpg",
-      alt: "Sancrox Civil, mobile",
+      alt: "Pell Civil, mobile",
     },
-    mobileClip: phoneClip("sancrox", "Sancrox Civil, mobile"),
+    mobileClip: phoneClip("sancrox", "Pell Civil, mobile"),
     stills: stills("sancrox", ["What we do", "Recent jobs"]),
     overview: [
       "A Port Macquarie civil practice: roads, stormwater, subdivisions and culverts, with construction-phase support. Conventional infrastructure, not a marina brochure.",
