@@ -33,7 +33,9 @@ export function ContactForm() {
 
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim().slice(0, 40);
     const message = String(data.get("message") ?? "").trim();
+    const enquiry = { name, email, ...(phone ? { phone } : {}), message };
 
     if (!name || !email || !message) {
       setError("Please fill in your name, email and a message.");
@@ -61,7 +63,7 @@ export function ContactForm() {
         const local = await fetch("/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, message, company: data.get("company") }),
+          body: JSON.stringify({ ...enquiry, company: data.get("company") }),
         });
         if (local.ok) {
           setStatus("sent");
@@ -77,11 +79,11 @@ export function ContactForm() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          _subject: enquirySubject({ name, email, message }),
+          _subject: enquirySubject(enquiry),
           _template: "box",
           _captcha: "false",
           _replyto: email,
-          Message: enquiryText({ name, email, message }),
+          Message: enquiryText(enquiry),
         }),
       });
       const payload = (await res.json().catch(() => null)) as
@@ -101,10 +103,10 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="relative">
+      <div>
         {!reduceMotion ? <LighthouseConfetti /> : null}
-        <p className={`rise ${body}`} role="status">
-          Thanks, that has come through. I will get back to you within a day or so.
+        <p className={body} role="status">
+          Thanks for getting in touch. I&apos;ll get back to you ASAP.
         </p>
       </div>
     );
@@ -140,6 +142,21 @@ export function ContactForm() {
             className={input}
           />
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="phone" className={label}>
+          Your number, if you&apos;d like
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          inputMode="tel"
+          maxLength={40}
+          className={input}
+        />
       </div>
 
       <div>

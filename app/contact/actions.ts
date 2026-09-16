@@ -24,8 +24,9 @@ export async function sendMessage(
 
   const name = field(formData, "name");
   const email = field(formData, "email");
+  const phone = field(formData, "phone").slice(0, 40);
   const message = field(formData, "message");
-  const fields = { name, email, message };
+  const fields = { name, email, ...(phone ? { phone } : {}), message };
 
   if (!name || !email || !message) {
     return {

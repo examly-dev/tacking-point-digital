@@ -6,11 +6,12 @@ export const runtime = "nodejs";
 
 function readEnquiry(body: unknown): Enquiry | null {
   if (!body || typeof body !== "object") return null;
-  const { name, email, message } = body as Record<string, unknown>;
+  const { name, email, phone, message } = body as Record<string, unknown>;
   if (typeof name !== "string" || typeof email !== "string" || typeof message !== "string") {
     return null;
   }
-  const enquiry = { name: name.trim(), email: email.trim(), message: message.trim() };
+  const enquiry: Enquiry = { name: name.trim(), email: email.trim(), message: message.trim() };
+  if (typeof phone === "string" && phone.trim()) enquiry.phone = phone.trim().slice(0, 40);
   if (!enquiry.name || !enquiry.email || !enquiry.message) return null;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(enquiry.email)) return null;
   if (enquiry.message.length > 5000) return null;
