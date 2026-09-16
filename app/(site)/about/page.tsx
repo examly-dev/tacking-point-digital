@@ -34,9 +34,9 @@ export default function AboutPage() {
         <div className={`${body} space-y-5`}>
           <p className="rise" style={{ animationDelay: "60ms" }}>
             I&apos;m Andy. I am a part-time high school teacher, and I have a
-            young family here on the Mid North Coast. Life is good, and I love
-            running. Aside from these things, I build websites and web
-            applications.
+            young family here on the Mid North Coast. I love running and
+            brewing beer. Life is good. Aside from these things, I build
+            websites and web applications.
           </p>
           <p className="rise" style={{ animationDelay: "120ms" }}>
             The part I enjoy most is where good design meets good engineering:
