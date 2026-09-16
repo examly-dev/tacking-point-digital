@@ -132,8 +132,7 @@ export default function ServicesPage() {
             price. I do not mark up the basics.
           </p>
           <p>
-            Once live, changes are at a competitive hourly rate, the same as
-            for a site you already have. Company email, Google Workspace,
+            Once live, changes are at a competitive hourly rate. Company email, Google Workspace,
             newsletters and the like: the platform at its normal price, usually
             not much, plus my time at that rate.
           </p>
