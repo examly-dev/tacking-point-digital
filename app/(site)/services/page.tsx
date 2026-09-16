@@ -40,13 +40,9 @@ export default function ServicesPage() {
       <article className="max-w-[52rem]">
         <Section title="Bespoke websites" step={0}>
           <p>
-            Most of what I build is bespoke: designed and coded for you, not a
-            template. Good typography, a simple layout, fast, works properly on
-            a phone, nothing bolted on that you will never use.
-          </p>
-          <p>
-            Usually Next.js, TypeScript and Tailwind under the hood, the same
-            stack as my own apps.
+            Most of what I build is designed and coded for you. Careful type, a
+            simple layout, quick to load, and comfortable on a phone, without
+            extras you will not use.
           </p>
           <p>
             If you want to edit text and photos yourself, I add Sanity, a small
@@ -56,13 +52,15 @@ export default function ServicesPage() {
 
         <Section title="Platforms you can run yourself" step={1}>
           <p>
-            If you would rather run the site yourself, I will put it on a
-            platform you can actually use. WordPress is still solid. Framer or
-            Webflow when the design needs more control. Squarespace for
-            something simple. Shopify if you are selling. Or whatever you
-            already prefer. I set it up properly and uncluttered, make sure it
-            works on a phone and show you around. Usually cheaper than bespoke,
-            though the platform charges its own monthly fee.
+            If you would rather look after the site yourself, I will put it on a
+            platform you can run. There is a reason WordPress, Squarespace,
+            Framer, Webflow and Shopify are still so popular: they work well as
+            CMSs, and I respect that. WordPress for a lot of everyday sites.
+            Framer or Webflow when the design needs more control. Squarespace
+            for something simple. Shopify if you are selling. Or whatever you
+            already prefer. I set it up cleanly, make sure it works on a phone,
+            and show you around. Usually cheaper than a custom build, though
+            the platform charges its own monthly fee.
           </p>
           <p>
             After that, help is optional: some people never need me again,
@@ -72,7 +70,7 @@ export default function ServicesPage() {
 
         <Section title="Web and mobile apps" step={2}>
           <p>
-            Beyond brochure sites I build web apps: booking and admin tools,
+            Alongside the websites, I build web apps: booking and admin tools,
             dashboards, internal systems, and my own products{" "}
             <Link href="/work/examly" className={link}>
               Examly
