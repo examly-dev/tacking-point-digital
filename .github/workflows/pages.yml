@@ -26,10 +26,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - name: Use mailto contact form
-        run: |
-          cp components/ContactFormMailto.tsx components/ContactForm.tsx
-          rm -f app/contact/actions.ts
       - name: Omit private invoices from the public site
         run: |
           rm -rf "app/(invoices)" app/api/invoices proxy.ts

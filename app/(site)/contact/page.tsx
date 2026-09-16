@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { TalkThrough } from "@/components/TalkThrough";
+import { ContactForm } from "@/components/ContactForm";
 import { Lighthouse } from "@/components/Lighthouse";
-import { site } from "@/lib/site";
+import { mailto, site, tel } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -19,9 +19,32 @@ export default function ContactPage() {
             <Lighthouse />
             {site.name}
           </p>
-          <div className="rise" style={{ animationDelay: "60ms" }}>
-            <TalkThrough />
-          </div>
+          <p className="rise" style={{ animationDelay: "60ms" }}>
+            <a
+              href={tel}
+              className="hover:opacity-50 transition-opacity duration-200"
+            >
+              {site.phone}
+            </a>
+            <br />
+            <a
+              href={mailto}
+              className="hover:opacity-50 transition-opacity duration-200"
+            >
+              {site.email}
+            </a>
+          </p>
+          <p className="rise" style={{ animationDelay: "120ms" }}>
+            Or leave a message here and I will get back to you. No pitch, no
+            obligation; just a chat about what you need.
+          </p>
+        </div>
+
+        <div
+          className="rise mt-10 border-t border-black/10 pt-8"
+          style={{ animationDelay: "180ms" }}
+        >
+          <ContactForm />
         </div>
       </article>
     </div>
