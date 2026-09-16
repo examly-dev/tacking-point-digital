@@ -27,22 +27,19 @@ function StripeMark({ className = 'h-4 w-4' }: { className?: string }) {
 
 export function Subscribe() {
   const [plan, setPlan] = useState<'weekly' | 'fortnightly'>('weekly');
-  const [fulfil, setFulfil] = useState<'pickup' | 'delivery'>('pickup');
   const [day, setDay] = useState<(typeof DAYS)[number]>('Wednesday');
   const [loaf, setLoaf] = useState(LOAVES[0]);
   const [pay, setPay] = useState<Pay>('payto');
   const [done, setDone] = useState<string | null>(null);
 
-  const bag = 22;
-  const drop = fulfil === 'delivery' ? 6 : 0;
-  const total = bag + drop;
+  const total = 22;
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const name = String(new FormData(e.currentTarget).get('name') ?? '').trim() || 'you';
     const method = pay === 'apple' ? 'Apple Pay' : pay === 'payto' ? 'PayTo' : 'card';
     setDone(
-      `${plan === 'weekly' ? 'Weekly' : 'Fortnightly'} bag for ${name}: ${loaf}, ${fulfil === 'pickup' ? `${day} pickup` : `${day} drop`}. ${method}. $${total} per ${plan === 'weekly' ? 'week' : 'fortnight'}.`,
+      `${plan === 'weekly' ? 'Weekly' : 'Fortnightly'} bag for ${name}: ${loaf}, ${day} pickup. ${method}. $${total} per ${plan === 'weekly' ? 'week' : 'fortnight'}.`,
     );
   }
 
@@ -55,7 +52,7 @@ export function Subscribe() {
         </p>
         <p className="mt-4 max-w-[36rem] text-[17px] leading-[1.45]">{done}</p>
         <p className="mt-3 max-w-[36rem] text-[14px] leading-[1.5] text-[#F2EFE8]/55">
-          On a live site Stripe would start a recurring Billing subscription and take PayTo, BECS Direct Debit, or a card. This page does not take payment.
+          On a live site Stripe would start a recurring Billing subscription and take PayTo or a card. This page does not take payment.
         </p>
       </div>
     );
@@ -85,30 +82,6 @@ export function Subscribe() {
                   {title}
                 </span>
                 <span className={`mt-2 block text-[13px] ${plan === id ? 'text-[#111]/55' : 'text-[#F2EFE8]/55'}`}>{note}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <p className={label}>How it gets to you</p>
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            {(
-              [
-                ['pickup', 'Pickup', 'Name on a bag. From 07:00.'],
-                ['delivery', 'Delivery', 'Neighbourhood run. $6 a drop.'],
-              ] as const
-            ).map(([id, title, note]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setFulfil(id)}
-                className={`border px-4 py-3 text-left ${
-                  fulfil === id ? 'border-[#F2EFE8] bg-[#F2EFE8] text-[#111]' : 'border-white/20 hover:border-white'
-                }`}
-              >
-                <span className="block text-[16px] font-medium">{title}</span>
-                <span className={`mt-1 block text-[13px] ${fulfil === id ? 'text-[#111]/55' : 'text-[#F2EFE8]/55'}`}>{note}</span>
               </button>
             ))}
           </div>
@@ -160,7 +133,7 @@ export function Subscribe() {
           </p>
         </div>
         <p className="mt-1 text-[13px] leading-[1.45] text-[#F2EFE8]/55">
-          Stripe Billing on a custom Next.js checkout. PayTo and BECS Direct Debit for the weekly debit; cards and Apple Pay if you prefer.
+          Stripe Billing on a custom Next.js checkout. PayTo, cards and Apple Pay.
         </p>
 
         <label className="mt-5 block">
@@ -199,7 +172,7 @@ export function Subscribe() {
         </div>
         <p className="mt-2 text-[12px] leading-snug text-[#F2EFE8]/45">
           {pay === 'payto'
-            ? 'PayTo (NPP) with BECS Direct Debit as fallback. Usual method for an Australian weekly debit in 2026.'
+            ? 'PayTo through Stripe. Usual method for an Australian weekly debit.'
             : pay === 'apple'
               ? 'Apple Pay via Stripe Payment Element.'
               : 'Visa, Mastercard, eftpos. Stripe handles the card.'}

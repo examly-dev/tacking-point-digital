@@ -208,7 +208,8 @@ export default function ProofRoomPage() {
           </Reveal>
           <Reveal delay={60}>
             <p className="mt-6 max-w-[34rem] text-[17px] leading-[1.45] text-[#F2EFE8]/70 md:text-[19px]">
-              A recurring bag of bread. Two loaves, weekly or fortnightly. Pick them up, or we drop them.
+              A recurring bag of bread. Two loaves, weekly or fortnightly. You
+              pick them up from the shop.
             </p>
           </Reveal>
 

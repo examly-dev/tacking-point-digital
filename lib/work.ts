@@ -190,10 +190,10 @@ export const work: WorkItem[] = [
       alt: "Bakehouse, mobile",
     },
     mobileClip: phoneClip("proof-room", "Bakehouse, mobile"),
-    stills: stills("proof-room", ["The wordmark", "What’s on"]),
+    stills: stills("proof-room", ["The weekly loaf", "Subscribe"]),
     overview: [
       "An indicative bespoke site for a small bakery: hours, what’s on, and how to visit. Quite simple, but the useful information is all there. Photography does most of the work so the product can sit in the layout rather than behind stock copy.",
-      "The weekly loaf is a Stripe Billing subscription — card, Apple Pay, and PayTo / BECS Direct Debit — so a custom site can take recurring payments without a separate shop. Pickup or a neighbourhood drop.",
+      "The weekly loaf is a Stripe Billing subscription — card, Apple Pay, and PayTo — so a custom site can take recurring payments without a separate shop.",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe Billing"],
   },
@@ -240,7 +240,7 @@ export const work: WorkItem[] = [
       alt: "Ellery Lawyers, mobile",
     },
     mobileClip: phoneClip("ellery", "Ellery Lawyers, mobile"),
-    stills: stills("ellery", ["Practice areas", "The people"]),
+    stills: stills("ellery", ["The headline", "How to write in"]),
     overview: [
       "An indicative website for a small Newcastle, NSW firm: property and conveyancing, wills and estates, and family law, on one page — who you would see, and how to write in.",
     ],
@@ -339,7 +339,7 @@ export const work: WorkItem[] = [
       alt: "Ironbark, mobile",
     },
     mobileClip: phoneClip("ironbark", "Ironbark, mobile"),
-    stills: stills("ironbark", ["The hut", "Availability and booking"]),
+    stills: stills("ironbark", ["Photos of the hut", "Availability and booking"]),
     overview: [
       "An indicative listing and booking page for a small stay. Availability and reservations go through Little Hotelier, so the diary stays in the property manager’s existing tool rather than a second calendar.",
     ],
@@ -411,7 +411,7 @@ export const work: WorkItem[] = [
       alt: "Pell Civil, mobile",
     },
     mobileClip: phoneClip("sancrox", "Pell Civil, mobile"),
-    stills: stills("sancrox", ["Clients we issue drawings for", "Recent jobs"]),
+    stills: stills("sancrox", ["Write to us", "Recent jobs"]),
     overview: [
       "An indicative website for a Port Macquarie civil practice: roads, stormwater, subdivisions and culverts, with construction-phase support. Services, recent jobs, and who issues the drawings.",
     ],
