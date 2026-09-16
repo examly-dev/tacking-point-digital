@@ -20,6 +20,15 @@ docker compose up
 
 Then open [https://web.tackingpoint.orb.local](https://web.tackingpoint.orb.local) or [https://tackingpoint.local](https://tackingpoint.local).
 
+## Invoices
+
+A private invoice workspace lives at `/invoices` on the local/OrbStack app. It is stripped from the GitHub Pages build.
+
+- Trading as **Tacking Point Digital**; legal supplier **Andrew James Fong**; ABN **77 124 933 069**
+- Records are stored in `.data/invoices.json` (gitignored)
+- Fill in bank details under `/invoices/settings`
+- Optional `INVOICE_ACCESS_KEY` in `.env` — required in production, optional in development
+
 ## Add a piece of work
 
 1. Drop screenshots or short silent clips (H.264 MP4, with a JPEG or PNG poster) in `public/work/`. The card shows the cover in a 16:10 frame (220×138 from tablet up), so a 1440×900 capture fits without cropping. Keep the inline `src` at 1× (1440×900) so it decodes cheaply while the page animates; put the 2× file in `hd` and only the lightbox will use it. Clips do not autoplay in the grid: the card shows the poster and plays on hover or focus (on touch screens, while the card is mostly on screen). On project pages only the clip in view plays, and `prefers-reduced-motion` shows posters only. Every shot on a project page opens full size in a lightbox (`components/Lightbox.tsx`), with a link to the raw file.

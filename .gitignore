@@ -20,6 +20,9 @@
 # production
 /build
 
+# invoice records (local/OrbStack only)
+.data/
+
 # misc
 .DS_Store
 *.pem
