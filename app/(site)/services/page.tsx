@@ -40,9 +40,9 @@ export default function ServicesPage() {
       <article className="max-w-[52rem]">
         <Section title="Bespoke websites" step={0}>
           <p>
-            Most of what I build is designed and coded for you. Careful type, a
-            simple layout, quick to load, and comfortable on a phone, without
-            extras you will not use.
+            Most of what I build is bespoke: designed and coded for you. Good
+            typography, a simple layout, fast, works properly on a phone. I
+            keep it to what you will actually use.
           </p>
           <p>
             If you want to edit text and photos yourself, I add Sanity, a small
@@ -131,10 +131,11 @@ export default function ServicesPage() {
             , an Australian-owned host: a .com.au in your name at their normal
             price. I do not mark up the basics.
           </p>
+          <p>Once live, changes are at a competitive hourly rate.</p>
           <p>
-            Once live, changes are at a competitive hourly rate. Company email,
-            Google Workspace, newsletters and the like: the platform at its
-            normal price, usually not much, plus my time at that rate.
+            I can set up company email, Google Workspace, newsletters and the
+            like. You pay the platform at its normal rate, plus the time it
+            takes me to set it up.
           </p>
           <p>
             I am not one to upsell. I take pride in the work and would rather
