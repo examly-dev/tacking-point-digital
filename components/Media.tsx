@@ -114,6 +114,13 @@ export function Media({
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={asset(media.src)} alt={media.alt} className={fit} />
+    <img
+      src={asset(media.src)}
+      alt={media.alt}
+      decoding="async"
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : undefined}
+      className={fit}
+    />
   );
 }

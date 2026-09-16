@@ -1,76 +1,16 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
 import { SitePreview, ViewSiteButton } from "@/components/SitePreview";
+import { ViewSlider } from "@/components/ViewSlider";
 import type { WorkMedia } from "@/lib/work";
-
-const label = "text-[13px] tablet:text-[12px] transition-colors duration-200";
-
-/**
- * Quiet two-position slider: Desktop ← thumb → Mobile.
- * Black thumb on a hairline track, matching the rest of the site.
- */
-function ViewSlider({
-  value,
-  onChange,
-}: {
-  value: "desktop" | "mobile";
-  onChange: (next: "desktop" | "mobile") => void;
-}) {
-  const mobile = value === "mobile";
-
-  return (
-    <div className="flex items-center gap-2.5" role="group" aria-label="Preview size">
-      <button
-        type="button"
-        className={`${label} ${mobile ? "text-black/30 hover:text-black" : "text-black"}`}
-        onClick={() => onChange("desktop")}
-      >
-        Desktop
-      </button>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={mobile}
-        aria-label={mobile ? "Mobile view. Switch to desktop." : "Desktop view. Switch to mobile."}
-        onClick={() => onChange(mobile ? "desktop" : "mobile")}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowLeft" || e.key === "Home") {
-            e.preventDefault();
-            onChange("desktop");
-          }
-          if (e.key === "ArrowRight" || e.key === "End") {
-            e.preventDefault();
-            onChange("mobile");
-          }
-        }}
-        className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center tablet:h-[18px] tablet:w-[32px]"
-      >
-        <span className="relative block h-[18px] w-[32px] rounded-full bg-black/[0.08]">
-          <span
-            aria-hidden
-            className="absolute top-[2px] left-[2px] h-[14px] w-[14px] rounded-full bg-black transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none"
-            style={{ transform: mobile ? "translateX(14px)" : "translateX(0)" }}
-          />
-        </span>
-      </button>
-      <button
-        type="button"
-        className={`${label} ${mobile ? "text-black" : "text-black/30 hover:text-black"}`}
-        onClick={() => onChange("mobile")}
-      >
-        Mobile
-      </button>
-    </div>
-  );
-}
 
 /**
  * Work-page preview well. Independent of the Dead Simple Sites index cards.
- * Mobile is a watchable 390×844 scrolling phone clip; desktop is the landscape
- * scroll clip, contain-fitted in a 16/10 frame.
+ * Always opens on desktop. Mobile is a watchable 390×844 scrolling phone clip;
+ * desktop is the landscape scroll clip, contain-fitted in a 16/10 frame.
  */
 export function CoverSwitch({
   cover,
@@ -81,11 +21,15 @@ export function CoverSwitch({
   mobile: WorkMedia;
   previewSlug?: string;
 }) {
-  const [view, setView] = useState<"desktop" | "mobile">("mobile");
+  const [view, setView] = useState<"desktop" | "mobile">("desktop");
   const [preview, setPreview] = useState(false);
   const openPreview = useCallback(() => setPreview(true), []);
   const closePreview = useCallback(() => setPreview(false), []);
   const media = view === "mobile" ? mobile : cover ?? mobile;
+
+  useEffect(() => {
+    setView("desktop");
+  }, [cover?.src, mobile.src, previewSlug]);
 
   return (
     <>

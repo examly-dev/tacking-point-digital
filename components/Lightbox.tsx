@@ -30,20 +30,21 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label={`View full size: ${media.alt}`}
-        className="group/zoom relative block w-full cursor-zoom-in text-left"
-      >
+      <div className="group/zoom relative">
         {children}
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={`View full size: ${media.alt}`}
+          className="absolute inset-0 cursor-zoom-in"
+        />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-2.5 right-2.5 rounded-sm bg-white/90 px-2 py-1 text-[11px] text-black/60 opacity-0 shadow-[0_1px_2px_rgba(0,0,0,0.08)] backdrop-blur transition-opacity duration-200 group-hover/zoom:opacity-100 group-focus-visible/zoom:opacity-100"
+          className="pointer-events-none absolute bottom-2.5 right-2.5 rounded-sm bg-white/90 px-2 py-1 text-[11px] text-black/60 opacity-0 shadow-[0_1px_2px_rgba(0,0,0,0.08)] backdrop-blur transition-opacity duration-200 group-hover/zoom:opacity-100 group-focus-within/zoom:opacity-100"
         >
           Full size
         </span>
-      </button>
+      </div>
 
       {open
         ? createPortal(

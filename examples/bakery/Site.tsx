@@ -1,6 +1,7 @@
 import { Archivo, Archivo_Black } from 'next/font/google';
 import { asset } from '@/lib/asset';
 import { Clock, InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
+import { Subscribe } from '@/examples/bakery/Subscribe';
 
 /*
   BAKEHOUSE
@@ -211,41 +212,9 @@ export default function ProofRoomPage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-8 md:mt-16 md:grid-cols-2 md:gap-10">
-            <Reveal>
-              <p className={`${black} text-[clamp(28px,5vw,40px)] leading-none`}>Weekly</p>
-              <p className="mt-3 text-[15px] leading-snug text-[#F2EFE8]/70">
-                $22. Two loaves. We pack the bag, or you name them by Tuesday 5pm. Skip a week by text.
-              </p>
-            </Reveal>
-            <Reveal delay={50}>
-              <p className={`${black} text-[clamp(28px,5vw,40px)] leading-none`}>Fortnightly</p>
-              <p className="mt-3 text-[15px] leading-snug text-[#F2EFE8]/70">
-                $22. Same bag, every other week. Same skip rule. No lock-in.
-              </p>
-            </Reveal>
+          <div className="mt-12 md:mt-16">
+            <Subscribe />
           </div>
-
-          <div className="mt-12 grid gap-8 border-t border-white/15 pt-10 md:grid-cols-2 md:gap-10">
-            <Reveal>
-              <p className={label} style={{ color: 'rgba(242,239,232,0.45)' }}>Pickup</p>
-              <p className="mt-3 text-[16px] leading-snug">
-                Your name on a paper bag. From 07:00, Wednesday or Saturday. If we sell out of a loaf you named, we substitute and note it on the bag.
-              </p>
-            </Reveal>
-            <Reveal delay={50}>
-              <p className={label} style={{ color: 'rgba(242,239,232,0.45)' }}>Delivery</p>
-              <p className="mt-3 text-[16px] leading-snug">
-                Wednesday and Saturday mornings, neighbourhood run. $6 a drop, or free if you are on two bags. Leave a crate if you are out.
-              </p>
-            </Reveal>
-          </div>
-
-          <Reveal delay={80}>
-            <p className="mt-12 max-w-[36rem] text-[15px] leading-snug text-[#F2EFE8]/55">
-              Start it with a text or an email. Say weekly or fortnightly, pickup or delivery, and which day.
-            </p>
-          </Reveal>
         </section>
 
         <div className="grid md:grid-cols-2">

@@ -247,15 +247,15 @@ export default function HalfwayPage() {
             <div>
               <h2 className={`${disp} text-[clamp(48px,8vw,120px)]`}>Book</h2>
               <p className="mt-4 max-w-[28rem] text-[15px] leading-[1.5] text-[#2B1A12]/65">
-                A table inside, at the window, or on the footpath. Two to eight people. We hold it fifteen minutes, then it
-                goes back on the board.
+                A table inside, at the window, or on the footpath. Two to eight people. Bookings run through Now Book It,
+                on this page — we hold it fifteen minutes, then it goes back on the board.
               </p>
             </div>
-            <p className={`${label} text-[#2B1A12]/50`}>Mon – Sat · last sitting 13:00</p>
+            <p className={`${label} text-[#2B1A12]/50`}>Now Book It · last sitting 13:00</p>
           </Reveal>
-          <Reveal delay={80} className="mt-10">
+          <div className="mt-10">
             <BookingForm />
-          </Reveal>
+          </div>
         </section>
 
         <section id="beans" className={`${section} text-[#EFE4D2]`} style={{ background: OLIVE }}>
@@ -481,7 +481,7 @@ export default function HalfwayPage() {
           </div>
           <div className="flex flex-col gap-2 border-t border-[#EFE4D2]/15 px-5 py-5 text-[11px] leading-relaxed tracking-[0.08em] text-[#EFE4D2]/40 uppercase sm:flex-row sm:flex-wrap sm:items-center sm:justify-between md:px-8">
             <span className="shrink-0">© Halfway House 2026</span>
-            <span className="max-w-full sm:text-right">ABN 51 824 753 556 · Shopify shop · Square gift cards · Sixth coffee free</span>
+            <span className="max-w-full sm:text-right">ABN 51 824 753 556 · Now Book It · Shopify · Square gift cards</span>
           </div>
         </footer>
       </div>

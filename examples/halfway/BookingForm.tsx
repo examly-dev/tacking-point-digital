@@ -73,6 +73,7 @@ export function BookingForm() {
         <p className="mt-3 max-w-[34rem] text-[17px] leading-[1.5]">{sent}</p>
         <p className="mt-4 max-w-[34rem] text-[14px] leading-[1.5] text-[#2B1A12]/60">
           We keep it fifteen minutes after the time. Give the name at the door. If you are late we give the table away.
+          Now Book It would also text a reminder.
         </p>
       </div>
     );
@@ -81,6 +82,10 @@ export function BookingForm() {
   return (
     <form onSubmit={onSubmit} className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
       <div className="min-w-0 rounded-3xl border border-[#2B1A12]/15 bg-white p-5 md:p-6">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-[15px] font-semibold">Hold a table</p>
+          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#2B1A12]/50">Powered by Now Book It</p>
+        </div>
         <p className={label}>Date</p>
         <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {days.map((d) => {

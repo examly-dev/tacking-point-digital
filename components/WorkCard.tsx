@@ -20,7 +20,7 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
     >
       <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
         <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] transition-colors duration-300 ease-out group-hover:bg-black/[0.08] group-active:bg-black/[0.08] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
-          <div className="relative aspect-[180/236] w-[72%] overflow-hidden border border-black/[0.03] bg-white transition-transform duration-500 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.015] group-active:scale-[0.99] tablet:h-[236px] tablet:w-[180px]">
+          <div className="relative aspect-[180/236] w-[72%] overflow-hidden transition-transform duration-500 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.015] group-active:scale-[0.99] tablet:h-[236px] tablet:w-[180px]">
             {preview ? (
               <Media
                 media={preview}
@@ -34,7 +34,7 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
         </div>
       </ViewTransition>
       <div className="flex w-full items-center justify-between tablet:w-[250px]">
-        <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
+        <h2 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h2>
         <span className="flex items-center gap-1 text-[15px] text-black/30 transition-colors duration-200 group-hover:text-black tablet:text-[14px]">
           Visit
           <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">

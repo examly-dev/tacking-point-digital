@@ -145,6 +145,7 @@ export default async function WorkPage({ params }: Props) {
           <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
             {item.mobile || item.mobileClip ? (
               <CoverSwitch
+                key={item.slug}
                 cover={item.cover}
                 mobile={item.mobileClip ?? item.mobile!}
                 previewSlug={preview ? item.slug : undefined}
