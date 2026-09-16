@@ -55,7 +55,7 @@ export function ContactForm() {
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(inbox())}`, {
+      const res = await fetch(`https://formsubmit.co/ajax/${inbox()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,9 +76,7 @@ export function ContactForm() {
         | null;
       const ok =
         res.ok &&
-        payload != null &&
-        payload.success !== false &&
-        payload.success !== "false";
+        (payload?.success === true || payload?.success === "true");
       if (!ok) throw new Error(payload?.message ?? "send failed");
       setStatus("sent");
       form.reset();
