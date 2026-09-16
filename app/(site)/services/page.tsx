@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Bespoke websites, CMS and site builders, web and mobile apps, updates to existing sites, and automation. Fixed-price builds, honest pricing.",
+    "Bespoke websites, CMS and site builders, updates to existing sites, web and mobile apps, and automation. Fixed-price builds, honest pricing.",
 };
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
@@ -68,7 +68,15 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section title="Web and mobile apps" step={2}>
+        <Section title="Existing sites" step={2}>
+          <p>
+            If you already have a site and just want updates or extra
+            functionality, I do that at a reasonable hourly rate. All I need is
+            the right access. I will not try to sell you a redesign.
+          </p>
+        </Section>
+
+        <Section title="Web and mobile apps" step={3}>
           <p>
             Alongside the websites, I build web apps: booking and admin tools,
             dashboards, internal systems, and my own products{" "}
@@ -90,14 +98,6 @@ export default function ServicesPage() {
             with app store reviews and updates to keep on top of, so we would
             first talk through whether you really need one. Often a web app
             does the job.
-          </p>
-        </Section>
-
-        <Section title="Existing sites" step={3}>
-          <p>
-            If you already have a site and just want updates or extra
-            functionality, I do that at a reasonable hourly rate. All I need is
-            the right access. I will not try to sell you a redesign.
           </p>
         </Section>
 
