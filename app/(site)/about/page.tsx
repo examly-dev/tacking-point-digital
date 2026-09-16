@@ -54,10 +54,9 @@ export default function AboutPage() {
             if you were not really happy with it.
           </p>
           <p className="rise" style={{ animationDelay: "300ms" }}>
-            You can find more about what I do, how I work and what it costs
-            under{" "}
-            <Link href="/services" className={link}>
-              Services
+            You can find more about{" "}
+            <Link href="/services/" className={link}>
+              what I do, how I work and what it costs under Services
             </Link>
             .
           </p>
