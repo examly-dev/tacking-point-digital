@@ -36,8 +36,9 @@ export function Media({
   sizes?: string;
   priority?: boolean;
   /**
-   * Do not put `src` in the HTML until this node intersects. `loading="lazy"`
-   * still downloads a short homepage; Lighthouse then counts every card.
+   * Do not put `src` in the HTML until this node is near the viewport.
+   * Native `loading="lazy"` still fetches on-screen cards; deferring the
+   * attribute keeps the first paint to the first couple of rows.
    */
   deferSrc?: boolean;
   /** Force `loading="eager"` without making this the LCP image. */
@@ -156,41 +157,17 @@ function Still({
     const node = slot.current;
     if (!node) return;
 
-    // A late-painted same-size image becomes LCP. On phones wait for a gesture
-    // (which finalises LCP). Tablet/desktop can fill in-view cards immediately.
-    let allowed = window.matchMedia("(min-width: 850px)").matches;
-
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!allowed || !entry.isIntersecting) return;
+        if (!entry.isIntersecting) return;
         setReady(true);
         io.disconnect();
       },
-      { root: null, rootMargin: "0px", threshold: 0 },
+      { root: null, rootMargin: "800px 0px", threshold: 0 },
     );
     io.observe(node);
 
-    const arm = () => {
-      allowed = true;
-      const rect = node.getBoundingClientRect();
-      const vh = window.innerHeight || 0;
-      if (rect.bottom > 0 && rect.top < vh) {
-        setReady(true);
-        io.disconnect();
-      }
-    };
-
-    window.addEventListener("scroll", arm, { passive: true, once: true });
-    window.addEventListener("pointerdown", arm, { passive: true, once: true });
-    const host = node.closest("a");
-    host?.addEventListener("focusin", arm, { once: true });
-
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", arm);
-      window.removeEventListener("pointerdown", arm);
-      host?.removeEventListener("focusin", arm);
-    };
+    return () => io.disconnect();
   }, [deferSrc, ready]);
 
   if (!ready) {
@@ -204,7 +181,7 @@ function Still({
       alt={alt}
       decoding="async"
       loading={priority || eager ? "eager" : "lazy"}
-      fetchPriority={priority || eager ? "high" : undefined}
+      fetchPriority={priority ? "high" : undefined}
       className={className}
     />
   );

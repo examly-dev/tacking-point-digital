@@ -27,8 +27,8 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
                 sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
                 play="hover"
                 priority={index === 0}
-                eager={index === 1}
-                deferSrc={index >= 2}
+                eager={index < 4}
+                deferSrc={index >= 4}
                 className="object-cover object-top"
               />
             ) : null}
