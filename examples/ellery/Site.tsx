@@ -5,7 +5,8 @@ import { InPageScroll, Reveal, ScrollSpy } from '@/examples/_shared/primitives';
 
 /*
   ELLERY LAWYERS
-  Calm one-pager: cream paper, Newsreader display, Public Sans UI.
+  Indicative small-firm one-pager, Newcastle / Hamilton NSW.
+  Cream paper, Newsreader display, Public Sans UI.
   Few nav items, one building photograph, maize accent — not forest green,
   not Archivo Black, not Sora, not Outfit.
 */
@@ -42,18 +43,18 @@ const nav = [
 
 const practice = [
   {
-    h: 'Commercial',
-    p: 'Companies, contracts, and buying or selling a business. We read the paper and tell you what it actually does.',
+    h: 'Property',
+    p: 'Buying and selling houses and units, off-the-plan, and leases. Newcastle, Lake Macquarie and the Lower Hunter.',
     icon: 'building',
   },
   {
-    h: 'Disputes',
-    p: 'When a deal goes wrong, or money is owed. Most of it settles. If it has to go further, you will know why.',
+    h: 'Estates',
+    p: 'Wills, enduring powers of attorney, probate and family provision. Supreme Court of NSW when a grant is required.',
     icon: 'papers',
   },
   {
     h: 'Family',
-    p: 'Separation, parenting and property. The partner you instruct is the one who writes to the other side.',
+    p: 'Separation, parenting and property. Federal Circuit and Family Court if it does not settle.',
     icon: 'house',
   },
 ];
@@ -61,29 +62,29 @@ const practice = [
 const people = [
   {
     name: 'Helen Ellery',
-    role: 'Principal · commercial',
-    note: 'Started the practice in 1998. Still takes on the files herself.',
+    role: 'Principal · NSW',
+    note: 'Admitted in New South Wales. Opened the practice in 1998. Still takes files herself.',
     photo: 'helen.jpg',
     pos: 'object-[50%_18%]',
   },
   {
     name: 'Amir Rahman',
-    role: 'Partner · disputes',
-    note: 'Commercial disputes and debt. Direct, on the page, no theatre.',
+    role: 'Solicitor · property',
+    note: 'Contracts for sale, off-the-plan and leases. Settlements around Newcastle and Lake Macquarie.',
     photo: 'amir.jpg',
     pos: 'object-[50%_12%]',
   },
   {
     name: 'Claire Nash',
-    role: 'Partner · family',
+    role: 'Solicitor · family',
     note: 'Parenting and property after separation. Plain advice, then the paperwork.',
     photo: 'claire.jpg',
     pos: 'object-[50%_22%]',
   },
   {
     name: 'Tom Brier',
-    role: 'Senior associate',
-    note: 'Contracts and the day-to-day of a sale. Works with Helen on the commercial list.',
+    role: 'Solicitor · estates',
+    note: 'Wills, probate and family provision. Works the estates list with Helen.',
     photo: 'tom.jpg',
     pos: 'object-[50%_18%]',
   },
@@ -91,29 +92,29 @@ const people = [
 
 const notes = [
   {
-    q: 'They told us what it would cost and then they did it. The other side had a much larger firm. It did not change the result.',
+    q: 'They set out the cooling-off dates, then they just did the purchase. A house in Charlestown. Nothing extra on the bill.',
     who: 'Clare P.',
-    role: 'Manufacturer',
+    role: 'Charlestown',
   },
   {
-    q: 'I did not want a performance. I wanted someone to read the contract and say whether I should sign it. That is what I got.',
+    q: 'I needed a will and an enduring power of attorney. They explained the difference, then sent the drafts.',
     who: 'Mark T.',
-    role: 'Shop owner',
+    role: 'Warners Bay',
   },
 ];
 
 const faq = [
   {
     q: 'How do you charge?',
-    a: 'A written estimate before we start, then time in six-minute units, billed monthly. If the job is a fixed piece of work we will say so. You will not find a surprise on the invoice.',
+    a: 'A costs agreement and a written estimate before we start. Time in six-minute units, billed monthly, unless the job is a fixed piece of work — a standard conveyance, a simple will. You will not find a surprise on the invoice.',
   },
   {
-    q: 'Will a junior run my file?',
-    a: 'No. A senior associate may draft, under the partner who took you on. The partner still signs the letters and takes your call.',
+    q: 'Who works on my file?',
+    a: 'The solicitor you instruct. Another solicitor may draft; the same person still signs the letters and takes your call.',
   },
   {
     q: 'Do you go to court?',
-    a: 'When it is the right move. Most commercial and family work settles. If it does not, we brief counsel and stay on the file.',
+    a: 'Family matters go to the Federal Circuit and Family Court if they do not settle. Probate and family provision are Supreme Court of NSW. We brief a barrister when a hearing needs one, and stay on the file.',
   },
 ];
 
@@ -127,7 +128,7 @@ function Seal({ className = '' }: { className?: string }) {
         <path id="el-ring" d="M100,100 m0,-66 a66,66 0 1,1 0,132 a66,66 0 1,1 0,-132" />
       </defs>
       <text fill={INK} fontSize="11" letterSpacing="5.2" fontWeight="500">
-        <textPath href="#el-ring">ELLERY LAWYERS · EST 1998 ·</textPath>
+        <textPath href="#el-ring">ELLERY LAWYERS · NEWCASTLE ·</textPath>
       </text>
       <text
         x="100"
@@ -203,7 +204,7 @@ export default function ElleryPage() {
               href="#contact"
               className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full bg-[#1C1915] pl-4 pr-1.5 text-[13px] font-medium text-[#F5F0E6] transition-opacity hover:opacity-85 md:h-11 md:pl-5"
             >
-              Write to us
+              Contact us
               <span
                 className="grid h-7 w-7 place-items-center rounded-full text-[15px] leading-none text-[#1C1915] md:h-8 md:w-8"
                 style={{ background: MAIZE }}
@@ -218,7 +219,7 @@ export default function ElleryPage() {
         <section id="top" className={`${section} px-5 pt-10 md:px-8 md:pt-16`}>
           <Reveal>
             <h1 className={`${serif} mx-auto max-w-[18ch] text-center text-[clamp(2.4rem,7.2vw,6.4rem)] leading-[0.96] tracking-[-0.03em]`}>
-              The partner you meet runs the file.
+              Property, wills and family law. Newcastle.
             </h1>
           </Reveal>
 
@@ -228,8 +229,8 @@ export default function ElleryPage() {
             </Reveal>
             <Reveal delay={140}>
               <p className="max-w-[32rem] text-[17px] leading-[1.5] text-[#1C1915]/80 md:text-[19px]">
-                Commercial work, disputes and family law. We have been doing this since 1998. The person you speak to first is
-                the person who writes the letters.
+                Conveyancing, wills and estates, and family law. A Hamilton office, files from Newcastle, Lake Macquarie and
+                the Lower Hunter. Helen opened the practice in 1998.
               </p>
             </Reveal>
           </div>
@@ -250,7 +251,7 @@ export default function ElleryPage() {
           <Reveal className="relative z-10 mx-5 -mt-24 max-w-[20rem] p-6 md:absolute md:bottom-10 md:left-10 md:mx-0 md:mt-0 md:max-w-[22rem] md:p-8">
             <div className="absolute inset-0" style={{ background: MAIZE }} />
             <p className={`relative ${serif} text-[22px] leading-[1.25] tracking-[-0.02em] md:text-[26px]`}>
-              The person who takes your call keeps the file. It is not passed down the chain.
+              Most files are a purchase, a will or a separation.
             </p>
           </Reveal>
         </section>
@@ -262,11 +263,11 @@ export default function ElleryPage() {
             </Reveal>
             <Reveal delay={60} className="md:col-span-8 md:col-start-5">
               <p className={`${serif} max-w-[22ch] text-[clamp(1.85rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.03em]`}>
-                A small practice. Named partners. Direct answers.
+                A small practice in Hamilton. Direct answers.
               </p>
               <p className="mt-8 max-w-[36rem] text-[17px] leading-[1.5] text-[#1C1915]/75 md:text-[18px]">
-                Most of the work is on the phone and in writing. We meet when it helps. We do not take on more than we can
-                hold, which is why the list stays short and the partner stays on the file.
+                Most of the work is on the phone and in writing. We meet when it helps. Four solicitors, admitted in NSW. We
+                do not take on more than we can hold.
               </p>
             </Reveal>
           </div>
@@ -337,7 +338,7 @@ export default function ElleryPage() {
         <section id="contact" className={`${section} border-t border-[#1C1915]/10 px-5 py-20 md:px-8 md:py-28`}>
           <div className="grid gap-12 md:grid-cols-12">
             <Reveal className="md:col-span-5">
-              <p className={label}>Write to us</p>
+              <p className={label}>Contact us</p>
               <h2 className={`${serif} mt-5 max-w-[12ch] text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.05] tracking-[-0.03em]`}>
                 A short note is enough.
               </h2>
@@ -350,10 +351,12 @@ export default function ElleryPage() {
                   hello@ellery.example
                 </a>
                 <br />
-                <span className="tabular-nums">(02) 8314 2200</span>
+                <span className="tabular-nums">(02) 4926 1840</span>
               </p>
               <p className="mt-6 text-[14px] leading-[1.5] text-[#1C1915]/55">
-                Level 3, 14 Pell Lane
+                Level 1, 41 Hudson Street
+                <br />
+                Hamilton NSW 2303
                 <br />
                 By appointment
               </p>
@@ -374,7 +377,7 @@ export default function ElleryPage() {
             <div className="md:col-span-5">
               <p className={`${serif} text-[32px] leading-none tracking-[-0.03em]`}>Ellery</p>
               <p className="mt-4 max-w-[18rem] text-[14px] leading-[1.5] text-white/55">
-                A small commercial, disputes and family practice. Named partners since 1998.
+                Property, wills and family law. Hamilton, Newcastle.
               </p>
             </div>
             <div className="md:col-span-3">
@@ -392,9 +395,11 @@ export default function ElleryPage() {
               <p className="mt-4 text-[14px] leading-[1.6] text-white/75">
                 hello@ellery.example
                 <br />
-                (02) 8314 2200
+                (02) 4926 1840
                 <br />
-                Level 3, 14 Pell Lane
+                Level 1, 41 Hudson Street
+                <br />
+                Hamilton NSW 2303
               </p>
             </div>
           </div>

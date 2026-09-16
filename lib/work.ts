@@ -219,7 +219,7 @@ export const work: WorkItem[] = [
     slug: "ellery",
     name: "Ellery Lawyers",
     kind: "Website · example",
-    summary: "An indicative one-page site for a small law firm.",
+    summary: "An indicative one-pager for a small Newcastle law firm.",
     cover: {
       type: "video",
       src: "/work/ellery.mp4",
@@ -235,7 +235,7 @@ export const work: WorkItem[] = [
     mobileClip: phoneClip("ellery", "Ellery Lawyers, mobile"),
     stills: stills("ellery", ["Practice areas", "The people"]),
     overview: [
-      "An indicative website for a small law firm: a modern one-pager that should read as a reliable, professional practice — practice areas, the people, and how to write in.",
+      "An indicative website for a small Newcastle, NSW firm: property and conveyancing, wills and estates, and family law, on one page — who you would see, and how to write in.",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
