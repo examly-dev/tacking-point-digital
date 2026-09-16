@@ -149,6 +149,7 @@ export default async function WorkPage({ params }: Props) {
                 cover={item.cover}
                 mobile={item.mobileClip ?? item.mobile!}
                 previewSlug={preview ? item.slug : undefined}
+                mobileView={item.mobileView}
               />
             ) : item.cover ? (
               <PhoneShot media={item.cover} priority />

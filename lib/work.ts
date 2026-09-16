@@ -38,6 +38,11 @@ export type WorkItem = {
    * Kept separate from the index-card still so the grid stays DSS-ratio posters.
    */
   mobileClip?: WorkMedia;
+  /**
+   * Work-page Desktop/Mobile switcher. Defaults to true.
+   * Set false for desktop-only products; homepage cards still use `mobile`.
+   */
+  mobileView?: boolean;
   /** Extra clips and screenshots shown below the write-up. */
   gallery?: WorkMedia[];
   /** Small high-res stills after the hero clip. Quiet, not a grid of thumbs. */
@@ -91,6 +96,7 @@ export const work: WorkItem[] = [
       src: "/work/accordion-mobile.webp",
       alt: "Accordion home page",
     },
+    mobileView: false,
     gallery: [
       {
         type: "video",
@@ -141,6 +147,7 @@ export const work: WorkItem[] = [
       poster: "/work/examly-preview-mobile.jpg",
       hd: null,
     }),
+    mobileView: false,
     gallery: [
       {
         type: "video",

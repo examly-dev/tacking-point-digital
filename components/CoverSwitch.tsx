@@ -16,16 +16,19 @@ export function CoverSwitch({
   cover,
   mobile,
   previewSlug,
+  mobileView = true,
 }: {
   cover?: WorkMedia;
   mobile: WorkMedia;
   previewSlug?: string;
+  mobileView?: boolean;
 }) {
   const [view, setView] = useState<"desktop" | "mobile">("desktop");
   const [preview, setPreview] = useState(false);
   const openPreview = useCallback(() => setPreview(true), []);
   const closePreview = useCallback(() => setPreview(false), []);
-  const media = view === "mobile" ? mobile : cover ?? mobile;
+  const allowMobile = Boolean(mobileView && cover);
+  const media = allowMobile && view === "mobile" ? mobile : cover ?? mobile;
 
   useEffect(() => {
     setView("desktop");
@@ -34,12 +37,14 @@ export function CoverSwitch({
   return (
     <>
       <figure className="bg-black/[0.05] p-4 tablet:p-8">
-        <div className="mb-3 flex items-center justify-between gap-4 tablet:mb-4">
-          {previewSlug ? <ViewSiteButton onClick={openPreview} /> : <span />}
-          {cover ? <ViewSlider value={view} onChange={setView} /> : null}
-        </div>
+        {previewSlug || allowMobile ? (
+          <div className="mb-3 flex items-center justify-between gap-4 tablet:mb-4">
+            {previewSlug ? <ViewSiteButton onClick={openPreview} /> : <span />}
+            {allowMobile ? <ViewSlider value={view} onChange={setView} /> : null}
+          </div>
+        ) : null}
         <Lightbox media={media}>
-          {view === "mobile" ? (
+          {allowMobile && view === "mobile" ? (
             <div className="mx-auto w-full max-w-[300px]">
               <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
                 <Media media={mobile} sizes="300px" className="object-contain" priority />
