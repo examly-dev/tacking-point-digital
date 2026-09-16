@@ -6,7 +6,7 @@ import { TalkThrough } from "@/components/TalkThrough";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Andy is a web developer and teacher on the Mid North Coast. Websites and web apps for small to medium sized businesses and professionals.",
+    "Andy is a web developer and teacher on the Mid North Coast. Websites and web apps for businesses and professionals.",
 };
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
@@ -34,8 +34,9 @@ export default function AboutPage() {
         <div className={`${body} space-y-5`}>
           <p className="rise" style={{ animationDelay: "60ms" }}>
             I&apos;m Andy. I am a part-time high school teacher, and I have a
-            young family here on the Mid North Coast. The rest of the time I
-            build websites and web applications.
+            young family here on the Mid North Coast. Life is good, and I love
+            running. Aside from these things, I build websites and web
+            applications.
           </p>
           <p className="rise" style={{ animationDelay: "120ms" }}>
             The part I enjoy most is where good design meets good engineering:
@@ -43,14 +44,14 @@ export default function AboutPage() {
             that quietly does what it is supposed to do.
           </p>
           <p className="rise" style={{ animationDelay: "180ms" }}>
-            I back myself. I would not feel confident putting something live
-            if you were not really happy with it.
-          </p>
-          <p className="rise" style={{ animationDelay: "240ms" }}>
             I started as a data analyst at KPMG, retrained as a teacher, and
             moved up the coast when the family came along. Teaching is still
             the day job. The slower pace here means a small client list, and
             time to do the work properly.
+          </p>
+          <p className="rise" style={{ animationDelay: "240ms" }}>
+            I back myself. I would not feel confident putting something live
+            if you were not really happy with it.
           </p>
           <p className="rise" style={{ animationDelay: "300ms" }}>
             You can find more about what I do, how I work and what it costs
