@@ -41,10 +41,16 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
           aria-hidden="true"
           className="flex items-center gap-1 text-[15px] text-black/60 transition-colors duration-200 group-hover:text-black tablet:text-[14px]"
         >
-          Visit
-          <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-            <Arrow />
-          </span>
+          {item.sample ? (
+            "Sample"
+          ) : (
+            <>
+              Visit
+              <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <Arrow />
+              </span>
+            </>
+          )}
         </span>
       </div>
     </Link>

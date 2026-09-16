@@ -22,6 +22,8 @@ export type WorkItem = {
   name: string;
   /** Short grey label under the name, e.g. "Web app · 2026". */
   kind: string;
+  /** Sample / indicative site, not a paid job and not a template. */
+  sample?: boolean;
   /** One-line summary shown at the top of the project page. */
   summary: string;
   /** Live site. Omit if there is no public URL yet. */
@@ -175,7 +177,8 @@ export const work: WorkItem[] = [
   {
     slug: "proof-room",
     name: "Bakehouse",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative bespoke site for a small bakery, with a weekly loaf subscription.",
     cover: {
       type: "video",
@@ -200,7 +203,8 @@ export const work: WorkItem[] = [
   {
     slug: "halfway",
     name: "Halfway House",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary:
       "A café and roastery: Now Book It for tables, Shopify for bags and gear, Square gift cards.",
     cover: {
@@ -225,7 +229,8 @@ export const work: WorkItem[] = [
   {
     slug: "ellery",
     name: "Ellery Lawyers",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative one-pager for a small Newcastle law firm.",
     cover: {
       type: "video",
@@ -249,7 +254,8 @@ export const work: WorkItem[] = [
   {
     slug: "ridgeway-physio",
     name: "Ridgeway Physiotherapy",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary:
       "A physio practice site with a page per service and HotDoc booking.",
     cover: {
@@ -275,7 +281,8 @@ export const work: WorkItem[] = [
   {
     slug: "marlow-finch",
     name: "Rowe Accounting",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative one-pager for a small accountancy, with fees on the page.",
     cover: {
       type: "video",
@@ -300,7 +307,8 @@ export const work: WorkItem[] = [
   {
     slug: "harbourline",
     name: "Harbourline Environmental",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative site for a coastal and civil engineering practice.",
     cover: {
       type: "video",
@@ -324,7 +332,8 @@ export const work: WorkItem[] = [
   {
     slug: "ironbark",
     name: "Ironbark",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative booking page for a small stay, wired to Little Hotelier.",
     cover: {
       type: "video",
@@ -348,7 +357,8 @@ export const work: WorkItem[] = [
   {
     slug: "ballast",
     name: "Parkside Gym",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative gym site: timetable, membership, and the coaches.",
     cover: {
       type: "video",
@@ -372,7 +382,8 @@ export const work: WorkItem[] = [
   {
     slug: "hartwell",
     name: "Hartwell Constructions",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative builder’s site on a CMS the client can edit.",
     cover: {
       type: "video",
@@ -396,7 +407,8 @@ export const work: WorkItem[] = [
   {
     slug: "sancrox",
     name: "Pell Civil",
-    kind: "Website · example",
+    kind: "Sample website, not a template",
+    sample: true,
     summary: "An indicative site for a regional civil practice: roads, drainage, subdivisions.",
     cover: {
       type: "video",

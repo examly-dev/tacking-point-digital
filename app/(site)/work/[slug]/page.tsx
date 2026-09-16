@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
-import { Arrow } from "@/components/Arrow";
 import { CoverSwitch } from "@/components/CoverSwitch";
 import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
+import { WorkPreview } from "@/components/SitePreview";
 import { hasPreview } from "@/lib/preview";
 import { getWork, work, type WorkMedia } from "@/lib/work";
 
@@ -109,55 +109,28 @@ export default async function WorkPage({ params }: Props) {
           Work
         </Link>
 
-        <header className="mb-6">
-          <div className="flex items-baseline justify-between gap-6">
-            <h1
-              style={delay(1)}
-              className="rise text-[22px] tablet:text-[14px] desktop:text-[16px] font-medium tracking-[-0.02em] tablet:tracking-[-0.01em] leading-tight"
-            >
-              {item.name}
-            </h1>
-            {item.url ? (
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={delay(1)}
-                className={`rise ${body} inline-flex items-center gap-1 text-black/30 hover:text-black transition-colors duration-150 group`}
-              >
-                Visit site
-                <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  <Arrow />
-                </span>
-              </a>
-            ) : null}
-          </div>
-          <p style={delay(1)} className={`rise ${body} text-black/30 mt-1`}>
-            {item.kind}
+        <WorkPreview slug={preview ? item.slug : undefined} name={item.name} kind={item.kind}>
+          <p style={delay(2)} className={`rise ${body} mb-8`}>
+            {item.summary}
           </p>
-        </header>
 
-        <p style={delay(2)} className={`rise ${body} mb-8`}>
-          {item.summary}
-        </p>
-
-        <div className="mb-10">
-          <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-            {item.mobile || item.mobileClip ? (
-              <CoverSwitch
-                key={item.slug}
-                cover={item.cover}
-                mobile={item.mobileClip ?? item.mobile!}
-                previewSlug={preview ? item.slug : undefined}
-                mobileView={item.mobileView}
-              />
-            ) : item.cover ? (
-              <PhoneShot media={item.cover} priority />
-            ) : (
-              <div className="h-[300px] bg-black/[0.05]" />
-            )}
-          </ViewTransition>
-        </div>
+          <div className="mb-10">
+            <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
+              {item.mobile || item.mobileClip ? (
+                <CoverSwitch
+                  key={item.slug}
+                  cover={item.cover}
+                  mobile={item.mobileClip ?? item.mobile!}
+                  mobileView={item.mobileView}
+                />
+              ) : item.cover ? (
+                <PhoneShot media={item.cover} priority />
+              ) : (
+                <div className="h-[300px] bg-black/[0.05]" />
+              )}
+            </ViewTransition>
+          </div>
+        </WorkPreview>
 
         <section style={delay(3)} className={`rise ${body} mb-10 space-y-5`}>
           {item.overview.map((p) => (

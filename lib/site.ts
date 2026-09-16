@@ -10,7 +10,7 @@ export const site = {
 export const intro = [
   `${site.name} is me, Andy, a web developer in ${site.location}.`,
   "I build websites and web apps for businesses and professionals, on the Mid North Coast and further afield.",
-  "Have a look at some recent work, or get in touch. I'm always happy to chat.",
+  "Have a look at some recent work and samples, or get in touch. I'm always happy to chat.",
 ] as const;
 
 export const mailto = `mailto:${site.email}`;
