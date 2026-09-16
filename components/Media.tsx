@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/asset";
 import type { WorkMedia } from "@/lib/work";
 
@@ -26,6 +26,8 @@ export type PlayMode =
 export function Media({
   media,
   priority = false,
+  deferSrc = false,
+  eager = false,
   play = "inview",
   className = "object-contain",
 }: {
@@ -33,6 +35,13 @@ export function Media({
   /** Unused; kept so call sites can still pass a sizes hint. */
   sizes?: string;
   priority?: boolean;
+  /**
+   * Do not put `src` in the HTML until this node intersects. `loading="lazy"`
+   * still downloads a short homepage; Lighthouse then counts every card.
+   */
+  deferSrc?: boolean;
+  /** Force `loading="eager"` without making this the LCP image. */
+  eager?: boolean;
   play?: PlayMode;
   className?: string;
 }) {
@@ -113,14 +122,90 @@ export function Media({
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Still
       src={asset(media.src)}
       alt={media.alt}
-      decoding="async"
-      loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : undefined}
       className={fit}
+      priority={priority}
+      deferSrc={deferSrc}
+      eager={eager}
+    />
+  );
+}
+
+function Still({
+  src,
+  alt,
+  className,
+  priority,
+  deferSrc,
+  eager,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  priority: boolean;
+  deferSrc: boolean;
+  eager: boolean;
+}) {
+  const slot = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(!deferSrc);
+
+  useEffect(() => {
+    if (!deferSrc || ready) return;
+    const node = slot.current;
+    if (!node) return;
+
+    // A late-painted same-size image becomes LCP. On phones wait for a gesture
+    // (which finalises LCP). Tablet/desktop can fill in-view cards immediately.
+    let allowed = window.matchMedia("(min-width: 850px)").matches;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!allowed || !entry.isIntersecting) return;
+        setReady(true);
+        io.disconnect();
+      },
+      { root: null, rootMargin: "0px", threshold: 0 },
+    );
+    io.observe(node);
+
+    const arm = () => {
+      allowed = true;
+      const rect = node.getBoundingClientRect();
+      const vh = window.innerHeight || 0;
+      if (rect.bottom > 0 && rect.top < vh) {
+        setReady(true);
+        io.disconnect();
+      }
+    };
+
+    window.addEventListener("scroll", arm, { passive: true, once: true });
+    window.addEventListener("pointerdown", arm, { passive: true, once: true });
+    const host = node.closest("a");
+    host?.addEventListener("focusin", arm, { once: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", arm);
+      window.removeEventListener("pointerdown", arm);
+      host?.removeEventListener("focusin", arm);
+    };
+  }, [deferSrc, ready]);
+
+  if (!ready) {
+    return <div ref={slot} className="absolute inset-0" aria-hidden="true" />;
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      decoding="async"
+      loading={priority || eager ? "eager" : "lazy"}
+      fetchPriority={priority || eager ? "high" : undefined}
+      className={className}
     />
   );
 }

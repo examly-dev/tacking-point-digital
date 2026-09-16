@@ -31,7 +31,7 @@ export function Nav() {
             className={
               active
                 ? "text-black"
-                : "text-black/30 hover:text-black transition-colors duration-200"
+                : "text-black/60 hover:text-black transition-colors duration-200"
             }
           >
             {label}

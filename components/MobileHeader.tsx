@@ -62,7 +62,7 @@ export function MobileHeader() {
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="-mr-2 flex h-11 items-center px-2 text-[15px] text-black/50 active:text-black"
+            className="-mr-2 flex h-11 items-center px-2 text-[15px] text-black/60 active:text-black"
           >
             Menu
           </button>
@@ -88,7 +88,7 @@ export function MobileHeader() {
               ref={closeRef}
               type="button"
               onClick={() => setOpen(false)}
-              className="-mr-2 flex h-11 items-center px-2 text-[15px] text-black/50 active:text-black"
+              className="-mr-2 flex h-11 items-center px-2 text-[15px] text-black/60 active:text-black"
             >
               Close
             </button>
@@ -103,7 +103,7 @@ export function MobileHeader() {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={`rise flex h-[3.25rem] items-center text-[2.25rem] font-medium leading-none tracking-[-0.03em] active:translate-x-1 transition-transform duration-200 ${
-                    active ? "text-black" : "text-black/25"
+                    active ? "text-black" : "text-black/60"
                   }`}
                   style={{ animationDelay: `${60 + i * 50}ms` }}
                 >
@@ -123,7 +123,7 @@ export function MobileHeader() {
           </div>
 
           <div
-            className="rise mt-8 flex flex-col gap-1 px-5 text-[15px] leading-[1.6] text-black/50"
+            className="rise mt-8 flex flex-col gap-1 px-5 text-[15px] leading-[1.6] text-black/60"
             style={{ animationDelay: "360ms" }}
           >
             <a href={tel} className="flex h-10 items-center active:text-black">

@@ -15,7 +15,7 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
   return (
     <Link
       href={`/work/${item.slug}`}
-      className="group block w-full cursor-pointer rise tablet:w-[250px]"
+      className={`group block w-full cursor-pointer tablet:w-[250px]${index < 2 ? "" : " rise"}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
@@ -27,6 +27,8 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
                 sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
                 play="hover"
                 priority={index === 0}
+                eager={index === 1}
+                deferSrc={index >= 2}
                 className="object-cover object-top"
               />
             ) : null}
@@ -35,7 +37,10 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
       </ViewTransition>
       <div className="flex w-full items-center justify-between tablet:w-[250px]">
         <h2 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h2>
-        <span className="flex items-center gap-1 text-[15px] text-black/30 transition-colors duration-200 group-hover:text-black tablet:text-[14px]">
+        <span
+          aria-hidden="true"
+          className="flex items-center gap-1 text-[15px] text-black/60 transition-colors duration-200 group-hover:text-black tablet:text-[14px]"
+        >
           Visit
           <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
             <Arrow />

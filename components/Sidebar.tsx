@@ -29,7 +29,7 @@ export function Sidebar() {
       </div>
 
       <footer className="mt-auto pt-6">
-        <div className="space-y-1 text-[12px] text-black/40 leading-relaxed">
+        <div className="space-y-1 text-[12px] text-black/60 leading-relaxed">
           <p>{site.name}</p>
           <p>
             <a
