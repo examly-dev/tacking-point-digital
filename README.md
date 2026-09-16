@@ -2,8 +2,8 @@
 
 A small Next.js site. Type is self-hosted [Satoshi](https://www.fontshare.com/fonts/satoshi) (Fontshare).
 
-**Latest build (updates on every push to `main`):**
-[https://examly-dev.github.io/tacking-point-digital/](https://examly-dev.github.io/tacking-point-digital/)
+**Live site:**
+[https://tackingpointdigital.com.au](https://tackingpointdigital.com.au)
 
 Layout: a fixed sidebar (`components/Sidebar.tsx`) from 850px up; on phones a sticky bar with a full-screen menu (`components/MobileHeader.tsx`) and a contact strip at the foot of each page (`components/MobileFooter.tsx`). Name, contact details and the introduction all live in `lib/site.ts`.
 

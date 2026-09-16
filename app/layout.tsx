@@ -11,13 +11,39 @@ const satoshi = localFont({
   variable: "--font-satoshi",
 });
 
+const description =
+  "Websites and web apps for businesses and professionals. Andy, web developer, Port Macquarie.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: site.name,
     template: `%s — ${site.name}`,
   },
-  description:
-    "Websites and web apps for small to medium sized businesses and professionals. Andy, web developer, Port Macquarie.",
+  description,
+  applicationName: site.name,
+  authors: [{ name: "Andy", url: site.url }],
+  creator: "Andy",
+  publisher: site.name,
+  keywords: ["web developer", "Port Macquarie", "Mid North Coast", "Next.js", "websites", "web apps"],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: site.url,
+    siteName: site.name,
+    title: site.name,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.name,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport: Viewport = {
