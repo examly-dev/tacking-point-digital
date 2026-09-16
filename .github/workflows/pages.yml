@@ -28,7 +28,7 @@ jobs:
           cache: npm
       - name: Omit private invoices from the public site
         run: |
-          rm -rf "app/(invoices)" app/api/invoices proxy.ts
+          rm -rf "app/(invoices)" app/api proxy.ts
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - run: npm ci

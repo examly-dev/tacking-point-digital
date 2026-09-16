@@ -1,5 +1,6 @@
 "use server";
 
+import { enquiryHtml, enquirySubject, enquiryText } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
 export type ContactState =
@@ -12,14 +13,6 @@ const fallback = `Something went wrong sending that. Please email ${site.email} 
 function field(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value.trim() : "";
-}
-
-function escapeHtml(s: string) {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 }
 
 export async function sendMessage(
@@ -81,9 +74,9 @@ export async function sendMessage(
         from,
         to: [to],
         reply_to: email,
-        subject: `Website enquiry from ${name}`,
-        text: `From: ${name} <${email}>\n\n${message}`,
-        html: `<p><strong>${escapeHtml(name)}</strong> &lt;${escapeHtml(email)}&gt;</p><p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>`,
+        subject: enquirySubject(fields),
+        text: enquiryText(fields),
+        html: enquiryHtml(fields),
       }),
     });
 

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { LighthouseConfetti } from "@/components/LighthouseConfetti";
+import { enquirySubject, enquiryText } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
 const body =
@@ -55,6 +56,20 @@ export function ContactForm() {
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     try {
+      const hosted = process.env.NEXT_PUBLIC_STATIC !== "true";
+      if (hosted) {
+        const local = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message, company: data.get("company") }),
+        });
+        if (local.ok) {
+          setStatus("sent");
+          form.reset();
+          return;
+        }
+      }
+
       const res = await fetch(`https://formsubmit.co/ajax/${inbox()}`, {
         method: "POST",
         headers: {
@@ -62,13 +77,11 @@ export function ContactForm() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          name,
-          email,
-          message,
-          _replyto: email,
-          _subject: `Website enquiry from ${name}`,
-          _template: "table",
+          _subject: enquirySubject({ name, email, message }),
+          _template: "box",
           _captcha: "false",
+          _replyto: email,
+          Message: enquiryText({ name, email, message }),
         }),
       });
       const payload = (await res.json().catch(() => null)) as
