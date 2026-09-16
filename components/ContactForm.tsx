@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { LighthouseConfetti } from "@/components/LighthouseConfetti";
 import { enquirySubject, enquiryText } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
@@ -20,7 +19,6 @@ function inbox() {
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [reduceMotion, setReduceMotion] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,7 +53,6 @@ export function ContactForm() {
 
     setError(null);
     setStatus("sending");
-    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     try {
       const hosted = process.env.NEXT_PUBLIC_STATIC !== "true";
@@ -103,12 +100,9 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div>
-        {!reduceMotion ? <LighthouseConfetti /> : null}
         <p className={body} role="status">
           Thanks for getting in touch. I&apos;ll get back to you ASAP.
         </p>
-      </div>
     );
   }
 
