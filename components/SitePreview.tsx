@@ -47,7 +47,7 @@ function PreviewWindow() {
 /**
  * Opens the example site in a contained viewer on this page.
  * Iframe points at a same-origin /preview/[slug] route so GitHub Pages works
- * (no localhost). Examly and Accordion never get this.
+ * (no localhost). Examly never gets this.
  * Always opens on desktop; the slider narrows the frame to a 390px phone.
  */
 export function SitePreview({ slug, open, onClose }: { slug: string; open: boolean; onClose: () => void }) {

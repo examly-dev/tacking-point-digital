@@ -79,13 +79,9 @@ export default function ServicesPage() {
         <Section title="Web and mobile apps" step={3}>
           <p>
             Alongside the websites, I build web apps: booking and admin tools,
-            dashboards, internal systems, and my own products{" "}
+            dashboards, internal systems, and my own product{" "}
             <Link href="/work/examly" className={link}>
               Examly
-            </Link>{" "}
-            and{" "}
-            <Link href="/work/accordion" className={link}>
-              Accordion
             </Link>
             . Full-stack builds, interface, server and database designed
             together, usually on Next.js, TypeScript and PostgreSQL. If nothing

@@ -55,6 +55,11 @@ export type WorkItem = {
   design?: string[];
   /** Tools used, shown as a single line. */
   stack?: string[];
+  /**
+   * Kept in the catalog but omitted from the public site (home grid, sitemap,
+   * /work/[slug]). Flip off to restore.
+   */
+  archived?: boolean;
 };
 
 function stills(slug: string, captions: string[]): WorkMedia[] {
@@ -80,9 +85,10 @@ function phoneClip(
   };
 }
 
-export const work: WorkItem[] = [
+const catalog: WorkItem[] = [
   {
     slug: "accordion",
+    archived: true,
     name: "Accordion",
     kind: "Web application · 2026 · ongoing",
     summary:
@@ -430,6 +436,9 @@ export const work: WorkItem[] = [
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
 ];
+
+/** Public work, in display order. Archived entries stay in `catalog`. */
+export const work: WorkItem[] = catalog.filter((item) => !item.archived);
 
 export function getWork(slug: string): WorkItem | undefined {
   return work.find((item) => item.slug === slug);
