@@ -5,7 +5,7 @@ A small Next.js site. Type is self-hosted [Satoshi](https://www.fontshare.com/fo
 **Live site:**
 [https://tackingpointdigital.com.au](https://tackingpointdigital.com.au)
 
-Layout: a fixed sidebar (`components/Sidebar.tsx`) from 850px up; on phones a sticky bar with a full-screen menu (`components/MobileHeader.tsx`) and a contact strip at the foot of each page (`components/MobileFooter.tsx`). Name, contact details and the introduction all live in `lib/site.ts`. The public **Clients** nav item is the door to the locked portal; the files live on Cloudflare Pages, not GitHub Pages.
+Layout: a fixed sidebar (`components/Sidebar.tsx`) from 850px up; on phones a sticky bar with a full-screen menu (`components/MobileHeader.tsx`) and a contact strip at the foot of each page (`components/MobileFooter.tsx`). Name, contact details and the introduction all live in `lib/site.ts`. A quiet **Client portal** link in the sidebar footer (and at the bottom of the mobile menu) is the public door; the files live on Cloudflare Pages, not GitHub Pages.
 
 ```bash
 npm install

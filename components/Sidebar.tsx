@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { intro, mailto, site, tel } from "@/lib/site";
+import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { Nav } from "./Nav";
 
@@ -45,6 +45,14 @@ export function Sidebar() {
               className="hover:text-black transition-colors duration-200"
             >
               {site.email}
+            </a>
+          </p>
+          <p className="pt-2">
+            <a
+              href={clientsUrl}
+              className="text-[11px] text-black/40 hover:text-black/70 transition-colors duration-200"
+            >
+              {clientsLabel}
             </a>
           </p>
         </div>

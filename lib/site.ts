@@ -21,3 +21,4 @@ export const tel = `tel:+61${site.phone.replace(/\s/g, "").slice(1)}`;
  * Switch to https://lighthouse-clients.pages.dev only if this hostname is down.
  */
 export const clientsUrl = "https://clients.tackingpointdigital.com.au";
+export const clientsLabel = "Client portal";

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { intro, mailto, site, tel } from "@/lib/site";
+import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { isActive, pages } from "./Nav";
 
@@ -131,6 +131,12 @@ export function MobileHeader() {
             </a>
             <a href={mailto} className="flex h-10 items-center active:text-black">
               {site.email}
+            </a>
+            <a
+              href={clientsUrl}
+              className="mt-2 flex h-8 items-center text-[13px] text-black/40 active:text-black/70"
+            >
+              {clientsLabel}
             </a>
           </div>
         </div>
