@@ -26,9 +26,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - name: Omit private invoices from the public site
+      - name: Omit private invoices and client previews from the public site
         run: |
-          rm -rf "app/(invoices)" app/api proxy.ts
+          rm -rf "app/(invoices)" "app/(clients)" app/api proxy.ts public/clients public/leap-type clients-host
+          mkdir -p public/clients
+          cp scripts/clients-public-redirect.html public/clients/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - run: npm ci

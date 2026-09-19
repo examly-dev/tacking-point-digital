@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { clientsUrl } from "@/lib/site";
 
 export const pages = [
   { href: "/", label: "Work" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: clientsUrl, label: "Clients" },
 ] as const;
 
 export function isActive(pathname: string, href: string) {
+  if (href.startsWith("https://") || href.startsWith("http://")) return false;
   if (href === "/") return pathname === "/" || pathname.startsWith("/work");
   return pathname === href || pathname.startsWith(`${href}/`);
 }

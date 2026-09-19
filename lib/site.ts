@@ -15,3 +15,9 @@ export const intro = [
 
 export const mailto = `mailto:${site.email}`;
 export const tel = `tel:+61${site.phone.replace(/\s/g, "").slice(1)}`;
+
+/**
+ * Public door to the locked client portal (Cloudflare Pages, not GitHub Pages).
+ * Switch to https://lighthouse-clients.pages.dev only if this hostname is down.
+ */
+export const clientsUrl = "https://clients.tackingpointdigital.com.au";
