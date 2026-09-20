@@ -16,11 +16,6 @@ export const intro = [
 export const mailto = `mailto:${site.email}`;
 export const tel = `tel:+61${site.phone.replace(/\s/g, "").slice(1)}`;
 
-/**
- * Public door to the locked client portal (Cloudflare Pages, not GitHub Pages).
- * Use the pages.dev host until clients.tackingpointdigital.com.au resolves
- * on local DNS and Cloudflare has issued the custom-hostname certificate.
- * Then switch this to https://clients.tackingpointdigital.com.au
- */
-export const clientsUrl = "https://lighthouse-clients.pages.dev";
+/** Locked client portal on Cloudflare Pages (not GitHub Pages). */
+export const clientsUrl = "https://clients.tackingpointdigital.com.au";
 export const clientsLabel = "Client portal";
