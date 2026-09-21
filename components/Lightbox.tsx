@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { asset } from "@/lib/asset";
 import type { WorkMedia } from "@/lib/work";
+import { useFocusTrap } from "./use-focus-trap";
 
 /**
  * Wraps a framed shot so it can be opened at full size. Inline clips are 1×
@@ -13,6 +14,10 @@ import type { WorkMedia } from "@/lib/work";
  */
 export function Lightbox({ media, children }: { media: WorkMedia; children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useFocusTrap(open, dialogRef, { initialFocusRef: closeRef });
 
   useEffect(() => {
     if (!open) return;
@@ -49,6 +54,7 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
       {open
         ? createPortal(
             <div
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-label={media.alt}
@@ -65,7 +71,12 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
                 >
                   Open file ↗
                 </a>
-                <button type="button" onClick={() => setOpen(false)} className="-mr-2 flex h-10 items-center px-2 hover:text-black">
+                <button
+                  ref={closeRef}
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="-mr-2 flex h-10 items-center px-2 hover:text-black"
+                >
                   Close
                 </button>
               </div>

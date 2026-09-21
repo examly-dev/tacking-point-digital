@@ -5,9 +5,17 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
   // Dev server is viewed through OrbStack domains, not localhost.
-  allowedDevOrigins: ["tackingpoint.local", "*.tackingpoint.orb.local", "*.orb.local"],
+  allowedDevOrigins: [
+    "tackingpoint.local",
+    "*.tackingpoint.orb.local",
+    "*.orb.local",
+    "127.0.0.1",
+    "localhost",
+  ],
   poweredByHeader: false,
   compress: true,
+  // Same convention as the GitHub Pages export and sitemap loc URLs.
+  trailingSlash: true,
   images: {
     unoptimized: isGithubPages,
     formats: ["image/avif", "image/webp"],
@@ -16,7 +24,6 @@ const nextConfig: NextConfig = {
   ...(isGithubPages
     ? {
         output: "export" as const,
-        trailingSlash: true,
         basePath,
       }
     : {

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
 import { Lighthouse } from "@/components/Lighthouse";
+import { pageMetadata } from "@/lib/metadata";
 import { mailto, site, tel } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/contact/",
   title: "Contact",
   description: `Get in touch with Andy at ${site.name}, ${site.location}. Email, call, or send a message.`,
-};
+});
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 
@@ -14,6 +15,7 @@ export default function ContactPage() {
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[34rem]">
+        <h1 className="sr-only">Contact</h1>
         <div className={`${body} space-y-5`}>
           <p className="rise flex items-center gap-2 font-medium">
             <Lighthouse />

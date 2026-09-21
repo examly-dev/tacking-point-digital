@@ -20,7 +20,7 @@ export function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex shrink-0 flex-col items-end gap-0.5 text-[14px] desktop:text-[16px]">
+    <nav className="flex shrink-0 flex-col items-end gap-0.5 text-[14px] desktop:text-[16px]" aria-label="Primary">
       {pages.map(({ href, label }) => {
         const active = isActive(pathname, href);
         return (

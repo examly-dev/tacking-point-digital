@@ -6,6 +6,7 @@ import { CoverSwitch } from "@/components/CoverSwitch";
 import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
 import { WorkPreview } from "@/components/SitePreview";
+import { pageMetadata } from "@/lib/metadata";
 import { hasPreview } from "@/lib/preview";
 import { getWork, work, type WorkMedia } from "@/lib/work";
 
@@ -19,7 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getWork(slug);
   if (!item) return {};
-  return { title: item.name, description: item.summary };
+  return pageMetadata({
+    path: `/work/${item.slug}/`,
+    title: item.name,
+    description: item.summary,
+  });
 }
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
@@ -98,7 +103,7 @@ export default async function WorkPage({ params }: Props) {
         <Link
           href="/"
           style={delay(0)}
-          className={`rise ${body} inline-flex min-h-11 tablet:min-h-0 items-center gap-1 text-black/30 hover:text-black active:text-black transition-colors duration-200 mb-4 tablet:mb-8 group`}
+          className={`rise ${body} inline-flex min-h-11 tablet:min-h-0 items-center gap-1 text-black/50 hover:text-black active:text-black transition-colors duration-200 mb-4 tablet:mb-8 group`}
         >
           <span
             aria-hidden="true"

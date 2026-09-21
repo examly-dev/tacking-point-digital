@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { enquirySubject, enquiryText } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
 const body =
   "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
-const label = "block text-[13px] tablet:text-[12px] desktop:text-[13px] text-black/50 mb-1";
+const label = "block text-[13px] tablet:text-[12px] desktop:text-[13px] text-black/60 mb-1";
 const input =
   "block w-full bg-transparent border-0 border-b border-black/15 py-2.5 tablet:py-2 text-[16px] tablet:text-[14px] desktop:text-[16px] text-black outline-none focus:border-black transition-colors duration-200 rounded-none";
 
@@ -17,6 +17,13 @@ function inbox() {
 }
 
 export function ContactForm() {
+  const id = useId();
+  const nameId = `${id}-name`;
+  const emailId = `${id}-email`;
+  const phoneId = `${id}-phone`;
+  const messageId = `${id}-message`;
+  const companyId = `${id}-company`;
+  const errorId = `${id}-error`;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -106,44 +113,55 @@ export function ContactForm() {
     );
   }
 
+  const invalid = status === "error";
+
   return (
-    <form onSubmit={onSubmit} className={`${body} space-y-7`} noValidate>
+    <form
+      onSubmit={onSubmit}
+      className={`${body} space-y-7`}
+      noValidate
+      aria-busy={status === "sending"}
+    >
       <div className="grid gap-7 tablet:grid-cols-2">
         <div>
-          <label htmlFor="name" className={label}>
+          <label htmlFor={nameId} className={label}>
             Your name
           </label>
           <input
-            id="name"
+            id={nameId}
             name="name"
             type="text"
             autoComplete="name"
             required
+            aria-invalid={invalid || undefined}
+            aria-describedby={invalid && error ? errorId : undefined}
             className={input}
           />
         </div>
         <div>
-          <label htmlFor="email" className={label}>
+          <label htmlFor={emailId} className={label}>
             Your email
           </label>
           <input
-            id="email"
+            id={emailId}
             name="email"
             type="email"
             autoComplete="email"
             inputMode="email"
             required
+            aria-invalid={invalid || undefined}
+            aria-describedby={invalid && error ? errorId : undefined}
             className={input}
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="phone" className={label}>
+        <label htmlFor={phoneId} className={label}>
           Your number, if you&apos;d like
         </label>
         <input
-          id="phone"
+          id={phoneId}
           name="phone"
           type="tel"
           autoComplete="tel"
@@ -154,21 +172,23 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className={label}>
+        <label htmlFor={messageId} className={label}>
           Message
         </label>
         <textarea
-          id="message"
+          id={messageId}
           name="message"
           rows={5}
           required
+          aria-invalid={invalid || undefined}
+          aria-describedby={invalid && error ? errorId : undefined}
           className={`${input} resize-y min-h-[8rem]`}
         />
       </div>
 
-      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden>
-        <label htmlFor="company">Company</label>
-        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor={companyId}>Company</label>
+        <input id={companyId} name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
@@ -180,7 +200,7 @@ export function ContactForm() {
           {status === "sending" ? "Sending…" : "Send message"}
         </button>
         {status === "error" && error ? (
-          <p className="text-black/60" role="alert">
+          <p id={errorId} className="text-black/60" role="alert">
             {error}
           </p>
         ) : null}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
+import { analyticsNote, clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { Nav } from "./Nav";
 
@@ -14,10 +14,10 @@ export function Sidebar() {
           href="/"
           className="lighthouse-logo block w-fit shrink-0 rounded-sm"
         >
-          <h1 className="flex items-center gap-2 text-[14px] desktop:text-[16px] font-medium tracking-[-0.01em] leading-tight">
+          <p className="flex items-center gap-2 text-[14px] desktop:text-[16px] font-medium tracking-[-0.01em] leading-tight">
             <Lighthouse />
             {site.name}
-          </h1>
+          </p>
         </Link>
         <Nav />
       </div>
@@ -55,6 +55,7 @@ export function Sidebar() {
               {clientsLabel}
             </a>
           </p>
+          <p className="pt-3 text-[11px] text-black/40 leading-relaxed">{analyticsNote}</p>
         </div>
       </footer>
     </aside>
