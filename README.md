@@ -7,6 +7,8 @@ A small Next.js site. Type is self-hosted [Satoshi](https://www.fontshare.com/fo
 
 Layout: a fixed sidebar (`components/Sidebar.tsx`) from 850px up; on phones a sticky bar with a full-screen menu (`components/MobileHeader.tsx`) and a contact strip at the foot of each page (`components/MobileFooter.tsx`). Name, contact details and the introduction all live in `lib/site.ts`. A quiet **Client portal** link in the sidebar footer (and at the bottom of the mobile menu) is the public door; the files live on Cloudflare Pages, not GitHub Pages.
 
+The public site loads [Plausible](https://plausible.io) in production (`components/Analytics.tsx`) for cookie-free page views. Create a site in Plausible for `tackingpointdigital.com.au` or no stats will appear. Optional `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` overrides the domain; set it to empty to disable the script.
+
 ```bash
 npm install
 npm run dev

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
+import { analyticsNote, clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { Nav } from "./Nav";
 
@@ -55,6 +55,7 @@ export function Sidebar() {
               {clientsLabel}
             </a>
           </p>
+          <p className="pt-3 text-[11px] text-black/40 leading-relaxed">{analyticsNote}</p>
         </div>
       </footer>
     </aside>

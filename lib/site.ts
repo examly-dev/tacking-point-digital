@@ -23,3 +23,7 @@ export const tel = `tel:+61${site.phone.replace(/\s/g, "").slice(1)}`;
 /** Locked client portal on Cloudflare Pages (not GitHub Pages). */
 export const clientsUrl = "https://clients.tackingpointdigital.com.au";
 export const clientsLabel = "Client portal";
+
+/** Factual note for Plausible (no cookies). Shown in the public footers. */
+export const analyticsNote =
+  "This site uses Plausible to see which pages are visited. No cookies, no ads.";

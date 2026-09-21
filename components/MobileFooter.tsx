@@ -1,4 +1,4 @@
-import { mailto, site, tel } from "@/lib/site";
+import { analyticsNote, mailto, site, tel } from "@/lib/site";
 
 /** Contact strip at the foot of every page on phones; the sidebar carries this elsewhere. */
 export function MobileFooter() {
@@ -16,6 +16,7 @@ export function MobileFooter() {
             {site.email}
           </a>
         </p>
+        <p className="pt-3 text-[12px] text-black/40">{analyticsNote}</p>
       </div>
     </footer>
   );

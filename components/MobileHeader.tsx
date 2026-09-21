@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
+import { analyticsNote, clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { isActive, pages } from "./Nav";
 import { useFocusTrap } from "./use-focus-trap";
@@ -148,6 +148,7 @@ export function MobileHeader() {
             >
               {clientsLabel}
             </a>
+            <p className="pt-3 text-[12px] leading-relaxed text-black/40">{analyticsNote}</p>
           </div>
         </div>
       ) : null}
