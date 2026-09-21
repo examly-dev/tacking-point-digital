@@ -14,10 +14,10 @@ export function Sidebar() {
           href="/"
           className="lighthouse-logo block w-fit shrink-0 rounded-sm"
         >
-          <h1 className="flex items-center gap-2 text-[14px] desktop:text-[16px] font-medium tracking-[-0.01em] leading-tight">
+          <p className="flex items-center gap-2 text-[14px] desktop:text-[16px] font-medium tracking-[-0.01em] leading-tight">
             <Lighthouse />
             {site.name}
-          </h1>
+          </p>
         </Link>
         <Nav />
       </div>

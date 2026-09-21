@@ -172,7 +172,7 @@ const catalog: WorkItem[] = [
     ],
     stills: stills("examly", [
       "Create: a coding question in the exam builder",
-      "Mark: working through a student’s paper",
+      "Mark: working through a student's paper",
     ]),
     overview: [
       "Examly is SaaS for teachers to create, host, mark and analyse mock HSC exams that their students sit online, in a window that behaves like the real paper.",

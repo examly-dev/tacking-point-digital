@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ViewSlider } from "@/components/ViewSlider";
 import { asset } from "@/lib/asset";
+import { useFocusTrap } from "./use-focus-trap";
 
 const quiet =
-  "text-[13px] tablet:text-[12px] text-black/30 hover:text-black transition-colors duration-200";
+  "text-[13px] tablet:text-[12px] text-black/50 hover:text-black transition-colors duration-200";
 
 const previewLink =
   "inline-flex min-h-11 tablet:min-h-0 items-center gap-1.5 text-[15px] tablet:text-[14px] desktop:text-[16px] text-black/60 hover:text-black underline decoration-black/20 underline-offset-[3px] hover:decoration-black transition-colors duration-200";
@@ -52,6 +53,10 @@ function PreviewWindow() {
  */
 export function SitePreview({ slug, open, onClose }: { slug: string; open: boolean; onClose: () => void }) {
   const [view, setView] = useState<"desktop" | "mobile">("desktop");
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useFocusTrap(open, dialogRef, { initialFocusRef: closeRef });
 
   useEffect(() => {
     if (!open) return;
@@ -74,13 +79,14 @@ export function SitePreview({ slug, open, onClose }: { slug: string; open: boole
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[80] flex flex-col bg-white"
       role="dialog"
       aria-modal="true"
       aria-label="Full site preview"
     >
       <div className="flex shrink-0 items-center justify-between gap-4 border-b border-black/10 px-5 py-3 tablet:px-8">
-        <button type="button" onClick={onClose} className={quiet}>
+        <button ref={closeRef} type="button" onClick={onClose} className={quiet}>
           Close
         </button>
         <ViewSlider value={view} onChange={setView} />

@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Lighthouse } from "@/components/Lighthouse";
 import { TalkThrough } from "@/components/TalkThrough";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/services/",
   title: "Services",
   description:
     "Bespoke websites, CMS and site builders, updates to existing sites, web and mobile apps, and automation. Fixed-price builds, honest pricing.",
-};
+});
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 const link =
@@ -38,6 +39,7 @@ export default function ServicesPage() {
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[52rem]">
+        <h1 className="sr-only">Services</h1>
         <Section title="Bespoke websites" step={0}>
           <p>
             Most of what I build is bespoke: designed and coded for you. Good

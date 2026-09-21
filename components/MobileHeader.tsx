@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
 import { Lighthouse } from "./Lighthouse";
 import { isActive, pages } from "./Nav";
+import { useFocusTrap } from "./use-focus-trap";
 
 /**
  * Phone chrome: a slim sticky bar with the wordmark and a Menu button that
@@ -20,6 +21,13 @@ export function MobileHeader() {
   const setOpen = (next: boolean) => setOpenedAt(next ? pathname : null);
   const [scrolled, setScrolled] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(open, sheetRef, {
+    initialFocusRef: closeRef,
+    restoreFocusRef: menuButtonRef,
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -32,7 +40,6 @@ export function MobileHeader() {
     if (!open) return;
     const { overflow } = document.body.style;
     document.body.style.overflow = "hidden";
-    closeRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenedAt(null);
     };
@@ -58,10 +65,12 @@ export function MobileHeader() {
             </span>
           </Link>
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="mobile-menu"
+            aria-haspopup="dialog"
             className="-mr-2 flex h-11 items-center px-2 text-[15px] text-black/60 active:text-black"
           >
             Menu
@@ -71,6 +80,7 @@ export function MobileHeader() {
 
       {open ? (
         <div
+          ref={sheetRef}
           id="mobile-menu"
           role="dialog"
           aria-modal="true"

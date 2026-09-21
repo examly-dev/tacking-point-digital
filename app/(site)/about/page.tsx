@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { asset } from "@/lib/asset";
 import { TalkThrough } from "@/components/TalkThrough";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/about/",
   title: "About",
   description:
     "Andy is a web developer and teacher on the Mid North Coast. Websites and web apps for businesses and professionals.",
-};
+});
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 const link =
@@ -17,6 +18,7 @@ export default function AboutPage() {
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[34rem]">
+        <h1 className="sr-only">About</h1>
         <figure className="rise mb-8 tablet:mb-10 w-full tablet:max-w-[18rem]">
           <div className="overflow-hidden bg-black/[0.05]">
             {/* Plain img so the file loads on GitHub Pages (next/image was omitting the base path). */}
