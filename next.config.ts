@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
   ],
   poweredByHeader: false,
   compress: true,
+  // Same convention as the GitHub Pages export and sitemap loc URLs.
+  trailingSlash: true,
   images: {
     unoptimized: isGithubPages,
     formats: ["image/avif", "image/webp"],
@@ -22,7 +24,6 @@ const nextConfig: NextConfig = {
   ...(isGithubPages
     ? {
         output: "export" as const,
-        trailingSlash: true,
         basePath,
       }
     : {

@@ -36,6 +36,7 @@ describe("pageMetadata", () => {
     });
     expect(home.title).toEqual({ absolute: site.name });
     expect(home.alternates).toEqual({ canonical: `${site.url}/` });
+    expect(home.openGraph?.url).toBe(`${site.url}/`);
   });
 });
 
