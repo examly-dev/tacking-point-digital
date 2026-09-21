@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Lighthouse } from "@/components/Lighthouse";
 import { TalkThrough } from "@/components/TalkThrough";
 import { pageMetadata } from "@/lib/metadata";
-import { site } from "@/lib/site";
+import { fixedPriceOffer, site } from "@/lib/site";
 
 export const metadata = pageMetadata({
   path: "/services/",
@@ -40,6 +40,7 @@ export default function ServicesPage() {
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[52rem]">
         <h1 className="sr-only">Services</h1>
+        <p className={`${body} max-w-[34rem] pb-8 rise`}>{fixedPriceOffer}</p>
         <Section title="Bespoke websites" step={0}>
           <p>
             Most of what I build is bespoke: designed and coded for you. Good
@@ -112,9 +113,8 @@ export default function ServicesPage() {
 
         <Section title="Pricing" step={5}>
           <p>
-            Always reasonable, and I will usually beat the quote you already
-            have. You tell me what you need and I give you a fixed price for
-            the build.
+            {fixedPriceOffer} Always reasonable, and I will usually beat the
+            quote you already have.
           </p>
           <p>
             Hosting and your domain go through{" "}
