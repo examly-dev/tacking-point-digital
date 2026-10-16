@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { asset } from "@/lib/asset";
+import { lockPageScroll } from "@/lib/scroll-lock";
 import type { WorkMedia } from "@/lib/work";
 
 /**
@@ -16,14 +17,13 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
 
   useEffect(() => {
     if (!open) return;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
+    const unlock = lockPageScroll();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = overflow;
+      unlock();
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);

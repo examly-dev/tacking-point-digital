@@ -37,8 +37,13 @@ body {
 }
 
 @media (min-width: 850px) {
-  html,
-  body {
+  /*
+    Only lock the window when the marketing chrome is mounted.
+    Preview iframes (and invoices/clients) share this stylesheet; without
+    :has(.site-canvas) they inherit overflow:hidden and cannot scroll.
+  */
+  html:has(.site-canvas),
+  html:has(.site-canvas) body {
     height: 100%;
     overflow: hidden;
   }
@@ -77,6 +82,14 @@ body {
   .site-canvas {
     margin-left: 400px;
   }
+}
+
+/* Preview iframes must scroll like a normal document at every viewport width. */
+html:has([data-site-preview]),
+html:has([data-site-preview]) body {
+  height: auto;
+  max-width: none;
+  overflow: auto;
 }
 
 img {
