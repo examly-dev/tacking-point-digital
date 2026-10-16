@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lighthouse } from "@/components/Lighthouse";
+import { TackingPoint } from "@/components/TackingPoint";
 import { site } from "@/lib/site";
 import { fieldInput, fieldLabel, solidButton } from "./fields";
 
@@ -47,8 +47,8 @@ export function InvoiceLoginForm({
   return (
     <div className="flex min-h-full items-center justify-center px-5 py-16">
       <form onSubmit={submit} className="w-full max-w-[22rem] space-y-6">
-        <p className="flex items-center gap-2 text-[14px] desktop:text-[16px]">
-          <Lighthouse />
+        <p className="tacking-point-logo flex items-center gap-2 text-[14px] desktop:text-[16px]">
+          <TackingPoint />
           {site.name}
         </p>
         <p className="text-[15px] leading-[1.6]">Invoices. Private.</p>
