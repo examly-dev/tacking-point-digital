@@ -440,6 +440,8 @@ const catalog: WorkItem[] = [
 /** Public work, in display order. Archived entries stay in `catalog`. */
 export const work: WorkItem[] = catalog.filter((item) => !item.archived);
 
+export const recentWork = work.slice(0, 6);
+
 export function getWork(slug: string): WorkItem | undefined {
   return work.find((item) => item.slug === slug);
 }

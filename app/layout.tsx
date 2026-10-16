@@ -1,18 +1,25 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { site } from "@/lib/site";
+import { description, site } from "@/lib/site";
 import "./globals.css";
 
 const satoshi = localFont({
-  src: "./fonts/Satoshi-Medium.woff2",
-  weight: "500",
-  style: "normal",
+  src: [
+    {
+      path: "./fonts/Satoshi-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Satoshi-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   display: "swap",
+  preload: true,
   variable: "--font-satoshi",
 });
-
-const description =
-  "Websites and web apps for businesses and professionals. Andy, web developer, Port Macquarie.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -47,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#12211a",
   viewportFit: "cover",
   width: "device-width",
   initialScale: 1,
@@ -55,8 +62,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${satoshi.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+    <html lang="en-AU" className={`${satoshi.variable} h-full antialiased`}>
+      <body className="min-h-full font-sans font-medium">{children}</body>
     </html>
   );
 }

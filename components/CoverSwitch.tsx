@@ -29,21 +29,21 @@ export function CoverSwitch({
   }, [cover?.src, mobile.src]);
 
   return (
-    <figure className="bg-black/[0.05] p-4 tablet:p-8">
+    <figure className="bg-green p-4 tablet:p-8">
       {allowMobile ? (
         <div className="mb-3 flex items-center justify-end gap-4 tablet:mb-4">
-          <ViewSlider value={view} onChange={setView} />
+          <ViewSlider value={view} onChange={setView} tone="green" />
         </div>
       ) : null}
       <Lightbox media={media}>
         {allowMobile && view === "mobile" ? (
           <div className="mx-auto w-full max-w-[300px]">
-            <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
+            <div className="relative aspect-[390/844] overflow-hidden border border-cream/10 bg-cream">
               <Media media={mobile} sizes="300px" className="object-contain" priority />
             </div>
           </div>
         ) : cover ? (
-          <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-black/[0.03] bg-white">
+          <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-cream/10 bg-cream">
             <Media
               media={cover}
               priority
@@ -53,7 +53,7 @@ export function CoverSwitch({
           </div>
         ) : null}
       </Lightbox>
-      <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
+      <figcaption className="mt-2.5 text-[13px] text-cream-muted tablet:text-[12px]">{media.alt}</figcaption>
     </figure>
   );
 }

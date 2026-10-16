@@ -5,7 +5,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { mailto, site, tel } from "@/lib/site";
 
 const link =
-  "underline decoration-black/20 underline-offset-[3px] hover:decoration-black transition-colors duration-200";
+  "underline decoration-rule underline-offset-[3px] hover:decoration-ink motion-safe:transition-colors motion-safe:duration-200";
 
 /**
  * Closing line: email, call, or reveal the contact form underneath.
@@ -23,7 +23,7 @@ export function TalkThrough() {
           email me
         </a>{" "}
         or call{" "}
-        <a href={tel} className="hover:opacity-50 transition-opacity duration-200">
+        <a href={tel} className="text-ink hover:opacity-60 motion-safe:transition-opacity motion-safe:duration-200">
           {site.phone}
         </a>
         . Or{" "}
@@ -48,7 +48,7 @@ export function TalkThrough() {
             id={formId}
             inert={!open}
             aria-hidden={!open}
-            className={`border-t border-black/10 pt-8 transition-opacity duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+            className={`border-t border-rule pt-8 transition-opacity duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
               open ? "opacity-100" : "opacity-0"
             }`}
           >

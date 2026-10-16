@@ -5,10 +5,10 @@ import { enquirySubject, enquiryText } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
 const body =
-  "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
-const label = "block text-[13px] tablet:text-[12px] desktop:text-[13px] text-black/50 mb-1";
+  "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.45]";
+const label = "block text-[13px] tablet:text-[12px] desktop:text-[13px] text-muted mb-1";
 const input =
-  "block w-full bg-transparent border-0 border-b border-black/15 py-2.5 tablet:py-2 text-[16px] tablet:text-[14px] desktop:text-[16px] text-black outline-none focus:border-black transition-colors duration-200 rounded-none";
+  "block w-full bg-transparent border-0 border-b border-rule py-2.5 tablet:py-2 text-[16px] tablet:text-[14px] desktop:text-[16px] text-ink outline-none focus:border-ink motion-safe:transition-colors motion-safe:duration-200 rounded-none";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -100,14 +100,14 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-        <p className={body} role="status">
-          Thanks for getting in touch. I&apos;ll get back to you ASAP.
-        </p>
+      <p className={body} role="status">
+        Thanks for getting in touch. I&apos;ll get back to you ASAP.
+      </p>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className={`${body} space-y-7`} noValidate>
+    <form onSubmit={onSubmit} className={`relative ${body} space-y-7`} noValidate>
       <div className="grid gap-7 tablet:grid-cols-2">
         <div>
           <label htmlFor="name" className={label}>
@@ -162,25 +162,32 @@ export function ContactForm() {
           name="message"
           rows={5}
           required
-          className={`${input} resize-y min-h-[8rem]`}
+          className={`${input} min-h-[8rem] resize-y`}
         />
       </div>
 
-      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden>
+      <div className="pointer-events-none absolute left-0 top-0 h-px w-px overflow-hidden opacity-0" aria-hidden>
         <label htmlFor="company">Company</label>
-        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          className="pointer-events-none"
+        />
       </div>
 
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex min-h-11 tablet:min-h-0 items-center underline decoration-black/20 underline-offset-[3px] hover:decoration-black active:decoration-black transition-colors duration-200 disabled:opacity-40 disabled:hover:decoration-black/20"
+          className="inline-flex min-h-11 items-center underline decoration-rule underline-offset-[3px] hover:decoration-ink disabled:opacity-40 disabled:hover:decoration-rule tablet:min-h-0 motion-safe:transition-colors motion-safe:duration-200"
         >
           {status === "sending" ? "Sending…" : "Send message"}
         </button>
         {status === "error" && error ? (
-          <p className="text-black/60" role="alert">
+          <p className="text-muted" role="alert">
             {error}
           </p>
         ) : null}
