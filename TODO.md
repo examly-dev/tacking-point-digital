@@ -9,7 +9,7 @@ One line per entry. Move lines down as they finish; this file is the per-project
 
 ## Next
 
-- Add Woodward Dawson to the portfolio.
+- When woodwarddawson.com.au is live, launch its card in `lib/work.ts`: delete `status: "upcoming"`, add `url`, a desktop `cover` and a `mobileClip`; the card already has its front-page loop.
 
 ## Later
 
@@ -17,6 +17,8 @@ One line per entry. Move lines down as they finish; this file is the per-project
 
 ## Done
 
+- Public site back to the minimal pre-Leap.Type design; Recent work split from Example sites; Woodward Dawson in as a coming-soon card; Examly archived (2026-10-21).
+- Phone menu no longer reopens on Back; "use my contact form" links to Contact; Woodward Dawson card plays a loop of its front page (2026-10-21).
 - Client portal committed on `feat/client-portal` (2026-10-20).
 - Leap.Type paper-and-green theme adopted across the public site (2026-10-16).
 - Private invoice workspace at /invoices.
