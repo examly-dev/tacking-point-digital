@@ -7,12 +7,12 @@ import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
 import { WorkPreview } from "@/components/SitePreview";
 import { hasPreview } from "@/lib/preview";
-import { getWork, work, type WorkMedia } from "@/lib/work";
+import { getWork, pagedWork, type WorkMedia } from "@/lib/work";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return work.map(({ slug }) => ({ slug }));
+  return pagedWork.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

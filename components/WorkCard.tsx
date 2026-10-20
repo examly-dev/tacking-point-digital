@@ -9,7 +9,17 @@ import { Media } from "./Media";
  * (`aspect-[180/236]`). Poster is shot at that ratio and fills with cover/top —
  * never contained into a mismatched hole.
  */
-export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
+export function WorkCard({
+  item,
+  index,
+  priority = false,
+}: {
+  item: WorkItem;
+  index: number;
+  priority?: boolean;
+}) {
+  if (item.status === "upcoming") return <UpcomingCard item={item} index={index} />;
+
   const preview = item.mobile ?? item.cover;
 
   return (
@@ -26,7 +36,7 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
                 media={preview}
                 sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
                 play="hover"
-                priority={index === 0}
+                priority={priority}
                 eager={index < 4}
                 deferSrc={index >= 4}
                 className="object-cover object-top"
@@ -36,13 +46,13 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
         </div>
       </ViewTransition>
       <div className="flex w-full items-center justify-between tablet:w-[250px]">
-        <h2 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h2>
+        <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
         <span
           aria-hidden="true"
           className="flex items-center gap-1 text-[15px] text-black/60 transition-colors duration-200 group-hover:text-black tablet:text-[14px]"
         >
-          {item.sample ? (
-            "Sample"
+          {item.category === "example" ? (
+            "Example"
           ) : (
             <>
               Visit
@@ -54,5 +64,30 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
         </span>
       </div>
     </Link>
+  );
+}
+
+/** A client site that is not live yet: same frame, no link, no screenshot. */
+function UpcomingCard({ item, index }: { item: WorkItem; index: number }) {
+  return (
+    <div
+      className={`block w-full tablet:w-[250px]${index < 2 ? "" : " rise"}`}
+      style={{ animationDelay: `${index * 70}ms` }}
+    >
+      <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
+        <div className="flex aspect-[180/236] w-[72%] items-center justify-center bg-white px-4 text-center tablet:h-[236px] tablet:w-[180px]">
+          <p className="text-[13px] leading-snug text-black/40 tablet:text-[12px]">
+            {/* Phones show the status here; the footer is too narrow for it. */}
+            <span className="block text-black/60 tablet:hidden">Coming soon</span>
+            {/* Keep "· 2026" with the word before it. */}
+            {item.kind.replaceAll(" · ", "\u00a0·\u00a0")}
+          </p>
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-between tablet:w-[250px]">
+        <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
+        <span className="ml-3 hidden shrink-0 text-[14px] text-black/40 tablet:inline">Coming soon</span>
+      </div>
+    </div>
   );
 }

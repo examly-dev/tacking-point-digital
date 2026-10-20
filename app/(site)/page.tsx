@@ -1,10 +1,11 @@
-import { WorkGrid } from "@/components/WorkGrid";
+import { WorkSection } from "@/components/WorkGrid";
 import { asset } from "@/lib/asset";
 import { intro } from "@/lib/site";
-import { work } from "@/lib/work";
+import { clientWork, exampleSites } from "@/lib/work";
 
 export default function Home() {
-  const lcp = work[0]?.mobile;
+  const first = [...clientWork, ...exampleSites].find((item) => item.mobile);
+  const lcp = first?.mobile;
 
   return (
     <>
@@ -25,7 +26,22 @@ export default function Home() {
           </p>
         ))}
       </div>
-      <WorkGrid />
+      <div className="space-y-12 p-5 tablet:space-y-14 tablet:p-8 desktop:p-10">
+        <WorkSection
+          id="recent-work"
+          title="Recent work"
+          items={clientWork}
+          prioritySlug={first?.slug}
+        />
+        <WorkSection
+          id="example-sites"
+          title="Example sites"
+          note="Sites I design to show what a small business website can be."
+          items={exampleSites}
+          offset={clientWork.length}
+          prioritySlug={first?.slug}
+        />
+      </div>
     </>
   );
 }

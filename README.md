@@ -32,13 +32,15 @@ A private invoice workspace lives at `/invoices` on the local/OrbStack app. It i
 ## Add a piece of work
 
 1. Drop screenshots or short silent clips (H.264 MP4, with a JPEG or PNG poster) in `public/work/`. The card shows the cover in a 16:10 frame (220×138 from tablet up), so a 1440×900 capture fits without cropping. Keep the inline `src` at 1× (1440×900) so it decodes cheaply while the page animates; put the 2× file in `hd` and only the lightbox will use it. Clips do not autoplay in the grid: the card shows the poster and plays on hover or focus (on touch screens, while the card is mostly on screen). On project pages only the clip in view plays, and `prefers-reduced-motion` shows posters only. Every shot on a project page opens full size in a lightbox (`components/Lightbox.tsx`), with a link to the raw file.
-2. Append an object in `lib/work.ts`. Each item gets its own page at `/work/<slug>`:
+2. Append an object in `lib/work.ts`. Each item gets its own page at `/work/<slug>`, except `status: "upcoming"` items, which only show a card. When an upcoming client site launches, delete `status`, add `url`, `cover` and `mobile`, and it gets its page and sitemap entry:
 
 ```ts
 {
   slug: "studio",
   name: "Studio name",
   kind: "Website · 2026",
+  category: "client", // "client" lists under Recent work, "example" under Example sites
+  status: "upcoming", // optional: a "Coming soon" card with no page until launch
   summary: "One line on what it is.",
   url: "https://example.com", // optional; omit to hide "Visit site"
   cover: { type: "image", src: "/work/studio.png", alt: "Studio home page" }, // optional
