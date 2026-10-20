@@ -18,7 +18,7 @@ export function WorkCard({
   index: number;
   priority?: boolean;
 }) {
-  if (item.status === "upcoming") return <UpcomingCard item={item} index={index} />;
+  if (item.status === "upcoming") return <UpcomingCard item={item} index={index} priority={priority} />;
 
   const preview = item.mobile ?? item.cover;
 
@@ -67,27 +67,48 @@ export function WorkCard({
   );
 }
 
-/** A client site that is not live yet: same frame, no link, no screenshot. */
-function UpcomingCard({ item, index }: { item: WorkItem; index: number }) {
+/** A client site that is not live yet: its front page, playing while on screen, no link. */
+function UpcomingCard({
+  item,
+  index,
+  priority,
+}: {
+  item: WorkItem;
+  index: number;
+  priority: boolean;
+}) {
+  const preview = item.mobile ?? item.cover;
+
   return (
     <div
       className={`block w-full tablet:w-[250px]${index < 2 ? "" : " rise"}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
-        <div className="flex aspect-[180/236] w-[72%] items-center justify-center bg-white px-4 text-center tablet:h-[236px] tablet:w-[180px]">
-          <p className="text-[13px] leading-snug text-black/40 tablet:text-[12px]">
-            {/* Phones show the status here; the footer is too narrow for it. */}
-            <span className="block text-black/60 tablet:hidden">Coming soon</span>
-            {/* Keep "· 2026" with the word before it. */}
-            {item.kind.replaceAll(" · ", "\u00a0·\u00a0")}
-          </p>
+        <div className="relative flex aspect-[180/236] w-[72%] items-center justify-center overflow-hidden bg-white px-4 text-center tablet:h-[236px] tablet:w-[180px]">
+          {preview ? (
+            <Media
+              media={preview}
+              sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
+              play="inview"
+              priority={priority}
+              eager={index < 4}
+              className="object-cover object-top"
+            />
+          ) : (
+            <p className="text-[13px] leading-snug text-black/40 tablet:text-[12px]">
+              {/* Keep "· 2026" with the word before it. */}
+              {item.kind.replaceAll(" · ", "\u00a0·\u00a0")}
+            </p>
+          )}
         </div>
       </div>
       <div className="flex w-full items-center justify-between tablet:w-[250px]">
         <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
         <span className="ml-3 hidden shrink-0 text-[14px] text-black/40 tablet:inline">Coming soon</span>
       </div>
+      {/* Phones: the footer is too narrow for the name and the status on one line. */}
+      <p className="text-[13px] text-black/40 tablet:hidden">Coming soon</p>
     </div>
   );
 }

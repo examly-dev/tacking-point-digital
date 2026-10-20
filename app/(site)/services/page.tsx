@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { TackingPoint } from "@/components/TackingPoint";
 import { TalkThrough } from "@/components/TalkThrough";
 import { site } from "@/lib/site";
@@ -79,11 +78,8 @@ export default function ServicesPage() {
         <Section title="Web and mobile apps" step={3}>
           <p>
             Alongside the websites, I build web apps: booking and admin tools,
-            dashboards, internal systems, and my own product{" "}
-            <Link href="/work/examly" className={link}>
-              Examly
-            </Link>
-            . Full-stack builds, interface, server and database designed
+            dashboards, internal systems, and my own product Examly.
+            Full-stack builds, interface, server and database designed
             together, usually on Next.js, TypeScript and PostgreSQL. If nothing
             off the shelf quite fits what you need, that is a conversation I
             would enjoy.

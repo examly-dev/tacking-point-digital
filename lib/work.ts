@@ -101,6 +101,13 @@ const catalog: WorkItem[] = [
     kind: "Recruitment website · 2026",
     category: "client",
     status: "upcoming",
+    // Front page on a phone: the hero's 12 s wind-farm loop under the header and headline.
+    mobile: {
+      type: "video",
+      src: "/work/woodward-dawson-card.mp4",
+      poster: "/work/woodward-dawson-card.jpg",
+      alt: "Woodward Dawson home page on a phone",
+    },
     summary:
       "A website, job board and editor for an environmental, infrastructure and energy recruitment firm.",
     overview: [

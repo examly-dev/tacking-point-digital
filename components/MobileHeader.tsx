@@ -14,10 +14,15 @@ import { isActive, pages } from "./Nav";
  */
 export function MobileHeader() {
   const pathname = usePathname();
-  // The sheet remembers which route opened it, so navigating closes it for free.
-  const [openedAt, setOpenedAt] = useState<string | null>(null);
-  const open = openedAt === pathname;
-  const setOpen = (next: boolean) => setOpenedAt(next ? pathname : null);
+  const [open, setOpen] = useState(false);
+  // Close the sheet whenever the route changes, including Back and Forward.
+  // Adjusting state during render (not in an effect) is React's pattern for this.
+  const [shownPath, setShownPath] = useState(pathname);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setOpen(false);
+  }
+  const close = () => setOpen(false);
   const [scrolled, setScrolled] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -34,7 +39,7 @@ export function MobileHeader() {
     document.body.style.overflow = "hidden";
     closeRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenedAt(null);
+      if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -78,7 +83,7 @@ export function MobileHeader() {
           className="tablet:hidden menu-sheet fixed inset-0 z-50 flex flex-col bg-white pt-[env(safe-area-inset-top)] pb-[max(1.5rem,env(safe-area-inset-bottom))]"
         >
           <div className="flex h-14 shrink-0 items-center justify-between px-5">
-            <Link href="/" className="lighthouse-logo -ml-1 flex h-11 items-center rounded-sm px-1">
+            <Link href="/" onClick={close} className="lighthouse-logo -ml-1 flex h-11 items-center rounded-sm px-1">
               <span className="flex items-center gap-2 text-[15px] font-medium tracking-[-0.01em] leading-none">
                 <TackingPoint />
                 {site.name}
@@ -101,6 +106,7 @@ export function MobileHeader() {
                 <Link
                   key={href}
                   href={href}
+                  onClick={close}
                   aria-current={active ? "page" : undefined}
                   className={`rise flex h-[3.25rem] items-center text-[2.25rem] font-medium leading-none tracking-[-0.03em] active:translate-x-1 transition-transform duration-200 ${
                     active ? "text-black" : "text-black/60"
