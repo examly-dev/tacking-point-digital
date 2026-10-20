@@ -22,8 +22,17 @@ export type WorkItem = {
   name: string;
   /** Short grey label under the name, e.g. "Web app · 2026". */
   kind: string;
-  /** Sample / indicative site, not a paid job and not a template. */
-  sample?: boolean;
+  /**
+   * "client": paid work for a real business, listed under Recent work.
+   * "example": a site I design to show what is possible, listed under Example sites.
+   */
+  category: "client" | "example";
+  /**
+   * "upcoming": a client site that is not live yet. It shows as a quiet
+   * "Coming soon" card with no project page and no sitemap entry. Remove the
+   * field (and add `url`, `cover`, `mobile`) when the site launches.
+   */
+  status?: "upcoming";
   /** One-line summary shown at the top of the project page. */
   summary: string;
   /** Live site. Omit if there is no public URL yet. */
@@ -87,8 +96,21 @@ function phoneClip(
 
 const catalog: WorkItem[] = [
   {
+    slug: "woodward-dawson",
+    name: "Woodward Dawson",
+    kind: "Recruitment website · 2026",
+    category: "client",
+    status: "upcoming",
+    summary:
+      "A website, job board and editor for an environmental, infrastructure and energy recruitment firm.",
+    overview: [
+      "Woodward Dawson place people in environmental, infrastructure and energy roles across Australia and New Zealand. The site covers their sectors, consultants and open roles, with a job board, applications, and an editor the team uses to keep it current.",
+    ],
+  },
+  {
     slug: "accordion",
     archived: true,
+    category: "client",
     name: "Accordion",
     kind: "Web application · 2026 · ongoing",
     summary:
@@ -135,6 +157,8 @@ const catalog: WorkItem[] = [
   },
   {
     slug: "examly",
+    archived: true,
+    category: "client",
     name: "Examly",
     kind: "Web application · 2026 · ongoing",
     summary:
@@ -184,7 +208,7 @@ const catalog: WorkItem[] = [
     slug: "proof-room",
     name: "Bakehouse",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative bespoke site for a small bakery, with a weekly loaf subscription.",
     cover: {
       type: "video",
@@ -210,7 +234,7 @@ const catalog: WorkItem[] = [
     slug: "halfway",
     name: "Halfway House",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary:
       "A café and roastery: Now Book It for tables, Shopify for bags and gear, Square gift cards.",
     cover: {
@@ -236,7 +260,7 @@ const catalog: WorkItem[] = [
     slug: "ellery",
     name: "Ellery Lawyers",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative one-pager for a small Newcastle law firm.",
     cover: {
       type: "video",
@@ -261,7 +285,7 @@ const catalog: WorkItem[] = [
     slug: "ridgeway-physio",
     name: "Ridgeway Physiotherapy",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary:
       "A physio practice site with a page per service and HotDoc booking.",
     cover: {
@@ -288,7 +312,7 @@ const catalog: WorkItem[] = [
     slug: "marlow-finch",
     name: "Rowe Accounting",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative one-pager for a small accountancy, with fees on the page.",
     cover: {
       type: "video",
@@ -314,7 +338,7 @@ const catalog: WorkItem[] = [
     slug: "harbourline",
     name: "Harbourline Environmental",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative site for a coastal and civil engineering practice.",
     cover: {
       type: "video",
@@ -339,7 +363,7 @@ const catalog: WorkItem[] = [
     slug: "ironbark",
     name: "Ironbark",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative booking page for a small stay, wired to Little Hotelier.",
     cover: {
       type: "video",
@@ -364,7 +388,7 @@ const catalog: WorkItem[] = [
     slug: "ballast",
     name: "Parkside Gym",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative gym site: timetable, membership, and the coaches.",
     cover: {
       type: "video",
@@ -389,7 +413,7 @@ const catalog: WorkItem[] = [
     slug: "hartwell",
     name: "Hartwell Constructions",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative builder’s site on a CMS the client can edit.",
     cover: {
       type: "video",
@@ -414,7 +438,7 @@ const catalog: WorkItem[] = [
     slug: "sancrox",
     name: "Pell Civil",
     kind: "Sample website, not a template",
-    sample: true,
+    category: "example",
     summary: "An indicative site for a regional civil practice: roads, drainage, subdivisions.",
     cover: {
       type: "video",
@@ -440,8 +464,15 @@ const catalog: WorkItem[] = [
 /** Public work, in display order. Archived entries stay in `catalog`. */
 export const work: WorkItem[] = catalog.filter((item) => !item.archived);
 
-export const recentWork = work.slice(0, 6);
+/** Paid client work, shown first under Recent work. */
+export const clientWork = work.filter((item) => item.category === "client");
+
+/** Sites I design to show what is possible, shown under Example sites. */
+export const exampleSites = work.filter((item) => item.category === "example");
+
+/** Work with its own /work/[slug] page. Upcoming client sites only get a card. */
+export const pagedWork = work.filter((item) => item.status !== "upcoming");
 
 export function getWork(slug: string): WorkItem | undefined {
-  return work.find((item) => item.slug === slug);
+  return pagedWork.find((item) => item.slug === slug);
 }

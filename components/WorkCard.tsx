@@ -5,29 +5,38 @@ import { Arrow } from "./Arrow";
 import { Media } from "./Media";
 
 /**
- * Dead Simple Sites gallery card: 250×300 green mat, 180×236 inner screenshot
+ * Dead Simple Sites gallery card: 250×300 grey mat, 180×236 inner screenshot
  * (`aspect-[180/236]`). Poster is shot at that ratio and fills with cover/top —
  * never contained into a mismatched hole.
  */
-export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
+export function WorkCard({
+  item,
+  index,
+  priority = false,
+}: {
+  item: WorkItem;
+  index: number;
+  priority?: boolean;
+}) {
+  if (item.status === "upcoming") return <UpcomingCard item={item} index={index} />;
+
   const preview = item.mobile ?? item.cover;
 
   return (
     <Link
       href={`/work/${item.slug}`}
-      prefetch={index === 0}
-      className={`group block w-full min-w-0 cursor-pointer tablet:w-[250px]${index < 2 ? "" : " rise"}`}
+      className={`group block w-full cursor-pointer tablet:w-[250px]${index < 2 ? "" : " rise"}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <ViewTransition name={`work-cover-${item.slug}`} share="morph" default="none">
-        <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-green p-3 motion-safe:transition-colors motion-safe:duration-300 motion-safe:ease-out group-hover:bg-[#1a2e25] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto tablet:p-4">
-          <div className="relative aspect-[180/236] w-[72%] overflow-hidden motion-safe:transition-transform motion-safe:duration-500 motion-safe:[transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] motion-safe:group-hover:scale-[1.015] motion-safe:group-active:scale-[0.99] tablet:h-[236px] tablet:w-[180px]">
+        <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] transition-colors duration-300 ease-out group-hover:bg-black/[0.08] group-active:bg-black/[0.08] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
+          <div className="relative aspect-[180/236] w-[72%] overflow-hidden transition-transform duration-500 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.015] group-active:scale-[0.99] tablet:h-[236px] tablet:w-[180px]">
             {preview ? (
               <Media
                 media={preview}
                 sizes="(min-width: 850px) 180px, (min-width: 520px) 44vw, 44vw"
                 play="hover"
-                priority={index === 0}
+                priority={priority}
                 eager={index < 4}
                 deferSrc={index >= 4}
                 className="object-cover object-top"
@@ -37,22 +46,17 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
         </div>
       </ViewTransition>
       <div className="flex w-full items-center justify-between tablet:w-[250px]">
-        <div className="min-w-0">
-          <h2 className="text-[15px] font-medium tracking-[-0.02em] text-ink tablet:text-[14px] desktop:text-[16px]">
-            {item.name}
-          </h2>
-          <p className="text-[13px] text-muted tablet:text-[12px]">{item.kind}</p>
-        </div>
+        <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
         <span
           aria-hidden="true"
-          className="ml-3 flex shrink-0 items-center gap-1 text-[15px] text-muted motion-safe:transition-colors motion-safe:duration-200 group-hover:text-ink tablet:text-[14px]"
+          className="flex items-center gap-1 text-[15px] text-black/60 transition-colors duration-200 group-hover:text-black tablet:text-[14px]"
         >
-          {item.sample ? (
-            "Sample"
+          {item.category === "example" ? (
+            "Example"
           ) : (
             <>
               Visit
-              <span className="motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 <Arrow />
               </span>
             </>
@@ -60,5 +64,30 @@ export function WorkCard({ item, index }: { item: WorkItem; index: number }) {
         </span>
       </div>
     </Link>
+  );
+}
+
+/** A client site that is not live yet: same frame, no link, no screenshot. */
+function UpcomingCard({ item, index }: { item: WorkItem; index: number }) {
+  return (
+    <div
+      className={`block w-full tablet:w-[250px]${index < 2 ? "" : " rise"}`}
+      style={{ animationDelay: `${index * 70}ms` }}
+    >
+      <div className="mb-2.5 flex aspect-[250/300] w-full items-center justify-center bg-black/[0.05] tablet:h-[300px] tablet:w-[250px] tablet:aspect-auto">
+        <div className="flex aspect-[180/236] w-[72%] items-center justify-center bg-white px-4 text-center tablet:h-[236px] tablet:w-[180px]">
+          <p className="text-[13px] leading-snug text-black/40 tablet:text-[12px]">
+            {/* Phones show the status here; the footer is too narrow for it. */}
+            <span className="block text-black/60 tablet:hidden">Coming soon</span>
+            {/* Keep "· 2026" with the word before it. */}
+            {item.kind.replaceAll(" · ", "\u00a0·\u00a0")}
+          </p>
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-between tablet:w-[250px]">
+        <h3 className="text-[15px] font-medium text-black tablet:text-[14px]">{item.name}</h3>
+        <span className="ml-3 hidden shrink-0 text-[14px] text-black/40 tablet:inline">Coming soon</span>
+      </div>
+    </div>
   );
 }

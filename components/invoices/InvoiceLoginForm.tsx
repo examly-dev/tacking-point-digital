@@ -47,7 +47,7 @@ export function InvoiceLoginForm({
   return (
     <div className="flex min-h-full items-center justify-center px-5 py-16">
       <form onSubmit={submit} className="w-full max-w-[22rem] space-y-6">
-        <p className="tacking-point-logo flex items-center gap-2 text-[14px] desktop:text-[16px]">
+        <p className="flex items-center gap-2 text-[14px] desktop:text-[16px]">
           <TackingPoint />
           {site.name}
         </p>

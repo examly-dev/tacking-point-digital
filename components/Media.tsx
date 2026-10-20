@@ -88,9 +88,6 @@ export function Media({
       };
     }
 
-    // Marketing pages scroll `.site-canvas`, not the window — observe that root
-    // so clips pause when they leave the visible well.
-    const root = video.closest(".site-canvas");
     const mounted = performance.now();
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -98,7 +95,7 @@ export function Media({
         const settled = Math.max(0, 900 - (performance.now() - mounted));
         start(settled);
       },
-      { root, threshold: play === "hover" ? 0.7 : 0.5 },
+      { threshold: play === "hover" ? 0.7 : 0.5 },
     );
     io.observe(video);
     return () => {
@@ -160,14 +157,13 @@ function Still({
     const node = slot.current;
     if (!node) return;
 
-    const root = node.closest(".site-canvas");
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         setReady(true);
         io.disconnect();
       },
-      { root, rootMargin: "800px 0px", threshold: 0 },
+      { root: null, rootMargin: "800px 0px", threshold: 0 },
     );
     io.observe(node);
 

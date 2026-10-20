@@ -7,12 +7,12 @@ import { Lightbox } from "@/components/Lightbox";
 import { Media } from "@/components/Media";
 import { WorkPreview } from "@/components/SitePreview";
 import { hasPreview } from "@/lib/preview";
-import { getWork, work, type WorkMedia } from "@/lib/work";
+import { getWork, pagedWork, type WorkMedia } from "@/lib/work";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return work.map(({ slug }) => ({ slug }));
+  return pagedWork.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -22,8 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: item.name, description: item.summary };
 }
 
-const body =
-  "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.45] tracking-[-0.01em]";
+const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 
 function delay(step: number) {
   return { animationDelay: `${step * 60}ms` };
@@ -32,24 +31,24 @@ function delay(step: number) {
 /** Portrait hero when there is no dedicated phone clip — same 390×844 well as CoverSwitch. */
 function PhoneShot({ media, priority = false }: { media: WorkMedia; priority?: boolean }) {
   return (
-    <figure className="bg-green p-4 tablet:p-8">
+    <figure className="bg-black/[0.05] p-4 tablet:p-8">
       <Lightbox media={media}>
         <div className="mx-auto w-full max-w-[300px]">
-          <div className="relative aspect-[390/844] overflow-hidden border border-cream/10 bg-cream">
+          <div className="relative aspect-[390/844] overflow-hidden border border-black/[0.03] bg-white">
             <Media media={media} priority={priority} sizes="300px" className="object-contain" />
           </div>
         </div>
       </Lightbox>
-      <figcaption className="mt-2.5 text-[13px] text-cream-muted tablet:text-[12px]">{media.alt}</figcaption>
+      <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
     </figure>
   );
 }
 
 function Shot({ media, priority = false }: { media: WorkMedia; priority?: boolean }) {
   return (
-    <figure className="bg-green p-3 tablet:p-6">
+    <figure className="bg-black/[0.05] p-3 tablet:p-6">
       <Lightbox media={media}>
-        <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-cream/10 bg-cream">
+        <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border border-black/[0.03] bg-white">
           <Media
             media={media}
             priority={priority}
@@ -58,7 +57,7 @@ function Shot({ media, priority = false }: { media: WorkMedia; priority?: boolea
           />
         </div>
       </Lightbox>
-      <figcaption className="mt-2.5 text-[13px] text-cream-muted tablet:text-[12px]">{media.alt}</figcaption>
+      <figcaption className="mt-2.5 text-[13px] tablet:text-[12px] text-black/40">{media.alt}</figcaption>
     </figure>
   );
 }
@@ -67,9 +66,9 @@ function Stills({ stills }: { stills: WorkMedia[] }) {
   return (
     <section className="mt-8 grid grid-cols-2 gap-2 tablet:gap-3">
       {stills.map((media) => (
-        <figure key={media.src} className="bg-green p-2 tablet:p-3">
+        <figure key={media.src} className="bg-black/[0.05] p-2 tablet:p-3">
           <Lightbox media={media}>
-            <div className="relative aspect-[16/10] overflow-hidden border border-cream/10 bg-cream">
+            <div className="relative aspect-[16/10] overflow-hidden border border-black/[0.03] bg-white">
               <Media
                 media={media}
                 sizes="(min-width: 1250px) 360px, (min-width: 850px) 40vw, 50vw"
@@ -78,7 +77,7 @@ function Stills({ stills }: { stills: WorkMedia[] }) {
             </div>
           </Lightbox>
           {media.alt ? (
-            <figcaption className="mt-2 text-[12px] text-cream-muted tablet:text-[11px]">{media.alt}</figcaption>
+            <figcaption className="mt-2 text-[12px] tablet:text-[11px] text-black/40">{media.alt}</figcaption>
           ) : null}
         </figure>
       ))}
@@ -97,10 +96,16 @@ export default async function WorkPage({ params }: Props) {
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[46rem]">
         <Link
-          href="/work"
+          href="/"
           style={delay(0)}
-          className={`rise ${body} mb-4 inline-flex min-h-11 items-center gap-1 text-muted motion-safe:transition-colors motion-safe:duration-200 hover:text-ink active:text-ink tablet:mb-8 tablet:min-h-0`}
+          className={`rise ${body} inline-flex min-h-11 tablet:min-h-0 items-center gap-1 text-black/30 hover:text-black active:text-black transition-colors duration-200 mb-4 tablet:mb-8 group`}
         >
+          <span
+            aria-hidden="true"
+            className="transition-transform duration-300 ease-out group-hover:-translate-x-0.5"
+          >
+            ←
+          </span>{" "}
           Work
         </Link>
 
@@ -121,7 +126,7 @@ export default async function WorkPage({ params }: Props) {
               ) : item.cover ? (
                 <PhoneShot media={item.cover} priority />
               ) : (
-                <div className="h-[300px] bg-green" />
+                <div className="h-[300px] bg-black/[0.05]" />
               )}
             </ViewTransition>
           </div>
@@ -135,7 +140,7 @@ export default async function WorkPage({ params }: Props) {
 
         {item.design?.length ? (
           <section style={delay(4)} className="rise mb-10">
-            <h2 className={`${body} mb-3 text-muted`}>Design</h2>
+            <h2 className={`${body} text-black/30 mb-3`}>Design</h2>
             <div className={`${body} space-y-5`}>
               {item.design.map((p) => (
                 <p key={p}>{p}</p>
@@ -145,7 +150,7 @@ export default async function WorkPage({ params }: Props) {
         ) : null}
 
         {item.stack?.length ? (
-          <p style={delay(4)} className={`rise ${body} mb-10 text-muted`}>
+          <p style={delay(4)} className={`rise ${body} text-black/30 mb-10`}>
             Built with {item.stack.join(", ")}.
           </p>
         ) : null}

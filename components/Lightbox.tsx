@@ -3,7 +3,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { asset } from "@/lib/asset";
-import { lockPageScroll } from "@/lib/scroll-lock";
 import type { WorkMedia } from "@/lib/work";
 
 /**
@@ -17,13 +16,14 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
 
   useEffect(() => {
     if (!open) return;
-    const unlock = lockPageScroll();
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => {
-      unlock();
+      document.body.style.overflow = overflow;
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -40,7 +40,7 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-2.5 right-2.5 rounded-sm bg-paper/90 px-2 py-1 text-[11px] text-muted opacity-0 shadow-[0_1px_2px_rgba(35,29,20,0.08)] backdrop-blur transition-opacity duration-200 group-hover/zoom:opacity-100 group-focus-within/zoom:opacity-100"
+          className="pointer-events-none absolute bottom-2.5 right-2.5 rounded-sm bg-white/90 px-2 py-1 text-[11px] text-black/60 opacity-0 shadow-[0_1px_2px_rgba(0,0,0,0.08)] backdrop-blur transition-opacity duration-200 group-hover/zoom:opacity-100 group-focus-within/zoom:opacity-100"
         >
           Full size
         </span>
@@ -52,24 +52,20 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
               role="dialog"
               aria-modal="true"
               aria-label={media.alt}
-              className="lightbox fixed inset-0 z-[100] flex flex-col bg-paper/95 backdrop-blur-md"
+              className="lightbox fixed inset-0 z-[100] flex flex-col bg-white/95 backdrop-blur-md"
               onClick={() => setOpen(false)}
             >
-              <div className="flex h-12 shrink-0 items-center justify-between px-4 text-[13px] text-muted tablet:px-6">
+              <div className="flex h-12 shrink-0 items-center justify-between px-4 text-[13px] text-black/50 tablet:px-6">
                 <a
                   href={asset(media.type === "video" ? media.hd ?? media.src : media.src)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex h-10 items-center hover:text-ink"
+                  className="flex h-10 items-center hover:text-black"
                 >
                   Open file ↗
                 </a>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="-mr-2 flex h-10 items-center px-2 hover:text-ink"
-                >
+                <button type="button" onClick={() => setOpen(false)} className="-mr-2 flex h-10 items-center px-2 hover:text-black">
                   Close
                 </button>
               </div>
@@ -85,7 +81,7 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
                     playsInline
                     aria-label={media.alt}
                     onClick={(e) => e.stopPropagation()}
-                    className="max-h-full max-w-full border border-rule bg-cream shadow-[0_30px_80px_-30px_rgba(35,29,20,0.35)]"
+                    className="max-h-full max-w-full border border-black/[0.06] bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)]"
                   />
                 ) : (
                   // Plain img on purpose: show the file at its native resolution, not a resized copy.
@@ -94,11 +90,11 @@ export function Lightbox({ media, children }: { media: WorkMedia; children: Reac
                     src={asset(media.src)}
                     alt={media.alt}
                     onClick={(e) => e.stopPropagation()}
-                    className="max-h-full max-w-full border border-rule bg-cream shadow-[0_30px_80px_-30px_rgba(35,29,20,0.35)]"
+                    className="max-h-full max-w-full border border-black/[0.06] bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)]"
                   />
                 )}
               </div>
-              <p className="shrink-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-center text-[13px] text-faint tablet:px-6">
+              <p className="shrink-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-center text-[13px] text-black/40 tablet:px-6">
                 {media.alt}
               </p>
             </div>,
