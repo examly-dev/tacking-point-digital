@@ -1,5 +1,8 @@
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import type { InvoiceViewModel } from "../view-model";
+import { INVOICE_PDF_FONT, registerInvoicePdfFonts } from "./register-fonts";
+
+registerInvoicePdfFonts();
 
 const COLOR = {
   text: "#000000",
@@ -14,7 +17,7 @@ export const invoicePdfStyles = StyleSheet.create({
     paddingBottom: 48,
     paddingHorizontal: 48,
     fontSize: 10,
-    fontFamily: "Helvetica",
+    fontFamily: INVOICE_PDF_FONT,
     color: COLOR.text,
     backgroundColor: "#ffffff",
   },
@@ -26,7 +29,7 @@ export const invoicePdfStyles = StyleSheet.create({
   },
   wordmark: {
     fontSize: 13,
-    fontFamily: "Helvetica",
+    fontFamily: INVOICE_PDF_FONT,
     letterSpacing: -0.2,
     marginBottom: 10,
   },
@@ -40,7 +43,7 @@ export const invoicePdfStyles = StyleSheet.create({
   },
   heading: {
     fontSize: 11,
-    fontFamily: "Helvetica",
+    fontFamily: INVOICE_PDF_FONT,
     letterSpacing: 1.4,
     textAlign: "right",
     marginBottom: 10,
@@ -56,7 +59,7 @@ export const invoicePdfStyles = StyleSheet.create({
   },
   metaStrong: {
     fontSize: 10,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: INVOICE_PDF_FONT,
     color: COLOR.text,
     textAlign: "right",
     marginBottom: 2,
@@ -69,7 +72,7 @@ export const invoicePdfStyles = StyleSheet.create({
   },
   clientName: {
     fontSize: 12,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: INVOICE_PDF_FONT,
     marginBottom: 2,
   },
   clientLine: {
@@ -129,12 +132,12 @@ export const invoicePdfStyles = StyleSheet.create({
   },
   grandLabel: {
     fontSize: 10,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: INVOICE_PDF_FONT,
     letterSpacing: 0.4,
   },
   grandValue: {
     fontSize: 11,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: INVOICE_PDF_FONT,
     textAlign: "right",
   },
   gstNote: {

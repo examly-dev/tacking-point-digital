@@ -4,6 +4,11 @@ const isGithubPages = process.env.GITHUB_PAGES === "true";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
+  // Nested lockfile in scripts/sanity-shots otherwise makes Turbopack
+  // resolve `@/` from the wrong root.
+  turbopack: {
+    root: process.cwd(),
+  },
   // Dev server is viewed through OrbStack domains, not localhost.
   allowedDevOrigins: ["tackingpoint.local", "*.tackingpoint.orb.local", "*.orb.local"],
   poweredByHeader: false,

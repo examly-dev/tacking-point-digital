@@ -1,0 +1,6 @@
+# Client portal on Cloudflare Pages.
+# Project name is the live CNAME target (clients.tackingpointdigital.com.au →
+# lighthouse-clients.pages.dev). Do not rename without updating that DNS record.
+name = "lighthouse-clients"
+compatibility_date = "2026-09-18"
+pages_build_output_dir = "public"

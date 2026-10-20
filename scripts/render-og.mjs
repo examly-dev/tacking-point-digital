@@ -14,7 +14,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const font = readFileSync(join(root, "app/fonts/Satoshi-Medium.woff2")).toString("base64");
 const iconSvg = readFileSync(join(root, "app/icon.svg"), "utf8");
 
-const lighthouse = `<svg width="148" height="148" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+const mark = `<svg width="148" height="148" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <path d="M108 68v32h40V68Z" fill="#ffd54a"/>
   <g stroke="#000" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none">
     <polyline points="100 68 128 36 156 68"/>
@@ -87,7 +87,7 @@ const ogHtml = `<!doctype html>
     <div class="card" id="og">
       <div class="glow"></div>
       <div class="inner">
-        <div class="mark">${lighthouse}</div>
+        <div class="mark">${mark}</div>
         <div class="name">Tacking Point Digital</div>
         <div class="line">Websites and web apps for businesses and professionals.</div>
       </div>

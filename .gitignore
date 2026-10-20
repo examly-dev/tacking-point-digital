@@ -23,6 +23,11 @@
 # invoice records (local/OrbStack only)
 .data/
 
+# Gated Leap.Type snapshot (OrbStack public + Cloudflare Pages host)
+/public/leap-type/
+/clients-host/public/leap-type/
+/clients-host/.dev.vars
+
 # misc
 .DS_Store
 *.pem
@@ -43,3 +48,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# wrangler local state
+.wrangler/

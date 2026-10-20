@@ -44,4 +44,10 @@ describe("invoice PDF", () => {
     expect(buffer.subarray(0, 5).toString()).toBe("%PDF-");
     expect(buffer.length).toBeGreaterThan(500);
   });
+
+  it("embeds Satoshi instead of Helvetica", async () => {
+    const pdf = (await renderInvoicePdf(invoice)).toString("latin1");
+    expect(pdf).toMatch(/Satoshi/);
+    expect(pdf).not.toMatch(/Helvetica/);
+  });
 });
