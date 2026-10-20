@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Lighthouse } from "@/components/Lighthouse";
 import { TalkThrough } from "@/components/TalkThrough";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -8,31 +10,26 @@ export const metadata: Metadata = {
     "Bespoke websites, CMS and site builders, updates to existing sites, web and mobile apps, and automation. Fixed-price builds, honest pricing.",
 };
 
-const body =
-  "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.45] tracking-[-0.01em]";
-
+const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
 const link =
-  "underline decoration-rule underline-offset-[3px] hover:decoration-ink motion-safe:transition-colors motion-safe:duration-200";
+  "underline decoration-black/20 underline-offset-[3px] hover:decoration-black transition-colors duration-200";
 
 function Section({
-  id,
   title,
   step,
   children,
 }: {
-  id: string;
   title: string;
   step: number;
   children: React.ReactNode;
 }) {
   return (
     <section
-      id={id}
-      className="rise grid gap-3 border-t border-rule py-8 first:border-t-0 first:pt-0 tablet:grid-cols-[11rem_1fr] tablet:gap-10"
+      className="rise grid gap-3 border-t border-black/10 py-8 first:border-t-0 first:pt-0 tablet:grid-cols-[11rem_1fr] tablet:gap-10"
       style={{ animationDelay: `${step * 60}ms` }}
     >
-      <h2 className={`${body} font-bold tracking-[-0.02em]`}>{title}</h2>
-      <div className={`${body} max-w-[34rem] space-y-5`}>{children}</div>
+      <h2 className={`${body} font-medium`}>{title}</h2>
+      <div className={`${body} space-y-5 max-w-[34rem]`}>{children}</div>
     </section>
   );
 }
@@ -41,11 +38,7 @@ export default function ServicesPage() {
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
       <article className="max-w-[52rem]">
-        <h1 className="mb-10 text-[32px] font-bold leading-[1.05] tracking-[-0.04em] tablet:text-[40px]">
-          Services
-        </h1>
-
-        <Section id="bespoke" title="Bespoke websites" step={1}>
+        <Section title="Bespoke websites" step={0}>
           <p>
             Most of what I build is bespoke: designed and coded for you. Good
             typography, a simple layout, fast, works properly on a phone. I
@@ -57,7 +50,7 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section id="platforms" title="Platforms you can run yourself" step={2}>
+        <Section title="Platforms you can run yourself" step={1}>
           <p>
             If you would rather look after the site yourself, I will put it on a
             platform you can run. There is a reason WordPress, Squarespace,
@@ -75,7 +68,7 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section id="existing" title="Existing sites" step={3}>
+        <Section title="Existing sites" step={2}>
           <p>
             If you already have a site and just want updates or extra
             functionality, I do that at a reasonable hourly rate. All I need is
@@ -83,7 +76,7 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section id="apps" title="Web and mobile apps" step={4}>
+        <Section title="Web and mobile apps" step={3}>
           <p>
             Alongside the websites, I build web apps: booking and admin tools,
             dashboards, internal systems, and my own product{" "}
@@ -104,7 +97,7 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section id="automation" title="Automation" step={5}>
+        <Section title="Automation" step={4}>
           <p>
             I can help with the repeating parts of a business: moving
             information between your existing tools, drafting from your own
@@ -115,7 +108,7 @@ export default function ServicesPage() {
           </p>
         </Section>
 
-        <Section id="pricing" title="Pricing" step={6}>
+        <Section title="Pricing" step={5}>
           <p>
             Always reasonable, and I will usually beat the quote you already
             have. You tell me what you need and I give you a fixed price for
@@ -147,10 +140,15 @@ export default function ServicesPage() {
         </Section>
 
         <div
-          className="rise border-t border-rule pt-8"
-          style={{ animationDelay: "420ms" }}
+          className="rise grid gap-3 border-t border-black/10 pt-8 tablet:grid-cols-[11rem_1fr] tablet:gap-10"
+          style={{ animationDelay: "300ms" }}
         >
-          <div className={`${body} max-w-[34rem]`}>
+          <div aria-hidden className="hidden tablet:block" />
+          <div className={`${body} max-w-[34rem] space-y-5`}>
+            <p className="flex items-center gap-2 font-medium">
+              <Lighthouse />
+              {site.name}
+            </p>
             <TalkThrough />
           </div>
         </div>

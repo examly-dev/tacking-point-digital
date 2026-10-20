@@ -7,145 +7,14 @@
 @theme {
   --breakpoint-tablet: 850px;
   --breakpoint-desktop: 1250px;
-  --color-green: #12211a;
-  --color-paper: #f6f1e7;
-  --color-ink: #231d14;
-  --color-muted: #4e4840;
-  --color-faint: #7a736b;
-  --color-rule: #e1d8c5;
-  --color-cream: #fdf6ee;
-  --color-cream-muted: #cfc6b8;
   --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 html,
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: #fff;
+  color: #000;
   -webkit-tap-highlight-color: transparent;
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
-/* Fixed green rail + cream offset. One offset only — rail is out of flow. */
-.site-rail {
-  display: none;
-}
-
-.site-canvas {
-  margin-left: 0;
-}
-
-@media (min-width: 850px) {
-  /*
-    Only lock the window when the marketing chrome is mounted.
-    Preview iframes (and invoices/clients) share this stylesheet; without
-    :has(.site-canvas) they inherit overflow:hidden and cannot scroll.
-  */
-  html:has(.site-canvas),
-  html:has(.site-canvas) body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .site-rail {
-    display: flex;
-    position: fixed;
-    inset: 0 auto 0 0;
-    z-index: 40;
-    width: 340px;
-    height: 100dvh;
-    pointer-events: auto;
-  }
-
-  .site-mobile-bar {
-    display: none;
-  }
-
-  .site-main {
-    padding-top: 0;
-  }
-
-  .site-canvas {
-    margin-left: 340px;
-    height: 100dvh;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-}
-
-@media (min-width: 1250px) {
-  .site-rail {
-    width: 400px;
-  }
-
-  .site-canvas {
-    margin-left: 400px;
-  }
-}
-
-/* Preview iframes must scroll like a normal document at every viewport width. */
-html:has([data-site-preview]),
-html:has([data-site-preview]) body {
-  height: auto;
-  max-width: none;
-  overflow: auto;
-}
-
-img {
-  max-width: 100%;
-}
-
-a,
-button,
-summary {
-  touch-action: manipulation;
-}
-
-summary {
-  list-style: none;
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
-
-p,
-figcaption {
-  text-wrap: pretty;
-}
-
-h1,
-h2,
-h3 {
-  text-wrap: balance;
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-green);
-  outline-offset: 3px;
-}
-
-.bg-green :focus-visible,
-aside :focus-visible,
-header :focus-visible {
-  outline-color: var(--color-cream);
-}
-
-.skip {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  z-index: 100;
-  padding: 0.6rem 0.9rem;
-  background: var(--color-green);
-  color: var(--color-cream);
-  font-size: 14px;
-  transform: translateY(-150%);
-}
-
-.skip:focus {
-  transform: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -168,6 +37,23 @@ html:has([data-example]) {
   }
 }
 
+a,
+button {
+  touch-action: manipulation;
+}
+
+p,
+figcaption {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Full-screen menu on phones fades up from just below its resting place. */
 @keyframes sheet-in {
   from {
     opacity: 0;
@@ -183,10 +69,12 @@ html:has([data-example]) {
   animation: sheet-in 320ms var(--ease-out-soft) both;
 }
 
+/* Full-size shot viewer uses the same entrance. */
 .lightbox {
   animation: sheet-in 240ms var(--ease-out-soft) both;
 }
 
+/* Content rises in with a stagger (delay set inline per element). */
 @keyframes rise {
   from {
     opacity: 0;
@@ -200,8 +88,13 @@ html:has([data-example]) {
 
 .rise {
   animation: rise 520ms var(--ease-out-soft) both;
+  will-change: transform, opacity;
 }
 
+/*
+  The card cover morphs into the project hero. Transform and opacity only:
+  filters on a screen-sized snapshot are what make these stutter.
+*/
 ::view-transition-group(.morph) {
   animation-duration: 440ms;
   animation-timing-function: var(--ease-out-soft);
@@ -217,15 +110,14 @@ html:has([data-example]) {
   display: none;
 }
 
+/* Everything else crossfades quickly underneath the morph. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 220ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise,
-  .menu-sheet,
-  .lightbox {
+  .rise {
     animation: none;
   }
 
@@ -237,31 +129,31 @@ html:has([data-example]) {
 }
 
 /* Hover the wordmark: lantern comes on, the page warms a little. */
-.tacking-point-lantern,
-.tacking-point-well {
+.lighthouse-lantern,
+.lighthouse-well {
   fill: transparent;
   transition: fill 0.45s var(--ease-out-soft);
 }
 
-.tacking-point-beam {
+.lighthouse-beam {
   transition: stroke 0.45s var(--ease-out-soft);
 }
 
-.tacking-point-logo:hover .tacking-point-lantern,
-.tacking-point-logo:active .tacking-point-lantern,
-.tacking-point-logo:focus-visible .tacking-point-lantern {
+.lighthouse-logo:hover .lighthouse-lantern,
+.lighthouse-logo:active .lighthouse-lantern,
+.lighthouse-logo:focus-visible .lighthouse-lantern {
   fill: #ffd54a;
 }
 
-.tacking-point-logo:hover .tacking-point-well,
-.tacking-point-logo:active .tacking-point-well,
-.tacking-point-logo:focus-visible .tacking-point-well {
+.lighthouse-logo:hover .lighthouse-well,
+.lighthouse-logo:active .lighthouse-well,
+.lighthouse-logo:focus-visible .lighthouse-well {
   fill: #ffe27a;
 }
 
-.tacking-point-logo:hover .tacking-point-beam,
-.tacking-point-logo:active .tacking-point-beam,
-.tacking-point-logo:focus-visible .tacking-point-beam {
+.lighthouse-logo:hover .lighthouse-beam,
+.lighthouse-logo:active .lighthouse-beam,
+.lighthouse-logo:focus-visible .lighthouse-beam {
   stroke: #ffd54a;
 }
 
@@ -274,22 +166,69 @@ body::after {
   opacity: 0;
   background: radial-gradient(
     55% 50% at 0% 0%,
-    rgba(255, 220, 120, 0.16),
+    rgba(255, 220, 120, 0.2),
     transparent 70%
   );
   transition: opacity 0.7s var(--ease-out-soft);
 }
 
-html:has(.tacking-point-logo:hover) body::after,
-html:has(.tacking-point-logo:active) body::after,
-html:has(.tacking-point-logo:focus-visible) body::after {
+html:has(.lighthouse-logo:hover) body::after,
+html:has(.lighthouse-logo:active) body::after,
+html:has(.lighthouse-logo:focus-visible) body::after {
   opacity: 1;
 }
 
+@keyframes lighthouse-confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.4);
+  }
+  12% {
+    opacity: 1;
+    transform: translate3d(calc(var(--drift) * 0.15), 4vh, 0) rotate(calc(var(--spin) * 0.15))
+      scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), var(--drop), 0) rotate(var(--spin)) scale(0.9);
+  }
+}
+
+.lighthouse-confetti {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+}
+
+.lighthouse-confetti-piece {
+  --drift: 0px;
+  --drop: 70vh;
+  --spin: 0deg;
+  position: absolute;
+  display: flex;
+  color: #111;
+  animation-name: lighthouse-confetti-fall;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+}
+
+.lighthouse-confetti-piece svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .tacking-point-lantern,
-  .tacking-point-well,
-  .tacking-point-beam,
+  .lighthouse-confetti {
+    display: none;
+  }
+
+  .lighthouse-lantern,
+  .lighthouse-well,
+  .lighthouse-beam,
   body::after {
     transition: none;
   }
