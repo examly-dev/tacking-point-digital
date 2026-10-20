@@ -1,3 +1,12 @@
+# Tacking Point Digital
+
+Business homepage for Tacking Point Digital (tackingpointdigital.com.au) with a private invoice workspace and a gated client preview portal.
+
+- Stack: Next.js (App Router), TypeScript, self-hosted Satoshi; GitHub Pages for the public site; Cloudflare Pages (`clients-host/`) for the client portal.
+- Run: `npm install && npm run dev`, or `docker compose up` for OrbStack (https://tackingpoint.local).
+- Deploy the portal with `scripts/deploy-clients.sh`; copy `.env.example` to `.env` for local keys.
+- Next actions live in `TODO.md` (Now / Next / Later / Done). Update it when work finishes.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
