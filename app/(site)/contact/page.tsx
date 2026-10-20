@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
-import { Lighthouse } from "@/components/Lighthouse";
+import { TackingPoint } from "@/components/TackingPoint";
 import { mailto, site, tel } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function ContactPage() {
       <article className="max-w-[34rem]">
         <div className={`${body} space-y-5`}>
           <p className="rise flex items-center gap-2 font-medium">
-            <Lighthouse />
+            <TackingPoint />
             {site.name}
           </p>
           <p className="rise" style={{ animationDelay: "60ms" }}>

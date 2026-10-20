@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
-import { Lighthouse } from "./Lighthouse";
+import { TackingPoint } from "./TackingPoint";
 import { isActive, pages } from "./Nav";
 
 /**
@@ -53,7 +53,7 @@ export function MobileHeader() {
         <div className="flex h-14 items-center justify-between px-5">
           <Link href="/" className="lighthouse-logo -ml-1 flex h-11 items-center rounded-sm px-1">
             <span className="flex items-center gap-2 text-[15px] font-medium tracking-[-0.01em] leading-none">
-              <Lighthouse />
+              <TackingPoint />
               {site.name}
             </span>
           </Link>
@@ -80,7 +80,7 @@ export function MobileHeader() {
           <div className="flex h-14 shrink-0 items-center justify-between px-5">
             <Link href="/" className="lighthouse-logo -ml-1 flex h-11 items-center rounded-sm px-1">
               <span className="flex items-center gap-2 text-[15px] font-medium tracking-[-0.01em] leading-none">
-                <Lighthouse />
+                <TackingPoint />
                 {site.name}
               </span>
             </Link>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Lighthouse } from "@/components/Lighthouse";
+import { TackingPoint } from "@/components/TackingPoint";
 import { TalkThrough } from "@/components/TalkThrough";
 import { site } from "@/lib/site";
 
@@ -146,7 +146,7 @@ export default function ServicesPage() {
           <div aria-hidden className="hidden tablet:block" />
           <div className={`${body} max-w-[34rem] space-y-5`}>
             <p className="flex items-center gap-2 font-medium">
-              <Lighthouse />
+              <TackingPoint />
               {site.name}
             </p>
             <TalkThrough />

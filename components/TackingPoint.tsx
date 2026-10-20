@@ -1,4 +1,4 @@
-export function Lighthouse() {
+export function TackingPoint() {
   return (
     <svg
       width="16"

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { clientsLabel, clientsUrl, intro, mailto, site, tel } from "@/lib/site";
-import { Lighthouse } from "./Lighthouse";
+import { TackingPoint } from "./TackingPoint";
 import { Nav } from "./Nav";
 
 const body = "text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
@@ -15,7 +15,7 @@ export function Sidebar() {
           className="lighthouse-logo block w-fit shrink-0 rounded-sm"
         >
           <h1 className="flex items-center gap-2 text-[14px] desktop:text-[16px] font-medium tracking-[-0.01em] leading-tight">
-            <Lighthouse />
+            <TackingPoint />
             {site.name}
           </h1>
         </Link>
