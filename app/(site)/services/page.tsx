@@ -1,4 +1,13 @@
 import type { Metadata } from "next";
+import { ServiceAccordion, type Service } from "@/components/ServiceAccordion";
+import {
+  AppsIcon,
+  AutomationIcon,
+  PricingIcon,
+  SelfManagedIcon,
+  UpdatesIcon,
+  WebsiteIcon,
+} from "@/components/ServiceIcons";
 import { TackingPoint } from "@/components/TackingPoint";
 import { TalkThrough } from "@/components/TalkThrough";
 import { site } from "@/lib/site";
@@ -6,147 +15,115 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Bespoke websites, CMS and site builders, updates to existing sites, web and mobile apps, and automation. Fixed-price builds, honest pricing.",
+    "Custom websites, sites you can run yourself, updates to existing sites, web and phone apps, and automation. Fixed-price builds and fair hourly rates.",
 };
 
 const body = "text-[15px] tablet:text-[14px] desktop:text-[16px] leading-[1.6] desktop:leading-[1.4]";
-const link =
-  "underline decoration-black/20 underline-offset-[3px] hover:decoration-black transition-colors duration-200";
 
-function Section({
-  title,
-  step,
-  children,
-}: {
-  title: string;
-  step: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      className="rise grid gap-3 border-t border-black/10 py-8 first:border-t-0 first:pt-0 tablet:grid-cols-[11rem_1fr] tablet:gap-10"
-      style={{ animationDelay: `${step * 60}ms` }}
-    >
-      <h2 className={`${body} font-medium`}>{title}</h2>
-      <div className={`${body} space-y-5 max-w-[34rem]`}>{children}</div>
-    </section>
-  );
-}
+const services: Service[] = [
+  {
+    id: "custom",
+    title: "Custom websites",
+    summary: "Designed and built for your business.",
+    icon: <WebsiteIcon />,
+    body: [
+      "A site designed from scratch around your business. Quick to load, clean to look at, and properly at home on a phone. Only what you will actually use.",
+      "If you would like to change the text and photos yourself, I will set that up so you can, with no code involved.",
+    ],
+  },
+  {
+    id: "self-managed",
+    title: "Sites you can run yourself",
+    summary: "Set up on a website builder you can manage.",
+    icon: <SelfManagedIcon />,
+    body: [
+      "If you would rather look after the site yourself, I will set it up on a well-known website builder that suits you, from a simple site to an online shop.",
+      "It is usually cheaper to build, though the builder charges its own monthly fee. I will show you around, and I am on hand afterwards if you need me.",
+    ],
+  },
+  {
+    id: "updates",
+    title: "Updates and fixes",
+    summary: "Changes to the site you already have.",
+    icon: <UpdatesIcon />,
+    body: [
+      "Already have a site? I will make changes, fix what is broken and add what is missing, at a fair hourly rate. All I need is access.",
+      "I will not try to sell you a redesign.",
+    ],
+  },
+  {
+    id: "apps",
+    title: "Web and phone apps",
+    summary: "Booking, dashboards, portals and tools.",
+    icon: <AppsIcon />,
+    body: [
+      "For when nothing off the shelf quite fits: booking systems, dashboards, client portals and internal tools, built around how you work.",
+      "Phone apps too, though we would talk first about whether you need one. Often a web app does the job.",
+    ],
+  },
+  {
+    id: "automation",
+    title: "Automation",
+    summary: "Less time on repetitive admin.",
+    icon: <AutomationIcon />,
+    body: [
+      "Getting the tools you already use to talk to each other, so details stop being typed in twice and things stop getting stuck in inboxes.",
+      "I will be straight about what is worth automating and what is not. Better over a coffee than in a proposal.",
+    ],
+  },
+];
 
 export default function ServicesPage() {
   return (
     <div className="p-5 tablet:p-8 desktop:p-10">
-      <article className="max-w-[52rem]">
-        <Section title="Bespoke websites" step={0}>
-          <p>
-            Most of what I build is bespoke: designed and coded for you. Good
-            typography, a simple layout, fast, works properly on a phone. I
-            keep it to what you will actually use.
-          </p>
-          <p>
-            If you want to edit text and photos yourself, I add Sanity, a small
-            editor in your browser, so you can do that without touching code.
-          </p>
-        </Section>
+      <article className="max-w-[44rem]">
+        <ServiceAccordion services={services} />
 
-        <Section title="Platforms you can run yourself" step={1}>
-          <p>
-            If you would rather look after the site yourself, I will put it on a
-            platform you can run. There is a reason WordPress, Squarespace,
-            Framer, Webflow and Shopify are still so popular: they work well as
-            CMSs, and I respect that. WordPress for a lot of everyday sites.
-            Framer or Webflow when the design needs more control. Squarespace
-            for something simple. Shopify if you are selling. Or whatever you
-            already prefer. I set it up cleanly, make sure it works on a phone,
-            and show you around. Usually cheaper than a custom build, though
-            the platform charges its own monthly fee.
-          </p>
-          <p>
-            After that, help is optional: some people never need me again,
-            others like me on hand for the odd change.
-          </p>
-        </Section>
-
-        <Section title="Existing sites" step={2}>
-          <p>
-            If you already have a site and just want updates or extra
-            functionality, I do that at a reasonable hourly rate. All I need is
-            the right access. I will not try to sell you a redesign.
-          </p>
-        </Section>
-
-        <Section title="Web and mobile apps" step={3}>
-          <p>
-            Alongside the websites, I build web apps: booking and admin tools,
-            dashboards, internal systems, and my own product Examly.
-            Full-stack builds, interface, server and database designed
-            together, usually on Next.js, TypeScript and PostgreSQL. If nothing
-            off the shelf quite fits what you need, that is a conversation I
-            would enjoy.
-          </p>
-          <p>
-            I also build native iPhone and Android apps with React Native and
-            Expo, sharing code with the website. That is a bigger undertaking,
-            with app store reviews and updates to keep on top of, so we would
-            first talk through whether you really need one. Often a web app
-            does the job.
-          </p>
-        </Section>
-
-        <Section title="Automation" step={4}>
-          <p>
-            I can help with the repeating parts of a business: moving
-            information between your existing tools, drafting from your own
-            data, chasing things stuck in someone&apos;s inbox. I use n8n and
-            language models where they actually fit, and I will be straight
-            about what is possible and what is theatre. Better over a coffee
-            than in a proposal.
-          </p>
-        </Section>
-
-        <Section title="Pricing" step={5}>
-          <p>
-            Always reasonable, and I will usually beat the quote you already
-            have. You tell me what you need and I give you a fixed price for
-            the build.
-          </p>
-          <p>
-            Hosting and your domain go through{" "}
-            <a
-              href="https://ventraip.com.au"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={link}
-            >
-              VentraIP
-            </a>
-            , an Australian-owned host: a .com.au in your name at their normal
-            price. I do not mark up the basics.
-          </p>
-          <p>Once live, changes are at a competitive hourly rate.</p>
-          <p>
-            I can set up company email, Google Workspace, newsletters and the
-            like. You pay the platform at its normal rate, plus the time it
-            takes me to set it up.
-          </p>
-          <p>
-            I am not one to upsell. I take pride in the work and would rather
-            you had what you need than what pads out an invoice.
-          </p>
-        </Section>
+        {/* Same row as the accordion, always open: the price promise should not hide. */}
+        <section
+          className="rise border-y border-black/10"
+          style={{ animationDelay: "320ms" }}
+          aria-labelledby="pricing"
+        >
+          <div className="flex items-center gap-4 py-5 tablet:gap-5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/[0.05] text-black/70">
+              <PricingIcon />
+            </span>
+            <span className="min-w-0 flex-1">
+              <h2 id="pricing" className={`${body} font-medium text-black`}>
+                Pricing
+              </h2>
+              <span className={`${body} block text-black/40`}>
+                Fixed, fair, and usually under your current quote.
+              </span>
+            </span>
+          </div>
+          <div className={`${body} max-w-[34rem] space-y-4 pb-6 pl-14 tablet:pl-[3.75rem]`}>
+            <p>
+              A fixed price for the build, agreed before I start. I will
+              usually beat the quote you already have.
+            </p>
+            <p>
+              Your domain and hosting are in your name with an Australian
+              host, at their normal price. I do not mark them up. After launch,
+              changes are at a fair hourly rate.
+            </p>
+            <p>
+              I would rather you had what you need than what pads out an
+              invoice.
+            </p>
+          </div>
+        </section>
 
         <div
-          className="rise grid gap-3 border-t border-black/10 pt-8 tablet:grid-cols-[11rem_1fr] tablet:gap-10"
-          style={{ animationDelay: "300ms" }}
+          className={`rise ${body} max-w-[34rem] space-y-5 pt-8 pl-14 tablet:pl-[3.75rem]`}
+          style={{ animationDelay: "380ms" }}
         >
-          <div aria-hidden className="hidden tablet:block" />
-          <div className={`${body} max-w-[34rem] space-y-5`}>
-            <p className="flex items-center gap-2 font-medium">
-              <TackingPoint />
-              {site.name}
-            </p>
-            <TalkThrough />
-          </div>
+          <p className="flex items-center gap-2 font-medium">
+            <TackingPoint />
+            {site.name}
+          </p>
+          <TalkThrough />
         </div>
       </article>
     </div>
