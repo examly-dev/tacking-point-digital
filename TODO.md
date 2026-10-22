@@ -18,6 +18,7 @@ One line per entry. Move lines down as they finish; this file is the per-project
 ## Done
 
 - Public site back to the minimal pre-Leap.Type design; Recent work split from Example sites; Woodward Dawson in as a coming-soon card; Examly archived (2026-10-21).
+- Services rebuilt as simple animated accordions with icons and plain wording; no product or tech names (2026-10-23).
 - Phone menu no longer reopens on Back; "use my contact form" links to Contact; Woodward Dawson card plays a loop of its front page (2026-10-21).
 - Client portal committed on `feat/client-portal` (2026-10-20).
 - Leap.Type paper-and-green theme adopted across the public site (2026-10-16).
